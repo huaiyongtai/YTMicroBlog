@@ -7,6 +7,7 @@
 //
 
 #import "HYHomePageController.h"
+#import "DropDownMenu.h"
 
 @interface HYHomePageController ()
 
@@ -28,20 +29,46 @@
                                                                       selector:@selector(pop)
                                                                      imageName:@"navigationbar_pop"
                                                           highlightedImageName:@"navigationbar_pop_highlighted"]];;
+    
+    
+    
+    
+    UIButton *customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_up"] forState:UIControlStateNormal];
+    [customBtn setTitle:@"首页" forState:UIControlStateNormal];
+    [customBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [customBtn setFrame:CGRectMake(0, 0, 100, 40)];
+    [customBtn addTarget:self action:@selector(dropMenu:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationItem setTitleView:customBtn];
+    
 }
 
-- (UIBarButtonItem *)itemWithTarget:(id)target sel:(SEL)selector imageName:(NSString *)imageName highlightedImageName:(NSString *)highlightedImageName {
+- (void)dropMenu:(UIButton *)btn {
+
+    DropDownMenu *menu = [DropDownMenu menu];
     
-    UIButton *navBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [navBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    [navBtn setImage:[UIImage imageNamed:highlightedImageName] forState:UIControlStateHighlighted];
-    [navBtn setBounds:CGRectMake(0, 0, navBtn.currentImage.size.width, navBtn.currentImage.size.height)];
-    [navBtn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
+    [view setBackgroundColor:[UIColor redColor]];
+    [menu setContentView:view];
     
-    return [[UIBarButtonItem alloc] initWithCustomView:navBtn];
+    
+    
+    
+    
+    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(20, 50, 200, 30)];
+    [testView setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:testView];
+    
+    
+    
+    
+    
+    [menu showFromView:testView];
+    
 }
 
 - (void)friendSearch {
+    
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
@@ -51,15 +78,12 @@
 
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
 }

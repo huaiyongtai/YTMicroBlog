@@ -22,6 +22,9 @@
 		826298E71B766D2C00E1680C /* HYTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298E61B766D2C00E1680C /* HYTabbarController.m */; };
 		826298EA1B766D5100E1680C /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298E91B766D5100E1680C /* HYNavigationController.m */; };
 		82A2397E1BB05118006AD4C7 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */; };
+		82D945581BBA41050070051B /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D945571BBA41050070051B /* DropDownMenu.m */; };
+		82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D9455A1BBA6D090070051B /* UIView+Extension.m */; };
+		82D9455E1BBA88180070051B /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D9455D1BBA88180070051B /* UIImage+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +69,12 @@
 		82A2397C1BB05118006AD4C7 /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
 		82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
 		82A2397F1BB05500006AD4C7 /* MicroBlog.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MicroBlog.pch; sourceTree = "<group>"; };
+		82D945561BBA41050070051B /* DropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenu.h; sourceTree = "<group>"; };
+		82D945571BBA41050070051B /* DropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenu.m; sourceTree = "<group>"; };
+		82D945591BBA6D090070051B /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		82D9455A1BBA6D090070051B /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		82D9455C1BBA88180070051B /* UIImage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extension.h"; sourceTree = "<group>"; };
+		82D9455D1BBA88180070051B /* UIImage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +100,8 @@
 			children = (
 				8206786B1BB1B6FB00F698C0 /* HYSearchBar.h */,
 				8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */,
+				82D945561BBA41050070051B /* DropDownMenu.h */,
+				82D945571BBA41050070051B /* DropDownMenu.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,6 +282,10 @@
 			children = (
 				82A2397C1BB05118006AD4C7 /* UIBarButtonItem+Extension.h */,
 				82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */,
+				82D9455C1BBA88180070051B /* UIImage+Extension.h */,
+				82D9455D1BBA88180070051B /* UIImage+Extension.m */,
+				82D945591BBA6D090070051B /* UIView+Extension.h */,
+				82D9455A1BBA6D090070051B /* UIView+Extension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -462,6 +477,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82D9455E1BBA88180070051B /* UIImage+Extension.m in Sources */,
+				82D945581BBA41050070051B /* DropDownMenu.m in Sources */,
 				826298E71B766D2C00E1680C /* HYTabbarController.m in Sources */,
 				826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */,
 				826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */,
@@ -471,6 +488,7 @@
 				826298E41B766B4100E1680C /* HYTest2ViewController.m in Sources */,
 				82A2397E1BB05118006AD4C7 /* UIBarButtonItem+Extension.m in Sources */,
 				826298E01B766B4100E1680C /* main.m in Sources */,
+				82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */,
 				826298E21B766B4100E1680C /* HYProflieController.m in Sources */,
 				826298EA1B766D5100E1680C /* HYNavigationController.m in Sources */,
 				826298DF1B766B4100E1680C /* AppDelegate.m in Sources */,
