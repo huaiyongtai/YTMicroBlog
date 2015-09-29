@@ -10,6 +10,9 @@
 
 @interface DropDownMenu ()
 
+/**
+ *  容器视图，用来将内容放在容器中
+ */
 @property (nonatomic, strong) UIImageView *containerView;
 
 @end
@@ -20,10 +23,12 @@
 - (UIImageView *)containerView {
     
     if (_containerView == nil) {
-        _containerView = [[UIImageView alloc] init];
-        [_containerView setImage:[UIImage imageWithResizableVerticalImageName:@"popover_background"]];
-        [_containerView setUserInteractionEnabled:YES];
-        [self addSubview:_containerView];
+        UIImageView *containerView = [[UIImageView alloc] init];
+        [containerView setImage:[UIImage imageWithResizableVerticalImageName:@"popover_background"]];
+        //开启事件交互（容器内的内容肯定需要交互）
+        [containerView setUserInteractionEnabled:YES];
+        [self addSubview:containerView];
+        _containerView = containerView;
     }
     return _containerView;
 }
@@ -42,11 +47,16 @@
 - (void)setContentView:(UIView *)contentView {
     _contentView = contentView;
     
-    self.containerView.width = contentView.width + 2*10;
-    self.containerView.height = contentView.height + 2*10+3;
+    //内容距离容器的边距
+    CGFloat margin = 8;
     
-    contentView.x = 10;
-    contentView.y = 13;
+    //根据显示内容的大小，来调整容器的大小
+    self.containerView.width = contentView.width + 2*margin;
+    self.containerView.height = contentView.height + 2*margin+6;
+    
+    //矫正内容在容器的位置（容器有箭头不规则，我们要确保内容在容器的适当范围内）
+    contentView.x = margin+0.5;
+    contentView.y = margin+5;
     
     [self.containerView addSubview:contentView];
 }
@@ -58,15 +68,16 @@
 
 - (void)showFromView:(UIView *)fromView {
     
-    //显示本视图
+    //显示自身视图，即添加到window上
     UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
     [self setFrame:window.bounds];
     [window addSubview:self];
     
-    //调整内容位置
+    //*****调整内容位置******//
+    
     //转换坐标系， 将以frameView自身的坐标系为坐标系 中的frame.bounds 转换window自身的坐标系
     CGRect newRect = [fromView convertRect:fromView.bounds toView:window];
-    
+    //设置显示位置
     [self.containerView setY:CGRectGetMaxY(newRect)];
     [self.containerView setCenterX:CGRectGetMidX(newRect)];
 }
