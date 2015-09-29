@@ -28,7 +28,7 @@
     [self.navigationItem setRightBarButtonItem:[UIBarButtonItem itemWithTarget:self
                                                                       selector:@selector(pop)
                                                                      imageName:@"navigationbar_pop"
-                                                          highlightedImageName:@"navigationbar_pop_highlighted"]];;
+                                                          highlightedImageName:@"navigationbar_pop_highlighted"]];
     
     
     
@@ -47,23 +47,10 @@
 
     DropDownMenu *menu = [DropDownMenu menu];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
-    [view setBackgroundColor:[UIColor redColor]];
-    [menu setContentView:view];
-    
-    
-    
-    
-    
-    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(20, 50, 200, 30)];
-    [testView setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:testView];
-    
-    
-    
-    
-    
-    [menu showFromView:testView];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
+    [contentView setBackgroundColor:[UIColor redColor]];
+    [menu setContentView:contentView];
+    [menu showFromView:btn];
     
 }
 

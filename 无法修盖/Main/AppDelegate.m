@@ -22,8 +22,7 @@
     self.window = [[UIWindow alloc] initWithFrame:screenFrame];
     
     HYTabbarController *tabbarController = [[HYTabbarController alloc] init];
-    
-       
+
     [self.window setRootViewController:tabbarController];
     
     [self.window makeKeyAndVisible];
