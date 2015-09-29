@@ -12,8 +12,9 @@
 #import "HYDiscoverController.h"
 #import "HYProflieController.h"
 #import "HYNavigationController.h"
+#import "YTTabBar.h"
 
-@interface HYTabbarController ()
+@interface HYTabbarController () <YTTabBarDelegate>
 
 @end
 
@@ -34,6 +35,8 @@
                        imageName:@"tabbar_message_center"
                selectedImageName:@"tabbar_message_center_selected"];
     
+//    [self addChildViewController:[[UIViewController alloc] init]];
+    
     HYDiscoverController *discoverController = [[HYDiscoverController alloc] init];
     [self addChildViewController:discoverController
                            title:@"发现"
@@ -45,7 +48,50 @@
                            title:@"我"
                        imageName:@"tabbar_profile"
                selectedImageName:@"tabbar_profile_selected"];
+    
+    
+//    self.tabBar = [[YTTabBar alloc] init];
+    YTTabBar *tabBar = [[YTTabBar alloc] init];
+    [tabBar setDelegate:self];
+    [self setValue:[[YTTabBar alloc] init] forKey:@"tabBar"];
+//    UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button"]
+//                       forState:UIControlStateNormal];
+//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button_highlighted"]
+//                       forState:UIControlStateHighlighted];
+//    [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_background_icon_add"]
+//             forState:UIControlStateNormal];
+//    [plusBtn setSize:plusBtn.currentBackgroundImage.size];
+//    
+//    //center是相对父控件的
+//    [plusBtn setCenter:CGPointMake(self.tabBar.width*0.5, self.tabBar.height*0.5)];
+//    [self.tabBar addSubview:plusBtn];
 
+}
+
+- (void)tabBarDidSelectedPlusBtn:(YTTabBar *)tabBar {
+    
+    UIViewController *vc = [[UIViewController alloc] init];
+    [vc.view setBackgroundColor:[UIColor redColor]];
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+//    UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button"]
+//                       forState:UIControlStateNormal];
+//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button_highlighted"]
+//                       forState:UIControlStateHighlighted];
+//    [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_background_icon_add"]
+//             forState:UIControlStateNormal];
+//    [plusBtn setSize:plusBtn.currentBackgroundImage.size];
+//    
+//    //center是相对父控件的
+//    [plusBtn setCenter:CGPointMake(self.tabBar.width*0.5, self.tabBar.height*0.5)];
+//    [self.tabBar addSubview:plusBtn];
+    [super viewWillAppear:animated];
 }
 
 - (void)addChildViewController:(UIViewController *)childController title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName {
