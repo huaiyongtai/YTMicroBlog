@@ -1,0 +1,32 @@
+//
+//  MicroBlog.pch
+//  无法修盖
+//
+//  Created by HelloWorld on 15/9/21.
+//  Copyright (c) 2015年 SearchPrefect. All rights reserved.
+//
+
+#ifndef _____MicroBlog_pch
+#define _____MicroBlog_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+
+
+//OC程序
+#ifdef __OBJC__
+
+#import "UIBarButtonItem+Extension.h"
+
+
+#ifdef DEBUG //是调试阶段
+#define MBLog(...) NSLog(__VA_ARGS__);
+#else //不是调试阶段
+#define MBLog(...)
+
+#endif
+
+#endif
+
