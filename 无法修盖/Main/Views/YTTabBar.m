@@ -27,8 +27,10 @@
                            forState:UIControlStateNormal];
         [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button_highlighted"]
                            forState:UIControlStateHighlighted];
-        [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_background_icon_add"]
+        [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_icon_add"]
                  forState:UIControlStateNormal];
+        [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_icon_add_highlighted"]
+                 forState:UIControlStateHighlighted];
         [plusBtn setSize:plusBtn.currentBackgroundImage.size];
         
         [plusBtn addTarget:self

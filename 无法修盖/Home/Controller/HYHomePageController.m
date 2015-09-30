@@ -8,8 +8,9 @@
 
 #import "HYHomePageController.h"
 #import "DropDownMenu.h"
+#import "NavTitleBtn.h"
 
-@interface HYHomePageController ()
+@interface HYHomePageController () <DropDownMenuDelegate>
 
 @end
 
@@ -33,12 +34,18 @@
     
     
     
-    UIButton *customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_up"] forState:UIControlStateNormal];
+    NavTitleBtn *customBtn = [NavTitleBtn buttonWithType:UIButtonTypeCustom];
+    [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_down"] forState:UIControlStateNormal];
+    [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_up"] forState:UIControlStateSelected];
     [customBtn setTitle:@"首页" forState:UIControlStateNormal];
     [customBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [customBtn setFrame:CGRectMake(0, 0, 100, 40)];
+    [customBtn setFrame:CGRectMake(0, 0, 200, 40)];
+//    [customBtn setBackgroundColor:[UIColor redColor]];
+//    [customBtn.imageView setBackgroundColor:[UIColor yellowColor]];
+//    [customBtn.titleLabel setBackgroundColor:[UIColor grayColor]];
     [customBtn addTarget:self action:@selector(dropMenu:) forControlEvents:UIControlEventTouchUpInside];
+//    [customBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 0)];
+//    [customBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 0)];
     [self.navigationItem setTitleView:customBtn];
     
 }
@@ -46,12 +53,25 @@
 - (void)dropMenu:(UIButton *)btn {
 
     DropDownMenu *menu = [DropDownMenu menu];
-    
+    menu.delegate = self;
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
     [contentView setBackgroundColor:[UIColor redColor]];
     [menu setContentView:contentView];
     [menu showFromView:btn];
     
+}
+
+#pragma mark - DropDownMenuDelegate
+- (void)dropDownMenuDidShowMenu:(DropDownMenu *)menu {
+    
+    UIButton *navTitleBtn = (UIButton *)self.navigationItem.titleView;
+    [navTitleBtn setSelected:YES];
+    
+    
+}
+- (void)dropDownMenuDidDismissMenu:(DropDownMenu *)menu {
+    UIButton *navTitleBtn = (UIButton *)self.navigationItem.titleView;
+    [navTitleBtn setSelected:NO];
 }
 
 - (void)friendSearch {

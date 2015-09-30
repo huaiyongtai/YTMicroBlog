@@ -35,8 +35,6 @@
                        imageName:@"tabbar_message_center"
                selectedImageName:@"tabbar_message_center_selected"];
     
-//    [self addChildViewController:[[UIViewController alloc] init]];
-    
     HYDiscoverController *discoverController = [[HYDiscoverController alloc] init];
     [self addChildViewController:discoverController
                            title:@"发现"
@@ -51,48 +49,16 @@
     
     
 //    self.tabBar = [[YTTabBar alloc] init];
+    //创建自定义tabBar
     YTTabBar *tabBar = [[YTTabBar alloc] init];
+    
+    //tabBarController管理着tabBar，不允许随意修改tabBar的delegate, 我们可以在tabBar未成为tabBarController的tabBar前设置tabBar的代理
     [tabBar setDelegate:self];
-    [self setValue:[[YTTabBar alloc] init] forKey:@"tabBar"];
-//    UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button"]
-//                       forState:UIControlStateNormal];
-//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button_highlighted"]
-//                       forState:UIControlStateHighlighted];
-//    [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_background_icon_add"]
-//             forState:UIControlStateNormal];
-//    [plusBtn setSize:plusBtn.currentBackgroundImage.size];
-//    
-//    //center是相对父控件的
-//    [plusBtn setCenter:CGPointMake(self.tabBar.width*0.5, self.tabBar.height*0.5)];
-//    [self.tabBar addSubview:plusBtn];
-
+    
+    //tabBar是只读属性，可使用KVC修改
+    [self setValue:tabBar forKey:@"tabBar"];
 }
 
-- (void)tabBarDidSelectedPlusBtn:(YTTabBar *)tabBar {
-    
-    UIViewController *vc = [[UIViewController alloc] init];
-    [vc.view setBackgroundColor:[UIColor redColor]];
-    
-    [self presentViewController:vc animated:YES completion:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-//    UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button"]
-//                       forState:UIControlStateNormal];
-//    [plusBtn setBackgroundImage:[UIImage imageNamed:@"tabbar_compose_button_highlighted"]
-//                       forState:UIControlStateHighlighted];
-//    [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_background_icon_add"]
-//             forState:UIControlStateNormal];
-//    [plusBtn setSize:plusBtn.currentBackgroundImage.size];
-//    
-//    //center是相对父控件的
-//    [plusBtn setCenter:CGPointMake(self.tabBar.width*0.5, self.tabBar.height*0.5)];
-//    [self.tabBar addSubview:plusBtn];
-    [super viewWillAppear:animated];
-}
 
 - (void)addChildViewController:(UIViewController *)childController title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName {
     
@@ -129,14 +95,13 @@
     [self addChildViewController:navigation];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - YTTabBarDelegate
+- (void)tabBarDidSelectedPlusBtn:(YTTabBar *)tabBar {
+    
+    UIViewController *vc = [[UIViewController alloc] init];
+    [vc.view setBackgroundColor:[UIColor redColor]];
+    
+    [self presentViewController:vc animated:YES completion:nil];
 }
-*/
 
 @end
