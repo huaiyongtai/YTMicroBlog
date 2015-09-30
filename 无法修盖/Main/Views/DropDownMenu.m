@@ -73,13 +73,17 @@
     [self setFrame:window.bounds];
     [window addSubview:self];
     
-    //*****调整内容位置******//
-    
+    //*****调整内容位置******/
     //转换坐标系， 将以frameView自身的坐标系为坐标系 中的frame.bounds 转换window自身的坐标系
     CGRect newRect = [fromView convertRect:fromView.bounds toView:window];
     //设置显示位置
     [self.containerView setY:CGRectGetMaxY(newRect)];
     [self.containerView setCenterX:CGRectGetMidX(newRect)];
+    
+    //通知代理下拉菜单显示了
+    if ([self.delegate respondsToSelector:@selector(dropDownMenuDidShowMenu:)]) {
+        [self.delegate dropDownMenuDidShowMenu:self];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -88,6 +92,11 @@
 
 - (void)dismiss {
     [self removeFromSuperview];
+    
+    //通知代理下拉菜单被销毁了
+    if ([self.delegate respondsToSelector:@selector(dropDownMenuDidDismissMenu:)]) {
+        [self.delegate dropDownMenuDidDismissMenu:self];
+    }
 }
 
 @end

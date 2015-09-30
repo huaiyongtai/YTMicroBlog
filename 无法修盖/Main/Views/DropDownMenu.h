@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class DropDownMenu;
+
+@protocol DropDownMenuDelegate <NSObject>
+
+@optional
+
+//下拉菜单显示完毕后
+- (void)dropDownMenuDidShowMenu:(DropDownMenu *)menu;
+
+//下拉菜单销毁完成后
+- (void)dropDownMenuDidDismissMenu:(DropDownMenu *)menu;
+
+@end
+
 @interface DropDownMenu : UIView
 
 /**
@@ -19,6 +33,11 @@
  *  要显示内容的视图控制器
  */
 @property (nonatomic, strong) UIViewController *contentViewController;
+
+/**
+ *  代理方法（菜单的显示与销毁）
+ */
+@property (nonatomic, weak) id<DropDownMenuDelegate> delegate;
 
 + (instancetype)menu;
 
