@@ -26,6 +26,7 @@
 		82D945581BBA41050070051B /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D945571BBA41050070051B /* DropDownMenu.m */; };
 		82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D9455A1BBA6D090070051B /* UIView+Extension.m */; };
 		82D9455E1BBA88180070051B /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D9455D1BBA88180070051B /* UIImage+Extension.m */; };
+		82D945681BBBB1C10070051B /* NavTitleBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D945671BBBB1C10070051B /* NavTitleBtn.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		82D9455A1BBA6D090070051B /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		82D9455C1BBA88180070051B /* UIImage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extension.h"; sourceTree = "<group>"; };
 		82D9455D1BBA88180070051B /* UIImage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extension.m"; sourceTree = "<group>"; };
+		82D945661BBBB1C10070051B /* NavTitleBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavTitleBtn.h; sourceTree = "<group>"; };
+		82D945671BBBB1C10070051B /* NavTitleBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavTitleBtn.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 				82D945571BBA41050070051B /* DropDownMenu.m */,
 				82907D331BBADE9D0043D7F4 /* YTTabBar.h */,
 				82907D341BBADE9D0043D7F4 /* YTTabBar.m */,
+				82D945661BBBB1C10070051B /* NavTitleBtn.h */,
+				82D945671BBBB1C10070051B /* NavTitleBtn.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,9 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				826298C61B766B4100E1680C /* Main */,
-				826298B61B766B4100E1680C /* Discover */,
 				826298BC1B766B4100E1680C /* Home */,
 				826298CC1B766B4100E1680C /* MessageCenter */,
+				826298B61B766B4100E1680C /* Discover */,
 				826298D21B766B4100E1680C /* Profile */,
 				826298C21B766B4100E1680C /* Libs */,
 				826298D81B766B4100E1680C /* Temp */,
@@ -482,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82D945681BBBB1C10070051B /* NavTitleBtn.m in Sources */,
 				82D9455E1BBA88180070051B /* UIImage+Extension.m in Sources */,
 				82D945581BBA41050070051B /* DropDownMenu.m in Sources */,
 				826298E71B766D2C00E1680C /* HYTabbarController.m in Sources */,
