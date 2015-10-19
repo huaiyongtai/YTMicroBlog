@@ -52,6 +52,10 @@
 
 - (void)dropMenu:(UIButton *)btn {
 
+    NSString *title = @"你啊可连接的法律可点击付款较";
+    title = [title substringFromIndex:arc4random_uniform(title.length)];
+    [btn setTitle:title forState:UIControlStateNormal];
+    
     DropDownMenu *menu = [DropDownMenu menu];
     menu.delegate = self;
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];

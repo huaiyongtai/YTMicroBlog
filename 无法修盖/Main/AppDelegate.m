@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HYTabbarController.h"
+#import "HYTNewFeatureController.h"
 
 @interface AppDelegate ()
 
@@ -21,9 +22,10 @@
     CGRect screenFrame = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:screenFrame];
     
-    HYTabbarController *tabbarController = [[HYTabbarController alloc] init];
-
-    [self.window setRootViewController:tabbarController];
+    HYTNewFeatureController *newFeatureController = [[HYTNewFeatureController alloc] init];
+    [self.window setRootViewController:newFeatureController];
+//    HYTabbarController *tabbarController = [[HYTabbarController alloc] init];
+//    [self.window setRootViewController:tabbarController];
     
     [self.window makeKeyAndVisible];
     
