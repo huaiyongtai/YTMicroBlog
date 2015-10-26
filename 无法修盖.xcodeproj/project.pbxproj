@@ -22,6 +22,7 @@
 		826298E71B766D2C00E1680C /* HYTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298E61B766D2C00E1680C /* HYTabbarController.m */; };
 		826298EA1B766D5100E1680C /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298E91B766D5100E1680C /* HYNavigationController.m */; };
 		827CCE0A1BD544E3005B5FAD /* HYTNewFeatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827CCE091BD544E3005B5FAD /* HYTNewFeatureController.m */; };
+		8283F4D21BDE8A77003AD687 /* HYTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8283F4D11BDE8A77003AD687 /* HYTViewController.m */; };
 		82907D351BBADE9D0043D7F4 /* YTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 82907D341BBADE9D0043D7F4 /* YTTabBar.m */; };
 		82A2397E1BB05118006AD4C7 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */; };
 		82D945581BBA41050070051B /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 82D945571BBA41050070051B /* DropDownMenu.m */; };
@@ -71,6 +72,8 @@
 		826298E91B766D5100E1680C /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
 		827CCE081BD544E3005B5FAD /* HYTNewFeatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTNewFeatureController.h; sourceTree = "<group>"; };
 		827CCE091BD544E3005B5FAD /* HYTNewFeatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTNewFeatureController.m; sourceTree = "<group>"; };
+		8283F4D01BDE8A77003AD687 /* HYTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTViewController.h; sourceTree = "<group>"; };
+		8283F4D11BDE8A77003AD687 /* HYTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTViewController.m; sourceTree = "<group>"; };
 		82907D331BBADE9D0043D7F4 /* YTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTTabBar.h; sourceTree = "<group>"; };
 		82907D341BBADE9D0043D7F4 /* YTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTTabBar.m; sourceTree = "<group>"; };
 		82A2397C1BB05118006AD4C7 /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		821AB0601B76517A00E793B1 /* 无法修盖 */ = {
 			isa = PBXGroup;
 			children = (
+				8283F4CE1BDE8A5A003AD687 /* OAuth */,
 				826298C61B766B4100E1680C /* Main */,
 				827CCE021BD5447C005B5FAD /* NewFeature */,
 				826298BC1B766B4100E1680C /* Home */,
@@ -417,6 +421,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8283F4CE1BDE8A5A003AD687 /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				8283F4CF1BDE8A5A003AD687 /* Controller */,
+			);
+			path = OAuth;
+			sourceTree = "<group>";
+		};
+		8283F4CF1BDE8A5A003AD687 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8283F4D01BDE8A77003AD687 /* HYTViewController.h */,
+				8283F4D11BDE8A77003AD687 /* HYTViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -518,6 +539,7 @@
 			files = (
 				82D945681BBBB1C10070051B /* NavTitleBtn.m in Sources */,
 				82D9455E1BBA88180070051B /* UIImage+Extension.m in Sources */,
+				8283F4D21BDE8A77003AD687 /* HYTViewController.m in Sources */,
 				82D945581BBA41050070051B /* DropDownMenu.m in Sources */,
 				826298E71B766D2C00E1680C /* HYTabbarController.m in Sources */,
 				826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */,
