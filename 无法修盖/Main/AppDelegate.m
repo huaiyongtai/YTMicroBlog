@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HYTabbarController.h"
 #import "HYTNewFeatureController.h"
+#import "HYTOAuthViewController.h"
 
 @interface AppDelegate ()
 
@@ -50,8 +51,8 @@
     }
     */
     
-    self.window.rootViewController = [[HYTabbarController alloc] init];
-    
+//    self.window.rootViewController = [[HYTabbarController alloc] init];
+    self.window.rootViewController = [[HYTOAuthViewController alloc] init];
     [self.window makeKeyAndVisible];
     
     return YES;

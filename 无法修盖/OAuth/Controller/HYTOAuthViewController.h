@@ -1,5 +1,5 @@
 //
-//  HYTViewController.h
+//  HYTOAuthViewController.h
 //  无法修盖
 //
 //  Created by HelloWorld on 15/10/27.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYTViewController : UIViewController
+@interface HYTOAuthViewController : UIViewController
 
 @end
