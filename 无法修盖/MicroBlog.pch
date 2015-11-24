@@ -21,15 +21,15 @@
 #import "UIBarButtonItem+Extension.h"
 #import "UIView+Extension.h"
 #import "UIImage+Extension.h"
+#import "UIWindow+Extension.h"
+#import "Constant.h"
 
+
+///定义常量
 #define SCREEN_BOUNDS   [UIScreen mainScreen].bounds
 #define SCREEN_SIZE     [UIScreen mainScreen].bounds.size
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.height
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.width
-
-
-
-
 
 #ifdef DEBUG //是调试阶段
 #define MBLog(...) NSLog(__VA_ARGS__);
@@ -37,6 +37,29 @@
 #define MBLog(...)
 
 #endif
+
+
+/* AFN 报如下错
+ 1. Use of undeclared identifier 'kSecFormatUnknown'
+ 
+ 2. Use of undeclared identifier 'kSecItemPemArmour'
+ 
+ 3. Implicit declaration of function 'SecItemExport' is invalid in C99
+ */
+//============加入如下代码解决=====================**
+#ifndef TARGET_OS_IOS                           /**/
+                                                /**/
+#define TARGET_OS_IOS TARGET_OS_IPHONE          /**/
+                                                /**/
+#endif                                          /**/
+                                                /**/
+#ifndef TARGET_OS_WATCH                         /**/
+                                                /**/
+#define TARGET_OS_WATCH 0                       /**/
+                                                /**/
+#endif                                          /**/
+//===========================================**
+
 
 #endif
 
