@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "HYTabbarController.h"
-#import "HYTNewFeatureController.h"
 #import "HYTOAuthViewController.h"
+#import "HYTAccountTool.h"
+#import "HYTAccount.h"
 
 @interface AppDelegate ()
 
@@ -22,39 +22,14 @@
     
     self.window = [[UIWindow alloc] initWithFrame:SCREEN_BOUNDS];
     
-    /*
-    NSString *versionKey = @"CFBundleVersion";
-    
-    //1.拿到当前软件版本号
-    //只有这个方法才能拿到我们的info.plist,如：[[NSBundle mainBundle] pathForResource:@"info" ofType:@"plist"] 无法拿到
-    NSDictionary *bundleInfo = [NSBundle mainBundle].infoDictionary;
-    NSString *currentVersion = bundleInfo[versionKey];
-    
-    //2.拿到沙盒存储的上一次版本号
-    NSUserDefaults *userDefalut = [NSUserDefaults standardUserDefaults];
-    NSString *lastVersion = [userDefalut valueForKey:versionKey];
-    
-    //3.上一次版本号与当前软件版本好比较
-    if ([currentVersion isEqualToString:lastVersion]) { //不显示新特性
-        HYTabbarController *tabbarController = [[HYTabbarController alloc] init];
-        [self.window setRootViewController:tabbarController];
-        
-    } else {    //不同显示新特性
-        
-        //3.1 设置新特性界面
-        HYTNewFeatureController *newFeatureController = [[HYTNewFeatureController alloc] init];
-        [self.window setRootViewController:newFeatureController];
-        
-        //3.2 将当前软件版本号存储
-        [userDefalut setValue:currentVersion forKey:versionKey];
-        [userDefalut synchronize];
+    HYTAccount *account = [HYTAccountTool accountInfo];
+    if (account == nil) {   //账号信息不合法
+        self.window.rootViewController = [[HYTOAuthViewController alloc] init];
+    } else {    
+        [self.window switchRootViewController];
     }
-    */
     
-//    self.window.rootViewController = [[HYTabbarController alloc] init];
-    self.window.rootViewController = [[HYTOAuthViewController alloc] init];
     [self.window makeKeyAndVisible];
-    
     return YES;
 }
 

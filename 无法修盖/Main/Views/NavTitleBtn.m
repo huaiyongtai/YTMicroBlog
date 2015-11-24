@@ -28,9 +28,9 @@ static CGFloat const kTitleAndImagePadding = 10;
     CGFloat imageViewHeight = self.currentImage.size.height;
     CGFloat imageViewWidth  = self.currentImage.size.width;
     
-    CGFloat imageViewX      = (contentRect.size.width - totalWidth) * 0.5 + titleSize.width + kTitleAndImagePadding + self.imageEdgeInsets.right - self.imageEdgeInsets.left;
+    CGFloat imageViewX = (contentRect.size.width - totalWidth) * 0.5 + titleSize.width + kTitleAndImagePadding + self.imageEdgeInsets.right - self.imageEdgeInsets.left;
     
-    CGFloat imageViewY      = (contentRect.size.height - imageViewHeight) * 0.5 + self.imageEdgeInsets.top - self.imageEdgeInsets.bottom;
+    CGFloat imageViewY = (contentRect.size.height - imageViewHeight) * 0.5 + self.imageEdgeInsets.top - self.imageEdgeInsets.bottom;
     
     return CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
 }
@@ -49,8 +49,6 @@ static CGFloat const kTitleAndImagePadding = 10;
     
     //计算内容的总的宽度
     CGFloat totalWidth = self.currentImage.size.width + titleSize.width + kTitleAndImagePadding;
-    
-    NSLog(@"%@, %@, %@", NSStringFromSelector(_cmd), NSStringFromUIEdgeInsets(self.titleEdgeInsets), NSStringFromCGRect(contentRect));
 
     CGFloat titleLabelX = (contentRect.size.width - totalWidth) * 0.5 + self.titleEdgeInsets.right - self.titleEdgeInsets.left;
     CGFloat titleLabelY = (contentRect.size.height - titleSize.height) * 0.5 + self.titleEdgeInsets.top - self.titleEdgeInsets.bottom;

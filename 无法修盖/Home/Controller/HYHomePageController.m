@@ -31,21 +31,13 @@
                                                                      imageName:@"navigationbar_pop"
                                                           highlightedImageName:@"navigationbar_pop_highlighted"]];
     
-    
-    
-    
     NavTitleBtn *customBtn = [NavTitleBtn buttonWithType:UIButtonTypeCustom];
     [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_down"] forState:UIControlStateNormal];
     [customBtn setImage:[UIImage imageNamed:@"navigationbar_arrow_up"] forState:UIControlStateSelected];
     [customBtn setTitle:@"首页" forState:UIControlStateNormal];
     [customBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [customBtn setFrame:CGRectMake(0, 0, 200, 40)];
-//    [customBtn setBackgroundColor:[UIColor redColor]];
-//    [customBtn.imageView setBackgroundColor:[UIColor yellowColor]];
-//    [customBtn.titleLabel setBackgroundColor:[UIColor grayColor]];
     [customBtn addTarget:self action:@selector(dropMenu:) forControlEvents:UIControlEventTouchUpInside];
-//    [customBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 0)];
-//    [customBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 100, 0, 0)];
     [self.navigationItem setTitleView:customBtn];
     
 }
@@ -62,7 +54,6 @@
     [contentView setBackgroundColor:[UIColor redColor]];
     [menu setContentView:contentView];
     [menu showFromView:btn];
-    
 }
 
 #pragma mark - DropDownMenuDelegate
