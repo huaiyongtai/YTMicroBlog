@@ -28,7 +28,6 @@
     } else {    
         [self.window switchRootViewController];
     }
-    
     [self.window makeKeyAndVisible];
     return YES;
 }

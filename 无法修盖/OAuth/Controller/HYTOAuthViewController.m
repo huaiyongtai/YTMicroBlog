@@ -87,7 +87,7 @@
     parameters[@"redirect_uri"] = @"http://m.baidu.com/";
 
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger POST:(NSString *)@"https://api.weibo.com/oauth2/access_token"
+    [manger POST:@"https://api.weibo.com/oauth2/access_token"
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
@@ -105,7 +105,5 @@
          }
      ];
 }
-
-
 
 @end

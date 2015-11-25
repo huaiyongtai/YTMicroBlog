@@ -14,6 +14,9 @@
 /** 用户唯一标示ID */
 @property (nonatomic, copy) NSString *userID;
 
+/** 账户昵称 */
+@property (nonatomic, copy) NSString *accountScreenName;
+
 /** 访问标识 */
 @property (nonatomic, copy) NSString *accessToken;
 
@@ -22,6 +25,7 @@
 
 /** 创建时间 */
 @property (nonatomic, strong) NSDate *expiresDate;
+
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;
 

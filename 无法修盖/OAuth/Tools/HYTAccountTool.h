@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class HYTAccount;
+#import "HYTAccount.h"
 
 @interface HYTAccountTool : NSObject
 

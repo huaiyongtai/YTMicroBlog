@@ -7,7 +7,6 @@
 //
 
 #import "HYTAccountTool.h"
-#import "HYTAccount.h"
 
 #define KAccountPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"AccountPath.data"]
 
@@ -27,7 +26,7 @@
 
     //过期时间和当前时间相比若不为递增则为过期
     NSComparisonResult result = [account.expiresDate compare:nowDate];
-    if (result != NSOrderedAscending)   return nil;
+    if (result != NSOrderedDescending)   return nil;
 
     return account;
 }

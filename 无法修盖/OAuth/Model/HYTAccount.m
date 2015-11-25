@@ -15,8 +15,11 @@
     HYTAccount *account = [[HYTAccount alloc] init];
     
     account.userID =  dict[@"uid"];
-    account.expiresLength =  dict[@"157679999"];
-    account.accessToken =  dict[@"expires_in"];
+    account.expiresLength =  dict[@"expires_in"];
+    account.accessToken =  dict[@"access_token"];
+    
+    NSDate *expiresData = [[NSDate date] dateByAddingTimeInterval:account.expiresLength.integerValue];
+    account.expiresDate = expiresData;
 
     return account;
 }
@@ -29,6 +32,7 @@
         self.expiresLength = [aDecoder decodeObjectForKey:@"expiresLength"];
         self.accessToken = [aDecoder decodeObjectForKey:@"accessToken"];
         self.expiresDate = [aDecoder decodeObjectForKey:@"expiresData"];
+        self.accountScreenName = [aDecoder decodeObjectForKey:@"accountScreenName"];
     }
     return self;
 }
@@ -39,9 +43,8 @@
     [aCoder encodeObject:self.userID forKey:@"userID"];
     [aCoder encodeObject:self.expiresLength forKey:@"expiresLength"];
     [aCoder encodeObject:self.accessToken forKey:@"accessToken"];
-    
-    NSDate *expiresData = [[NSDate date] dateByAddingTimeInterval:self.expiresLength.integerValue];
-    [aCoder encodeObject:expiresData forKey:@"expiresData"];
+    [aCoder encodeObject:self.expiresDate forKey:@"expiresData"];
+    [aCoder encodeObject:self.accountScreenName forKey:@"accountScreenName"];
 }
 
 @end
