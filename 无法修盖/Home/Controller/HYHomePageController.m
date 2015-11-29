@@ -12,10 +12,15 @@
 #import "NavTitleBtn.h"
 #import "AFNetworking.h"
 #import "HYTAccountTool.h"
+#import "UIImageView+WebCache.h"
+#import "HYTUser.h"
+#import "HYTStatus.h"
+#import "MJExtension.h"
 
 @interface HYHomePageController () <DropDownMenuDelegate>
 
-@property (nonatomic, strong) NSArray *statuses;
+/** 微博模型属性 */
+@property (nonatomic, strong) NSMutableArray *statuses;
 
 @end
 
@@ -24,12 +29,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.statuses = [NSMutableArray array];
+    
     [self setupNavInfo];
     
     [self setupNavTitle];
     
     [self setupStatus];
-    
 }
 
 /** 设置导航栏信息 */
@@ -71,16 +77,15 @@
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
-             NSString *screenName = responseObject[@"screen_name"];
+             HYTUser *user = [HYTUser mj_objectWithKeyValues:responseObject];
              
-             if (![account.accountScreenName isEqualToString:screenName]) {
-                 NavTitleBtn *navTitle = (NavTitleBtn *)self.navigationItem.titleView;
-                 [navTitle setTitle:account.accountScreenName forState:UIControlStateNormal];
-                 
-                 [HYTAccountTool saveAccountInfo:account];
-                 
-             }
+             //与上次昵称相同则直接返回
+             if ([user.name isEqualToString:account.accountScreenName]) return;
              
+             account.accountScreenName = user.name;
+             NavTitleBtn *navTitle = (NavTitleBtn *)self.navigationItem.titleView;
+             [navTitle setTitle:account.accountScreenName forState:UIControlStateNormal];
+             [HYTAccountTool saveAccountInfo:account];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"error:%@", error);
@@ -102,10 +107,17 @@
     [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
      parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSArray *statuesArray =  responseObject[@"statuses"];
+//            for (NSDictionary *statuesDict in statuesArray) {
+//                HYTStatus *statues = [HYTStatus mj_objectWithKeyValues:statuesDict];
+//                [self.statuses addObject:statues];
+//            }
             
-            self.statuses =  responseObject[@"statuses"];
+            //将字典数组转化为模型数组
+            self.statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+            
+            //刷新表格
             [self.tableView reloadData];
-            
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error:%@", error);
@@ -159,11 +171,15 @@
                                       reuseIdentifier:reuseID];
     }
     
-    NSDictionary *states = self.statuses[indexPath.row];
+    HYTStatus *states = self.statuses[indexPath.row];
+    HYTUser *user = states.user;
     
-    NSDictionary *user = states[@"user"];
-    cell.textLabel.text = user[@"name"];
-    cell.detailTextLabel.text = states[@"text"];
+    cell.textLabel.text = user.name;
+    cell.detailTextLabel.text = states.text;
+    
+    
+    UIImage *placeholderImage = [UIImage imageNamed:@"avatar_default_small"];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:user.profileImageURL] placeholderImage:placeholderImage];
     
     return cell;
 }

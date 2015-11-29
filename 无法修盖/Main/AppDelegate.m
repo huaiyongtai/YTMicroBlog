@@ -10,6 +10,7 @@
 #import "HYTOAuthViewController.h"
 #import "HYTAccountTool.h"
 #import "HYTAccount.h"
+#import "SDWebImageManager.h"
 
 @interface AppDelegate ()
 
@@ -52,6 +53,18 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - 当程序收到内存警告时将处理
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+
+    SDWebImageManager *sdMgr = [SDWebImageManager sharedManager];
+    //1.取消所有下载
+    [sdMgr cancelAll];
+    
+    //2.清除内存
+    [sdMgr.imageCache clearMemory];
 }
 
 @end
