@@ -11,12 +11,21 @@
 
 @implementation HYTUser
 
-+ (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"userID" : @"idstr",
-             @"profileImageURL" : @"profile_image_url"};
-}
+//+ (NSDictionary *)mj_replacedKeyFromPropertyName {
+//    return @{@"userID" : @"idstr",
+//             @"profileImageURL" : @"profile_image_url"};
+//}
 
+//当实现mj_replacedKeyFromPropertyName121方法后mj_replacedKeyFromPropertyName将不会被调用，只有当mj_replacedKeyFromPropertyName121返回nil时才调用mj_replacedKeyFromPropertyName；
 + (NSString *)mj_replacedKeyFromPropertyName121:(NSString *)propertyName {
+    
+    if ([propertyName isEqualToString:@"userID"]) {
+        return @"idstr";
+    }
+    
+    if ([propertyName isEqualToString:@"profileImageURL"]) {
+        return @"profile_image_url";
+    }
     return [propertyName mj_underlineFromCamel];
 }
 

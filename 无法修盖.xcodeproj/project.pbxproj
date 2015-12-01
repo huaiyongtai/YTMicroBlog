@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8206786D1BB1B6FB00F698C0 /* HYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */; };
+		8217FF941C0DF4500063A100 /* HYTFooterRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */; };
 		821AB06F1B76517A00E793B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821AB06E1B76517A00E793B1 /* Images.xcassets */; };
 		821AB0721B76517A00E793B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821AB0701B76517A00E793B1 /* LaunchScreen.xib */; };
 		821AB07E1B76517A00E793B1 /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 821AB07D1B76517A00E793B1 /* ____Tests.m */; };
@@ -86,6 +87,8 @@
 /* Begin PBXFileReference section */
 		8206786B1BB1B6FB00F698C0 /* HYSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSearchBar.h; sourceTree = "<group>"; };
 		8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSearchBar.m; sourceTree = "<group>"; };
+		8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTFooterRefreshView.h; sourceTree = "<group>"; };
+		8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTFooterRefreshView.m; sourceTree = "<group>"; };
 		821AB05E1B76517A00E793B1 /* 无法修盖.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "无法修盖.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		821AB0621B76517A00E793B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		821AB06E1B76517A00E793B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -391,6 +394,8 @@
 		826298C11B766B4100E1680C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */,
+				8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -818,6 +823,7 @@
 				82C692291C0B532F009214CC /* MJExtensionConst.m in Sources */,
 				82C692301C0B532F009214CC /* NSObject+MJKeyValue.m in Sources */,
 				82F52E181BDFDB8A00A509F5 /* AFURLRequestSerialization.m in Sources */,
+				8217FF941C0DF4500063A100 /* HYTFooterRefreshView.m in Sources */,
 				82FE49BB1C0B14C100B7305F /* NSData+ImageContentType.m in Sources */,
 				82C692321C0B532F009214CC /* NSString+MJExtension.m in Sources */,
 				826298E01B766B4100E1680C /* main.m in Sources */,

@@ -16,6 +16,7 @@
 #import "HYTUser.h"
 #import "HYTStatus.h"
 #import "MJExtension.h"
+#import "HYTFooterRefreshView.h"
 
 @interface HYHomePageController () <DropDownMenuDelegate>
 
@@ -36,6 +37,85 @@
     [self setupNavTitle];
     
     [self setupStatus];
+    
+    [self setupDragDownRefresh];
+    
+    [self setupDragUpRefresh];
+}
+
+- (void)setupDragDownRefresh {
+    
+    UIRefreshControl *downRefresh = [[UIRefreshControl alloc] init];
+    [downRefresh setBackgroundColor:[UIColor redColor]];
+    [downRefresh addTarget:self action:@selector(refreshNewStatus:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:downRefresh];
+}
+
+- (void)refreshNewStatus:(UIRefreshControl *)refreshControl {
+    
+    HYTStatus *status = [self.statuses firstObject];
+    
+    HYTAccount *account = [HYTAccountTool accountInfo];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"access_token"] = account.accessToken;
+    parameters[@"since_id"] = status.statusID;
+    
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
+     parameters:parameters
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            [refreshControl endRefreshing];
+            
+            //将字典数组转化为模型数组
+            NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+            
+            NSIndexSet *statusesIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
+            [self.statuses insertObjects:statuses atIndexes:statusesIndexSet];
+            
+            //刷新表格
+            [self.tableView reloadData];
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error:%@", error);
+        }
+     ];
+}
+- (void)setupDragUpRefresh {
+    
+    HYTFooterRefreshView *footerRefreshView = [HYTFooterRefreshView footerRefreshView];
+    [footerRefreshView setHidden:YES];
+    self.tableView.tableFooterView = footerRefreshView;
+}
+
+- (void)loadMoreStatus {
+//    self.tableView.tableFooterView.hidden = YES;
+//    HYTStatus *status = [self.statuses lastObject];
+//    
+//    HYTAccount *account = [HYTAccountTool accountInfo];
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    parameters[@"access_token"] = account.accessToken;
+//    parameters[@"max_id"] = status.statusID;
+//    
+//    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+//    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
+//     parameters:parameters
+//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            
+//            
+//            //将字典数组转化为模型数组
+//            NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+//            [self.statuses addObjectsFromArray:oldStatuses];
+//
+//            //刷新表格
+//            [self.tableView reloadData];
+//        }
+//        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            NSLog(@"error:%@", error);
+//        }
+//     ];
+//    
 }
 
 /** 设置导航栏信息 */
@@ -107,11 +187,6 @@
     [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
      parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSArray *statuesArray =  responseObject[@"statuses"];
-//            for (NSDictionary *statuesDict in statuesArray) {
-//                HYTStatus *statues = [HYTStatus mj_objectWithKeyValues:statuesDict];
-//                [self.statuses addObject:statues];
-//            }
             
             //将字典数组转化为模型数组
             self.statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
@@ -150,7 +225,6 @@
     
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
-
 - (void)pop {
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
@@ -160,7 +234,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.statuses.count;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *reuseID = @"statuses";
@@ -184,5 +257,27 @@
     return cell;
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (self.statuses.count==0 || self.tableView.tableFooterView.isHidden == NO) return;
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+    
+    //scrollView.contentInset (top = 64, left = 0, bottom = 49, right = 0)
+    CGFloat footerViewY = scrollView.contentSize.height - scrollView.height - scrollView.contentInset.top + self.tableView.tableFooterView.height;
+    
+//    NSLog(@"%f----%@-------%@", offsetY, NSStringFromCGSize(scrollView.contentSize), NSStringFromCGRect(self.tableView.tableFooterView.frame));
+    
+    //最后一个Cell是否完全显示出来
+    if (offsetY > footerViewY) {
+        self.tableView.tableFooterView.hidden = NO;
+        NSLog(@"------------");
+        [self loadMoreStatus];
+    } else {
+        self.tableView.tableFooterView.hidden = YES;
+    }
+    
+}
 
 @end

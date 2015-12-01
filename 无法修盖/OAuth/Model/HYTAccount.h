@@ -10,7 +10,6 @@
 
 @interface HYTAccount : NSObject <NSCoding>
 
-
 /** 用户唯一标示ID */
 @property (nonatomic, copy) NSString *userID;
 
@@ -25,7 +24,6 @@
 
 /** 创建时间 */
 @property (nonatomic, strong) NSDate *expiresDate;
-
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;
 
