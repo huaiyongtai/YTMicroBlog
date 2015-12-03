@@ -11,7 +11,7 @@
 @interface HYTAccount : NSObject <NSCoding>
 
 /** 用户唯一标示ID */
-@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *accountID;
 
 /** 账户昵称 */
 @property (nonatomic, copy) NSString *accountScreenName;

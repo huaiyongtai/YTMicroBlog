@@ -50,7 +50,12 @@
     [downRefresh addTarget:self action:@selector(refreshNewStatus:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:downRefresh];
 }
-
+- (void)setupDragUpRefresh {
+    
+    HYTFooterRefreshView *footerRefreshView = [HYTFooterRefreshView footerRefreshView];
+    [footerRefreshView setHidden:YES];
+    self.tableView.tableFooterView = footerRefreshView;
+}
 - (void)refreshNewStatus:(UIRefreshControl *)refreshControl {
     
     HYTStatus *status = [self.statuses firstObject];
@@ -58,7 +63,9 @@
     HYTAccount *account = [HYTAccountTool accountInfo];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"access_token"] = account.accessToken;
-    parameters[@"since_id"] = status.statusID;
+    if (status.statusID) {
+        parameters[@"since_id"] = status.statusID;
+    }
     
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
@@ -81,44 +88,42 @@
         }
      ];
 }
-- (void)setupDragUpRefresh {
-    
-    HYTFooterRefreshView *footerRefreshView = [HYTFooterRefreshView footerRefreshView];
-    [footerRefreshView setHidden:YES];
-    self.tableView.tableFooterView = footerRefreshView;
-}
 
+
+#pragma mark - 下拉加载更多数据
 - (void)loadMoreStatus {
-//    self.tableView.tableFooterView.hidden = YES;
-//    HYTStatus *status = [self.statuses lastObject];
-//    
-//    HYTAccount *account = [HYTAccountTool accountInfo];
-//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-//    parameters[@"access_token"] = account.accessToken;
-//    parameters[@"max_id"] = status.statusID;
-//    
-//    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-//    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
-//     parameters:parameters
-//        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            
-//            
-//            
-//            //将字典数组转化为模型数组
-//            NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
-//            [self.statuses addObjectsFromArray:oldStatuses];
-//
-//            //刷新表格
-//            [self.tableView reloadData];
-//        }
-//        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"error:%@", error);
-//        }
-//     ];
-//    
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    HYTAccount *account = [HYTAccountTool accountInfo];
+    parameters[@"access_token"] = account.accessToken;
+    
+    //若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
+    HYTStatus *status = [self.statuses lastObject];
+    if (status) {
+        long long maxID = [status.statusID longLongValue] - 1;
+        parameters[@"max_id"] = @(maxID);    //max_id返回的是
+    }
+    
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
+     parameters:parameters
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            //将字典数组转化为模型数组
+            NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+            [self.statuses addObjectsFromArray:oldStatuses];
+
+            //刷新表格
+            [self.tableView reloadData];
+            self.tableView.tableFooterView.hidden = YES;
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error:%@", error);
+        }
+     ];
 }
 
-/** 设置导航栏信息 */
+#pragma mark - 设置导航栏信息
 - (void)setupNavInfo {
     //导航栏左侧按钮
     [self.navigationItem setLeftBarButtonItem:[UIBarButtonItem itemWithTarget:self
@@ -144,13 +149,13 @@
     [customBtn addTarget:self action:@selector(dropMenu:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationItem setTitleView:customBtn];
 }
-/** 设置导航标题 */
+#pragma mark - 设置导航标题
 - (void)setupNavTitle {
     
     HYTAccount *account = [HYTAccountTool accountInfo];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"access_token"] = account.accessToken;
-    parameters[@"uid"] = account.userID;
+    parameters[@"uid"] = account.accountID;
     
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     [manger GET:@"https://api.weibo.com/2/users/show.json"
@@ -175,7 +180,7 @@
     
     
 }
-/** 设置微博数据 */
+#pragma mark - 加载微博数据
 - (void)setupStatus {
     
     HYTAccount *account = [HYTAccountTool accountInfo];
@@ -200,6 +205,7 @@
      ];
 }
 
+#pragma mark - 弹出下拉菜单
 - (void)dropMenu:(UIButton *)btn {
     
     DropDownMenu *menu = [DropDownMenu menu];
@@ -249,8 +255,6 @@
     
     cell.textLabel.text = user.name;
     cell.detailTextLabel.text = states.text;
-    
-    
     UIImage *placeholderImage = [UIImage imageNamed:@"avatar_default_small"];
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:user.profileImageURL] placeholderImage:placeholderImage];
     
@@ -261,23 +265,18 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     if (self.statuses.count==0 || self.tableView.tableFooterView.isHidden == NO) return;
-    
     CGFloat offsetY = scrollView.contentOffset.y;
     
     //scrollView.contentInset (top = 64, left = 0, bottom = 49, right = 0)
     CGFloat footerViewY = scrollView.contentSize.height - scrollView.height - scrollView.contentInset.top + self.tableView.tableFooterView.height;
     
-//    NSLog(@"%f----%@-------%@", offsetY, NSStringFromCGSize(scrollView.contentSize), NSStringFromCGRect(self.tableView.tableFooterView.frame));
-    
     //最后一个Cell是否完全显示出来
-    if (offsetY > footerViewY) {
+    if (offsetY >= footerViewY) {
+        NSLog(@"---------上拉加载------");
+        
         self.tableView.tableFooterView.hidden = NO;
-        NSLog(@"------------");
         [self loadMoreStatus];
-    } else {
-        self.tableView.tableFooterView.hidden = YES;
     }
-    
 }
 
 @end

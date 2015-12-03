@@ -14,7 +14,7 @@
     
     HYTAccount *account = [[HYTAccount alloc] init];
     
-    account.userID =  dict[@"uid"];
+    account.accountID =  dict[@"uid"];
     account.expiresLength =  dict[@"expires_in"];
     account.accessToken =  dict[@"access_token"];
     
@@ -28,7 +28,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     
     if (self = [super init]) {
-        self.userID = [aDecoder decodeObjectForKey:@"userID"];
+        self.accountID = [aDecoder decodeObjectForKey:@"accountID"];
         self.expiresLength = [aDecoder decodeObjectForKey:@"expiresLength"];
         self.accessToken = [aDecoder decodeObjectForKey:@"accessToken"];
         self.expiresDate = [aDecoder decodeObjectForKey:@"expiresData"];
@@ -40,7 +40,7 @@
 #pragma mark - 归档时要归档内容
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     
-    [aCoder encodeObject:self.userID forKey:@"userID"];
+    [aCoder encodeObject:self.accountID forKey:@"accountID"];
     [aCoder encodeObject:self.expiresLength forKey:@"expiresLength"];
     [aCoder encodeObject:self.accessToken forKey:@"accessToken"];
     [aCoder encodeObject:self.expiresDate forKey:@"expiresData"];

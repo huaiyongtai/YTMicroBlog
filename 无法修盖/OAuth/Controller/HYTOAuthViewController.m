@@ -97,8 +97,6 @@
              
              UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
              [keyWindow switchRootViewController];
-
-             
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"error:%@", error);
