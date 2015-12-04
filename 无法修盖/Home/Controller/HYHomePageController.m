@@ -38,11 +38,17 @@
     
     [self setupStatus];
     
+    //集成上拉、下拉组件
     [self setupDragDownRefresh];
-    
     [self setupDragUpRefresh];
+    
+    //开启自定调度，检测未读数
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(loadRequestUnreadInfo) userInfo:nil repeats:YES];
+    //将timer加入到消息循环中（指定NSRunLoopCommonModes）
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
 
+#pragma mark - 集成上拉、下拉刷新组件
 - (void)setupDragDownRefresh {
     
     UIRefreshControl *downRefresh = [[UIRefreshControl alloc] init];
@@ -56,6 +62,8 @@
     [footerRefreshView setHidden:YES];
     self.tableView.tableFooterView = footerRefreshView;
 }
+
+#pragma mark - 下拉刷新
 - (void)refreshNewStatus:(UIRefreshControl *)refreshControl {
     
     HYTStatus *status = [self.statuses firstObject];
@@ -77,9 +85,13 @@
             //将字典数组转化为模型数组
             NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
             
+            //提醒新的微博数量
+            [self alertuNewsStatusCount:statuses.count];
+            
+            //插入到模型数组中
             NSIndexSet *statusesIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
             [self.statuses insertObjects:statuses atIndexes:statusesIndexSet];
-            
+
             //刷新表格
             [self.tableView reloadData];
         }
@@ -88,9 +100,7 @@
         }
      ];
 }
-
-
-#pragma mark - 下拉加载更多数据
+#pragma mark - 上拉加载更多数据
 - (void)loadMoreStatus {
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -103,7 +113,6 @@
         long long maxID = [status.statusID longLongValue] - 1;
         parameters[@"max_id"] = @(maxID);    //max_id返回的是
     }
-    
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
      parameters:parameters
@@ -112,10 +121,70 @@
             //将字典数组转化为模型数组
             NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
             [self.statuses addObjectsFromArray:oldStatuses];
-
+            
             //刷新表格
             [self.tableView reloadData];
             self.tableView.tableFooterView.hidden = YES;
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error:%@", error);
+        }
+     ];
+}
+
+#pragma mark - 提醒新微博数量
+- (void)alertuNewsStatusCount:(NSUInteger)statusCount {
+    
+    if (statusCount == 0) return;
+    UILabel *alertLabel = [[UILabel alloc] init];
+    [alertLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]]];
+    [alertLabel setText:[NSString stringWithFormat:@"%li 条新微薄", statusCount]];
+    [alertLabel setTextAlignment:NSTextAlignmentCenter];
+    [alertLabel setTextColor:[UIColor whiteColor]];
+    [alertLabel setSize:CGSizeMake(SCREEN_WIDTH, 30)];
+    [alertLabel setOrigin:CGPointMake(0, self.navigationController.navigationBar.bottomY-alertLabel.height)];
+    [self.navigationController.view insertSubview:alertLabel belowSubview:self.navigationController.navigationBar];
+    
+    CGFloat duration = 1.0f;
+    CGFloat delay = 1.0f;
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         [alertLabel setTransform:CGAffineTransformMakeTranslation(0, alertLabel.x + alertLabel.height)];
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:duration
+                                               delay:delay
+                                             options:UIViewAnimationOptionCurveEaseInOut
+                                          animations:^{
+                                              [alertLabel setTransform:CGAffineTransformIdentity];
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [alertLabel removeFromSuperview];
+                                          }];
+    }];
+    
+}
+
+#pragma mark - 加载未查看信息
+- (void)loadRequestUnreadInfo {
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    HYTAccount *account = [HYTAccountTool accountInfo];
+    parameters[@"access_token"] = account.accessToken;
+    parameters[@"uid"] = account.accountID;
+
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    [manger GET:@"https://rm.api.weibo.com/2/remind/unread_count.json"
+     parameters:parameters
+        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSString *unreadStutasCount = responseObject[@"status"];
+            unreadStutasCount = unreadStutasCount.description;
+            if (unreadStutasCount.integerValue) {
+                self.tabBarItem.badgeValue = unreadStutasCount;
+            } else {
+                self.tabBarItem.badgeValue = nil;
+            }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error:%@", error);
@@ -227,6 +296,7 @@
     [navTitleBtn setSelected:NO];
 }
 
+#pragma mark - 导航栏左右、按钮点击事件
 - (void)friendSearch {
     
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -235,8 +305,7 @@
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
-
-#pragma mark - Table view data source
+#pragma mark - UIScrollViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.statuses.count;
 }
@@ -249,7 +318,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:reuseID];
     }
-    
     HYTStatus *states = self.statuses[indexPath.row];
     HYTUser *user = states.user;
     
@@ -269,7 +337,6 @@
     
     //scrollView.contentInset (top = 64, left = 0, bottom = 49, right = 0)
     CGFloat footerViewY = scrollView.contentSize.height - scrollView.height - scrollView.contentInset.top + self.tableView.tableFooterView.height;
-    
     //最后一个Cell是否完全显示出来
     if (offsetY >= footerViewY) {
         NSLog(@"---------上拉加载------");
