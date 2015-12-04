@@ -66,6 +66,7 @@
         
         /** 用户昵称 */
         UILabel *nameLabel = [[UILabel alloc] init];
+        [nameLabel setFont:HYTStatusFrameNameFont];
         [self.contentView addSubview:nameLabel];
         self.nameLabel = nameLabel;
         

@@ -331,7 +331,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 100;
 }
 
 #pragma mark - UIScrollViewDelegate

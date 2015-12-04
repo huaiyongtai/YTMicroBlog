@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 SearchPrefect. All rights reserved.
 //
 
+#define HYTStatusFrameNameFont [UIFont systemFontOfSize:15]
+
 #import <Foundation/Foundation.h>
 #import "HYTStatus.h"
 

@@ -22,6 +22,7 @@
 #import "UIView+Extension.h"
 #import "UIImage+Extension.h"
 #import "UIWindow+Extension.h"
+#import "NSString+Extension.h"
 #import "Constant.h"
 
 

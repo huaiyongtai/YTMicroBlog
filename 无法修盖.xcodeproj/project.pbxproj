@@ -16,6 +16,7 @@
 		823977E21C04732A00707E75 /* UIWindow+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 823977E11C04732A00707E75 /* UIWindow+Extension.m */; };
 		823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */; };
 		823FF7F31C118E2700D51B60 /* HYTStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */; };
+		824680611C11C52900B81579 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 824680601C11C52900B81579 /* NSString+Extension.m */; };
 		826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298B91B766B4100E1680C /* HYDiscoverController.m */; };
 		826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298BF1B766B4100E1680C /* HYHomePageController.m */; };
 		826298DF1B766B4100E1680C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298C81B766B4100E1680C /* AppDelegate.m */; };
@@ -106,6 +107,8 @@
 		823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusCell.m; sourceTree = "<group>"; };
 		823FF7F11C118E2700D51B60 /* HYTStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusFrame.h; sourceTree = "<group>"; };
 		823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusFrame.m; sourceTree = "<group>"; };
+		8246805F1C11C52900B81579 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		824680601C11C52900B81579 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		826298B81B766B4100E1680C /* HYDiscoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDiscoverController.h; sourceTree = "<group>"; };
 		826298B91B766B4100E1680C /* HYDiscoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDiscoverController.m; sourceTree = "<group>"; };
 		826298BE1B766B4100E1680C /* HYHomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHomePageController.h; sourceTree = "<group>"; };
@@ -434,6 +437,8 @@
 				82D9455A1BBA6D090070051B /* UIView+Extension.m */,
 				823977E01C04732A00707E75 /* UIWindow+Extension.h */,
 				823977E11C04732A00707E75 /* UIWindow+Extension.m */,
+				8246805F1C11C52900B81579 /* NSString+Extension.h */,
+				824680601C11C52900B81579 /* NSString+Extension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -829,6 +834,7 @@
 				827CCE0A1BD544E3005B5FAD /* HYTNewFeatureController.m in Sources */,
 				82F52E151BDFDB8A00A509F5 /* AFNetworkReachabilityManager.m in Sources */,
 				82FE49BA1C0B14C100B7305F /* MKAnnotationView+WebCache.m in Sources */,
+				824680611C11C52900B81579 /* NSString+Extension.m in Sources */,
 				82FE49C51C0B14C100B7305F /* UIImage+MultiFormat.m in Sources */,
 				82F52E191BDFDB8A00A509F5 /* AFURLResponseSerialization.m in Sources */,
 				82C692291C0B532F009214CC /* MJExtensionConst.m in Sources */,
