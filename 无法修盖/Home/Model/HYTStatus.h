@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class HYTUser;
+#import "HYTUser.h"
 
 @interface HYTStatus : NSObject
 
@@ -16,6 +16,12 @@
 
 /** 微博信息内容 */
 @property (nonatomic, copy) NSString *text;
+
+/** 微博来源 */
+@property (nonatomic, copy) NSString *source;
+
+/** 微博创建时间 */
+@property (nonatomic, copy) NSString *createdAt;
 
 /** 微博作者的用户信息 */
 @property (nonatomic, strong) HYTUser *user;

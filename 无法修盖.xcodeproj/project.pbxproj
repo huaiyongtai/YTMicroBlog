@@ -14,6 +14,8 @@
 		821AB07E1B76517A00E793B1 /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 821AB07D1B76517A00E793B1 /* ____Tests.m */; };
 		823977DE1C045E7F00707E75 /* HYTAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 823977DD1C045E7F00707E75 /* HYTAccountTool.m */; };
 		823977E21C04732A00707E75 /* UIWindow+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 823977E11C04732A00707E75 /* UIWindow+Extension.m */; };
+		823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */; };
+		823FF7F31C118E2700D51B60 /* HYTStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */; };
 		826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298B91B766B4100E1680C /* HYDiscoverController.m */; };
 		826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298BF1B766B4100E1680C /* HYHomePageController.m */; };
 		826298DF1B766B4100E1680C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298C81B766B4100E1680C /* AppDelegate.m */; };
@@ -100,6 +102,10 @@
 		823977DD1C045E7F00707E75 /* HYTAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTAccountTool.m; sourceTree = "<group>"; };
 		823977E01C04732A00707E75 /* UIWindow+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Extension.h"; sourceTree = "<group>"; };
 		823977E11C04732A00707E75 /* UIWindow+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Extension.m"; sourceTree = "<group>"; };
+		823FF7EE1C118E1200D51B60 /* HYTStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusCell.h; sourceTree = "<group>"; };
+		823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusCell.m; sourceTree = "<group>"; };
+		823FF7F11C118E2700D51B60 /* HYTStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusFrame.h; sourceTree = "<group>"; };
+		823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusFrame.m; sourceTree = "<group>"; };
 		826298B81B766B4100E1680C /* HYDiscoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDiscoverController.h; sourceTree = "<group>"; };
 		826298B91B766B4100E1680C /* HYDiscoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDiscoverController.m; sourceTree = "<group>"; };
 		826298BE1B766B4100E1680C /* HYHomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHomePageController.h; sourceTree = "<group>"; };
@@ -387,6 +393,8 @@
 				82FE49CE1C0B38A600B7305F /* HYTUser.m */,
 				82C6920D1C0B3D76009214CC /* HYTStatus.h */,
 				82C6920E1C0B3D76009214CC /* HYTStatus.m */,
+				823FF7F11C118E2700D51B60 /* HYTStatusFrame.h */,
+				823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -396,6 +404,8 @@
 			children = (
 				8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */,
 				8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */,
+				823FF7EE1C118E1200D51B60 /* HYTStatusCell.h */,
+				823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -789,6 +799,7 @@
 				82FE49CF1C0B38A600B7305F /* HYTUser.m in Sources */,
 				82C6922C1C0B532F009214CC /* MJPropertyKey.m in Sources */,
 				82FE49C31C0B14C100B7305F /* UIButton+WebCache.m in Sources */,
+				823FF7F31C118E2700D51B60 /* HYTStatusFrame.m in Sources */,
 				82F52E141BDFDB8A00A509F5 /* AFHTTPSessionManager.m in Sources */,
 				826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */,
 				826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */,
@@ -828,6 +839,7 @@
 				82C692321C0B532F009214CC /* NSString+MJExtension.m in Sources */,
 				826298E01B766B4100E1680C /* main.m in Sources */,
 				82FE49C61C0B14C100B7305F /* UIImage+WebP.m in Sources */,
+				823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */,
 				82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */,
 				826298E21B766B4100E1680C /* HYProflieController.m in Sources */,
 				826298EA1B766D5100E1680C /* HYNavigationController.m in Sources */,

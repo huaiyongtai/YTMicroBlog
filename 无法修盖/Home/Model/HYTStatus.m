@@ -7,7 +7,6 @@
 //
 
 #import "HYTStatus.h"
-#import "HYTUser.h"
 
 @implementation HYTStatus
 

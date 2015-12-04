@@ -13,15 +13,15 @@
 #import "AFNetworking.h"
 #import "HYTAccountTool.h"
 #import "UIImageView+WebCache.h"
-#import "HYTUser.h"
-#import "HYTStatus.h"
+#import "HYTStatusFrame.h"
+#import "HYTStatusCell.h"
 #import "MJExtension.h"
 #import "HYTFooterRefreshView.h"
 
 @interface HYHomePageController () <DropDownMenuDelegate>
 
 /** 微博模型属性 */
-@property (nonatomic, strong) NSMutableArray *statuses;
+@property (nonatomic, strong) NSMutableArray *statusFrames;
 
 @end
 
@@ -30,13 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.statuses = [NSMutableArray array];
+    self.statusFrames = [NSMutableArray array];
     
     [self setupNavInfo];
     
     [self setupNavTitle];
     
-    [self setupStatus];
+    [self loadStatus];
     
     //集成上拉、下拉组件
     [self setupDragDownRefresh];
@@ -66,7 +66,7 @@
 #pragma mark - 下拉刷新
 - (void)refreshNewStatus:(UIRefreshControl *)refreshControl {
     
-    HYTStatus *status = [self.statuses firstObject];
+    HYTStatus *status = [self.statusFrames firstObject];
     
     HYTAccount *account = [HYTAccountTool accountInfo];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -90,7 +90,7 @@
             
             //插入到模型数组中
             NSIndexSet *statusesIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
-            [self.statuses insertObjects:statuses atIndexes:statusesIndexSet];
+            [self.statusFrames insertObjects:[self statusFramesWithStatuses:statuses] atIndexes:statusesIndexSet];
 
             //刷新表格
             [self.tableView reloadData];
@@ -108,7 +108,8 @@
     parameters[@"access_token"] = account.accessToken;
     
     //若指定此参数，则返回ID小于或等于max_id的微博，默认为0。
-    HYTStatus *status = [self.statuses lastObject];
+    HYTStatusFrame *statusFrame = [self.statusFrames lastObject];
+    HYTStatus *status = statusFrame.status;
     if (status) {
         long long maxID = [status.statusID longLongValue] - 1;
         parameters[@"max_id"] = @(maxID);    //max_id返回的是
@@ -120,7 +121,7 @@
             
             //将字典数组转化为模型数组
             NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
-            [self.statuses addObjectsFromArray:oldStatuses];
+            [self.statusFrames addObjectsFromArray:[self statusFramesWithStatuses:oldStatuses]];
             
             //刷新表格
             [self.tableView reloadData];
@@ -177,7 +178,6 @@
     [manger GET:@"https://rm.api.weibo.com/2/remind/unread_count.json"
      parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
             NSString *unreadStutasCount = responseObject[@"status"];
             unreadStutasCount = unreadStutasCount.description;
             if (unreadStutasCount.integerValue) {
@@ -250,7 +250,7 @@
     
 }
 #pragma mark - 加载微博数据
-- (void)setupStatus {
+- (void)loadStatus {
     
     HYTAccount *account = [HYTAccountTool accountInfo];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -263,7 +263,8 @@
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             //将字典数组转化为模型数组
-            self.statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+            NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+            self.statusFrames = [self statusFramesWithStatuses:statuses];
             
             //刷新表格
             [self.tableView reloadData];
@@ -272,6 +273,15 @@
             NSLog(@"error:%@", error);
         }
      ];
+}
+
+- (NSMutableArray *)statusFramesWithStatuses:(NSArray *)statuses {
+    
+    NSMutableArray *statusFrames = [NSMutableArray array];
+    for (HYTStatus *status in statuses) {
+        [statusFrames addObject:[HYTStatusFrame statusFrameWithStatus:status]];
+    }
+    return statusFrames;
 }
 
 #pragma mark - 弹出下拉菜单
@@ -305,34 +315,29 @@
     NSLog(@"%@, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 }
 
-#pragma mark - UIScrollViewDataSource
+#pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.statuses.count;
+    return self.statusFrames.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *reuseID = @"statuses";
+    HYTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                      reuseIdentifier:reuseID];
-    }
-    HYTStatus *states = self.statuses[indexPath.row];
-    HYTUser *user = states.user;
-    
-    cell.textLabel.text = user.name;
-    cell.detailTextLabel.text = states.text;
-    UIImage *placeholderImage = [UIImage imageNamed:@"avatar_default_small"];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:user.profileImageURL] placeholderImage:placeholderImage];
+    HYTStatusCell *cell = [HYTStatusCell statusCellWithTableView:tableView];
+    cell.statueFrame = statusFrame;
     
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
 }
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    if (self.statuses.count==0 || self.tableView.tableFooterView.isHidden == NO) return;
+    if (self.statusFrames.count==0 || self.tableView.tableFooterView.isHidden == NO) return;
     CGFloat offsetY = scrollView.contentOffset.y;
     
     //scrollView.contentInset (top = 64, left = 0, bottom = 49, right = 0)
