@@ -14,7 +14,7 @@
 
 //static CGFloat kVerticalMargin = 25;    //距离边框的竖直距离(暂时弃用)
 static CGFloat kNormalMargin   = 20;    //普通内容的间距
-static CGFloat kSmallMargin    = 18;    //小间距 （用户名-时间、时间-来源）
+static CGFloat kSmallMargin    = 10;    //小间距 （用户名-时间、时间-来源）
 + (instancetype)statusFrameWithStatus:(HYTStatus *)status {
     
     HYTStatusFrame *statusFrame = [[self alloc] init];
@@ -29,9 +29,8 @@ static CGFloat kSmallMargin    = 18;    //小间距 （用户名-时间、时间
     _status = status;
     HYTUser *user = status.user;
     
-    /** 原创微博Frame */
-    CGRect originalStatusViewF;
-    
+    CGFloat cellWidth = SCREEN_WIDTH;
+
     /** 用户头像Frame */
     CGFloat profileImageWidth = 50;
     CGFloat profileImageHeight = 50;
@@ -47,47 +46,50 @@ static CGFloat kSmallMargin    = 18;    //小间距 （用户名-时间、时间
     self.nameLabelF = (CGRect){{nameX, nameY}, nameSize};
     
     /** 用户会员图标Frame */
-    CGRect mbMarkViewF;
+    if (user.isVip) {
+        CGFloat mbMarkX = CGRectGetMaxX(self.nameLabelF) + kSmallMargin;
+        CGFloat mbMarkY = nameY;
+        CGFloat mbMarkHeight = nameSize.height;
+        CGFloat mbMarkWidth = 36;
+        self.mbMarkViewF = CGRectMake(mbMarkX, mbMarkY, mbMarkWidth, mbMarkHeight);
+    }
     
     /** 微博来源Frame */
-    CGRect sourceLabelF;
+    CGFloat sourceX = nameX;
+    CGFloat sourceY = CGRectGetMaxY(self.nameLabelF) + kSmallMargin;
+    CGSize sourceSize = [status.source yt_sizeWithFont:HYTStatusFrameSourceFont];
+    self.sourceLabelF = (CGRect){{sourceX, sourceY}, sourceSize};
     
     /** 微博创建时间Frame */
-    CGRect createdAtLabelF;
+    CGFloat createdAtX = CGRectGetMaxX(self.sourceLabelF) + kSmallMargin;
+    CGFloat createdAtY = sourceY;
+    CGSize createdAtSize = [status.createdAt yt_sizeWithFont:HYTStatusFrameCreatedAtFont];
+    self.createdAtLabelF = (CGRect){{createdAtX, createdAtY}, createdAtSize};
     
     /** 微博信息内容Frame */
-    CGRect contentLabelF;
+    CGFloat contentX = profileImageX;
+    CGFloat contentY = MAX(CGRectGetMaxY(self.profileImageViewF), CGRectGetMaxY(self.sourceLabelF)) + kNormalMargin;
+    CGFloat contentMaxWidth = cellWidth - contentX - kNormalMargin;
+    CGSize contentSize = [status.text yt_sizeWithFont:HYTStatusFrameContentFont maxWidth:contentMaxWidth];
+    self.contentLabelF = (CGRect){{contentX, contentY}, contentSize};
+
+    CGFloat pictureX = contentX;
+    CGFloat pictureY = CGRectGetMaxY(self.contentLabelF);
+    CGFloat pictureWidth = 0;
+    CGFloat pictureHeight = 0;
+    if (status.pictures.count) {
+        pictureY += kSmallMargin;
+        pictureWidth = 100;
+        pictureHeight = pictureWidth;
+    }
+    self.pictureViewF = CGRectMake(pictureX, pictureY, pictureWidth, pictureHeight);
+
+    /** 原创微博Frame */
+    self.originalStatusViewF = CGRectMake(0, 0, cellWidth, CGRectGetMaxY(self.pictureViewF));
     
     /** cell的总高度 */
-    CGFloat cellTotalHeight;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    self.cellTotalHeight = CGRectGetMaxY(self.originalStatusViewF) + 10;
+
 }
 
 @end

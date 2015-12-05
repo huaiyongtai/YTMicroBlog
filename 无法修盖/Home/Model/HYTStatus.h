@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HYTUser.h"
+#import "HYTPicture.h"
 
 @interface HYTStatus : NSObject
 
@@ -22,6 +23,9 @@
 
 /** 微博创建时间 */
 @property (nonatomic, copy) NSString *createdAt;
+
+/** 配图模型数组 */
+@property (nonatomic, strong) NSArray *pictures;
 
 /** 微博作者的用户信息 */
 @property (nonatomic, strong) HYTUser *user;

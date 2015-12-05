@@ -56,6 +56,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         /** 原创微博 */
         UIView *originalStatusView = [[UIView alloc] init];
+        [originalStatusView setBackgroundColor:[UIColor orangeColor]];
         [self.contentView addSubview:originalStatusView];
         self.originalStatusView = originalStatusView;
         
@@ -73,25 +74,31 @@
         /** 用户会员图标 */
         UIImageView *mbMarkView = [[UIImageView alloc] init];
         [self.contentView addSubview:mbMarkView];
+        [mbMarkView setContentMode:UIViewContentModeScaleAspectFit];
         self.mbMarkView = mbMarkView;
         
         /** 微博来源 */
         UILabel *sourceLabel = [[UILabel alloc] init];
+        [sourceLabel setFont:HYTStatusFrameSourceFont];
         [self.contentView addSubview:sourceLabel];
         self.sourceLabel = sourceLabel;
         
         /** 微博创建时间 */
         UILabel *createdAtLabel = [[UILabel alloc] init];
+        [createdAtLabel setFont:HYTStatusFrameCreatedAtFont];
         [self.contentView addSubview:createdAtLabel];
         self.createdAtLabel = createdAtLabel;
         
         /** 配图 */
         UIImageView *pictureView = [[UIImageView alloc] init];
+        [pictureView setBackgroundColor:[UIColor blackColor]];
         [self.contentView addSubview:pictureView];
         self.pictureView = pictureView;
     
         /** 微博信息内容 */
         UILabel *contentLabel = [[UILabel alloc] init];
+        [contentLabel setNumberOfLines:0];
+        [contentLabel setFont:HYTStatusFrameContentFont];
         [self.contentView addSubview:contentLabel];
         self.contentLabel = contentLabel;
     }
@@ -113,9 +120,12 @@
     [self.nameLabel setText:user.name];
     [self.nameLabel setFrame:statueFrame.nameLabelF];
     
-    [self.mbMarkView setImage:[UIImage imageNamed:@"avatar_default_small"]];
-    [self.mbMarkView setFrame:statueFrame.mbMarkViewF];
-    
+    if (user.isVip) {
+        NSString *mbMarkNum = [NSString stringWithFormat:@"userinfo_membership_level%i", user.mbRank];
+        [self.mbMarkView setImage:[UIImage imageNamed:mbMarkNum]];
+        [self.mbMarkView setFrame:statueFrame.mbMarkViewF];
+    }
+
     [self.sourceLabel setText:status.source];
     [self.sourceLabel setFrame:statueFrame.sourceLabelF];
     
@@ -125,6 +135,23 @@
     [self.contentLabel setText:status.text];
     [self.contentLabel setFrame:statueFrame.contentLabelF];
     
+    if (status.pictures.count) {
+        HYTPicture *picture = status.pictures[0];
+        UIImage *picturePlaceholder = [UIImage imageNamed:@"timeline_image_placeholder"];
+        [self.pictureView sd_setImageWithURL:[NSURL URLWithString:picture.thumbnailPic] placeholderImage:picturePlaceholder];
+        [self.pictureView setFrame:statueFrame.pictureViewF];
+    }
+}
+
+- (void)prepareForReuse {
+    
+    [super prepareForReuse];
+    
+    self.mbMarkView.image = nil;
+    [self.mbMarkView setFrame:CGRectZero];
+    
+    self.pictureView.image = nil;
+    [self.pictureView setFrame:CGRectZero];
 }
 
 

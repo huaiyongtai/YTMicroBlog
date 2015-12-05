@@ -21,7 +21,7 @@
     NSDictionary *attributes = @{NSFontAttributeName : font};
 
     return [self boundingRectWithSize:maxSize
-                              options:NSStringDrawingTruncatesLastVisibleLine
+                              options:NSStringDrawingUsesLineFragmentOrigin
                            attributes:attributes
                               context:nil].size;
     

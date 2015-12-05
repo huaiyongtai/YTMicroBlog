@@ -26,9 +26,22 @@
     if ([propertyName isEqualToString:@"profileImageURL"]) {
         return @"profile_image_url";
     }
+    
+    if ([propertyName isEqualToString:@"mbType"]) {
+        return @"mbtype";
+    }
+    
+    if ([propertyName isEqualToString:@"mbRank"]) {
+        return @"mbrank";
+    }
     return [propertyName mj_underlineFromCamel];
 }
 
+- (void)setMbType:(int)mbType {
+    _mbType = mbType;
+    
+    self.vip = mbType > 2;
+}
 
 
 //+ (instancetype)userWithDict:(NSDictionary *)dict {

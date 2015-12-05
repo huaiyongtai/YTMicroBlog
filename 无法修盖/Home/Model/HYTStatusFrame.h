@@ -7,6 +7,9 @@
 //
 
 #define HYTStatusFrameNameFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameSourceFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameContentFont [UIFont systemFontOfSize:15]
 
 #import <Foundation/Foundation.h>
 #import "HYTStatus.h"
@@ -33,6 +36,9 @@
 
 /** 微博信息内容Frame */
 @property (nonatomic, assign) CGRect contentLabelF;
+
+/** 配图Frame */
+@property (nonatomic, assign) CGRect pictureViewF;
 
 /** cell的总高度 */
 @property (nonatomic, assign) CGFloat cellTotalHeight;

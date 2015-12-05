@@ -7,11 +7,25 @@
 //
 
 #import "HYTStatus.h"
+#import "MJExtension.h"
 
 @implementation HYTStatus
 
-+ (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"statusID" : @"idstr"};
++ (NSString *)mj_replacedKeyFromPropertyName121:(NSString *)propertyName {
+    
+    if ([propertyName isEqualToString:@"statusID"]) {
+        return @"idstr";
+    }
+    
+    if ([propertyName isEqualToString:@"pictures"]) {
+        return @"pic_urls";
+    }
+    
+    return [propertyName mj_underlineFromCamel];
+}
+
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"pictures" : [HYTPicture class]};
 }
 
 //+ (instancetype)statusWithDict:(NSDictionary *)dict {

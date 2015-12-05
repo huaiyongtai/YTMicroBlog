@@ -21,8 +21,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    self.window = [[UIWindow alloc] initWithFrame:SCREEN_BOUNDS];
+    if ([[UIDevice currentDevice]systemVersion].floatValue>=8.0) {
+        UIUserNotificationType type=UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
+        [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
+    }
     
+    self.window = [[UIWindow alloc] initWithFrame:SCREEN_BOUNDS];
     HYTAccount *account = [HYTAccountTool accountInfo];
     if (account == nil) {   //账号信息不合法
         self.window.rootViewController = [[HYTOAuthViewController alloc] init];
@@ -39,8 +44,29 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    /*应用程序一般有四种状态
+     * 1.死亡状态、没有开启
+     * 2.前台运行状态
+     * 3.后台暂停状态 （将终止动画、多媒体、网络请求等一系列操作）
+     * 4.后天运行状态
+     */
+    
+    //一、
+    //申请后台任务的运行（运行的时长由iOS系统来决定）
+    UIBackgroundTaskIdentifier taskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^{
+        //当后台运行时间过期，便会调用该（ExpirationHandler）Blook
+        
+        //结束后台任务
+        [application endBackgroundTask:taskIdentifier];
+        
+    }];
+    
+    //二、
+    /* 0. 在Info.plst中设置后台模式：Required background modes == App plays audio or streams audio/video using AirPlay（表示我们的后台任务是音频）
+     * 1. 搞一个0kb的MP3文件，没有声音 （不影响我们的应用）
+     * 2. 循环播放 （系统会检测我们有没有真的在播放）
+     */
     
     
 }

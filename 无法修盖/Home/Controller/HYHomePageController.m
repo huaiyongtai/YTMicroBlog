@@ -36,14 +36,12 @@
     
     [self setupNavTitle];
     
-    [self loadStatus];
-    
     //集成上拉、下拉组件
     [self setupDragDownRefresh];
     [self setupDragUpRefresh];
     
     //开启自定调度，检测未读数
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(loadRequestUnreadInfo) userInfo:nil repeats:YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(loadRequestUnreadInfo) userInfo:nil repeats:YES];
     //将timer加入到消息循环中（指定NSRunLoopCommonModes）
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
@@ -55,6 +53,10 @@
     [downRefresh setBackgroundColor:[UIColor redColor]];
     [downRefresh addTarget:self action:@selector(refreshNewStatus:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:downRefresh];
+    
+    //一开始就进入到刷新状态
+    [downRefresh beginRefreshing];
+    [self refreshNewStatus:downRefresh];
 }
 - (void)setupDragUpRefresh {
     
@@ -66,8 +68,8 @@
 #pragma mark - 下拉刷新
 - (void)refreshNewStatus:(UIRefreshControl *)refreshControl {
     
-    HYTStatus *status = [self.statusFrames firstObject];
-    
+    HYTStatusFrame *statusFrame = [self.statusFrames firstObject];
+    HYTStatus *status = statusFrame.status;
     HYTAccount *account = [HYTAccountTool accountInfo];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"access_token"] = account.accessToken;
@@ -136,10 +138,14 @@
 #pragma mark - 提醒新微博数量
 - (void)alertuNewsStatusCount:(NSUInteger)statusCount {
     
+    //只要刷新成功后清除未读提醒
+    self.tabBarItem.badgeValue = nil;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     if (statusCount == 0) return;
     UILabel *alertLabel = [[UILabel alloc] init];
     [alertLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]]];
-    [alertLabel setText:[NSString stringWithFormat:@"%li 条新微薄", statusCount]];
+    [alertLabel setText:[NSString stringWithFormat:@"%i 条新微薄", statusCount]];
     [alertLabel setTextAlignment:NSTextAlignmentCenter];
     [alertLabel setTextColor:[UIColor whiteColor]];
     [alertLabel setSize:CGSizeMake(SCREEN_WIDTH, 30)];
@@ -182,8 +188,11 @@
             unreadStutasCount = unreadStutasCount.description;
             if (unreadStutasCount.integerValue) {
                 self.tabBarItem.badgeValue = unreadStutasCount;
+                //设置AppIcon提醒数字
+                [UIApplication sharedApplication].applicationIconBadgeNumber = unreadStutasCount.integerValue;
             } else {
                 self.tabBarItem.badgeValue = nil;
+                [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -249,31 +258,6 @@
     
     
 }
-#pragma mark - 加载微博数据
-- (void)loadStatus {
-    
-    HYTAccount *account = [HYTAccountTool accountInfo];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"access_token"] = account.accessToken;
-    parameters[@"count"] = @20;
-    
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
-     parameters:parameters
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            //将字典数组转化为模型数组
-            NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
-            self.statusFrames = [self statusFramesWithStatuses:statuses];
-            
-            //刷新表格
-            [self.tableView reloadData];
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error:%@", error);
-        }
-     ];
-}
 
 - (NSMutableArray *)statusFramesWithStatuses:(NSArray *)statuses {
     
@@ -331,7 +315,8 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    HYTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
+    return statusFrame.cellTotalHeight;
 }
 
 #pragma mark - UIScrollViewDelegate

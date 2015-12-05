@@ -58,6 +58,7 @@
 		82F52E181BDFDB8A00A509F5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E0D1BDFDB8A00A509F5 /* AFURLRequestSerialization.m */; };
 		82F52E191BDFDB8A00A509F5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E0F1BDFDB8A00A509F5 /* AFURLResponseSerialization.m */; };
 		82F52E1A1BDFDB8A00A509F5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E111BDFDB8A00A509F5 /* AFURLSessionManager.m */; };
+		82FCE0C81C1325B20091CEEF /* HYTPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FCE0C71C1325B20091CEEF /* HYTPicture.m */; };
 		82FE49BA1C0B14C100B7305F /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499A1C0B14C100B7305F /* MKAnnotationView+WebCache.m */; };
 		82FE49BB1C0B14C100B7305F /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499C1C0B14C100B7305F /* NSData+ImageContentType.m */; };
 		82FE49BC1C0B14C100B7305F /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499E1C0B14C100B7305F /* SDImageCache.m */; };
@@ -193,6 +194,8 @@
 		82F52E0F1BDFDB8A00A509F5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		82F52E101BDFDB8A00A509F5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		82F52E111BDFDB8A00A509F5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		82FCE0C61C1325B20091CEEF /* HYTPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTPicture.h; sourceTree = "<group>"; };
+		82FCE0C71C1325B20091CEEF /* HYTPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTPicture.m; sourceTree = "<group>"; };
 		82FE49991C0B14C100B7305F /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		82FE499A1C0B14C100B7305F /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		82FE499B1C0B14C100B7305F /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 			children = (
 				82FE49CD1C0B38A600B7305F /* HYTUser.h */,
 				82FE49CE1C0B38A600B7305F /* HYTUser.m */,
+				82FCE0C61C1325B20091CEEF /* HYTPicture.h */,
+				82FCE0C71C1325B20091CEEF /* HYTPicture.m */,
 				82C6920D1C0B3D76009214CC /* HYTStatus.h */,
 				82C6920E1C0B3D76009214CC /* HYTStatus.m */,
 				823FF7F11C118E2700D51B60 /* HYTStatusFrame.h */,
@@ -797,6 +802,7 @@
 				82D945581BBA41050070051B /* DropDownMenu.m in Sources */,
 				82C6920F1C0B3D76009214CC /* HYTStatus.m in Sources */,
 				82C692311C0B532F009214CC /* NSObject+MJProperty.m in Sources */,
+				82FCE0C81C1325B20091CEEF /* HYTPicture.m in Sources */,
 				82F52E171BDFDB8A00A509F5 /* AFURLConnectionOperation.m in Sources */,
 				82FE49C81C0B14C100B7305F /* UIImageView+WebCache.m in Sources */,
 				82F52E161BDFDB8A00A509F5 /* AFSecurityPolicy.m in Sources */,

@@ -19,6 +19,12 @@
 /** 用户头像URL */
 @property (nonatomic, copy) NSString *profileImageURL;
 
+/** 会员类型 > 2代表是会员 */
+@property (nonatomic, assign) int mbType;
+/** 会员等级 */
+@property (nonatomic, assign) int mbRank;
+@property (nonatomic, assign, getter = isVip) BOOL vip;
+
 //+ (instancetype)userWithDict:(NSDictionary *)dict;
 
 @end
