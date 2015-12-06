@@ -30,6 +30,9 @@
 /** 微博作者的用户信息 */
 @property (nonatomic, strong) HYTUser *user;
 
+/** 转发微博 */
+@property (nonatomic, strong) HYTStatus *retweetedStatus;
+
 //+ (instancetype)statusWithDict:(NSDictionary *)dict;
 
 @end

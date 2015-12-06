@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820191061C1488BC00F5F7CA /* HYTStatusCellToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */; };
 		8206786D1BB1B6FB00F698C0 /* HYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */; };
 		8217FF941C0DF4500063A100 /* HYTFooterRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */; };
 		821AB06F1B76517A00E793B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821AB06E1B76517A00E793B1 /* Images.xcassets */; };
@@ -89,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		820191041C1488BC00F5F7CA /* HYTStatusCellToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusCellToolBar.h; sourceTree = "<group>"; };
+		820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusCellToolBar.m; sourceTree = "<group>"; };
 		8206786B1BB1B6FB00F698C0 /* HYSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSearchBar.h; sourceTree = "<group>"; };
 		8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSearchBar.m; sourceTree = "<group>"; };
 		8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTFooterRefreshView.h; sourceTree = "<group>"; };
@@ -412,6 +415,8 @@
 			children = (
 				8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */,
 				8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */,
+				820191041C1488BC00F5F7CA /* HYTStatusCellToolBar.h */,
+				820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */,
 				823FF7EE1C118E1200D51B60 /* HYTStatusCell.h */,
 				823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */,
 			);
@@ -850,6 +855,7 @@
 				82FE49BB1C0B14C100B7305F /* NSData+ImageContentType.m in Sources */,
 				82C692321C0B532F009214CC /* NSString+MJExtension.m in Sources */,
 				826298E01B766B4100E1680C /* main.m in Sources */,
+				820191061C1488BC00F5F7CA /* HYTStatusCellToolBar.m in Sources */,
 				82FE49C61C0B14C100B7305F /* UIImage+WebP.m in Sources */,
 				823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */,
 				82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */,

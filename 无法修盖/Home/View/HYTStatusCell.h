@@ -13,7 +13,7 @@
 @interface HYTStatusCell : UITableViewCell
 
 /** 微博的Frame模型 */
-@property (nonatomic, strong) HYTStatusFrame *statueFrame;
+@property (nonatomic, strong) HYTStatusFrame *statusFrame;
 
 + (instancetype)statusCellWithTableView:(UITableView *)tableView;
 

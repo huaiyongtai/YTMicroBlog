@@ -30,6 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.view setBackgroundColor:HYTCOLOR(239, 239, 239)];
+    
     self.statusFrames = [NSMutableArray array];
     
     [self setupNavInfo];
@@ -308,7 +310,7 @@
     HYTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
     
     HYTStatusCell *cell = [HYTStatusCell statusCellWithTableView:tableView];
-    cell.statueFrame = statusFrame;
+    cell.statusFrame = statusFrame;
     
     return cell;
 }

@@ -10,6 +10,7 @@
 #define HYTStatusFrameSourceFont [UIFont systemFontOfSize:15]
 #define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:15]
 #define HYTStatusFrameContentFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameReweetedContentFont [UIFont systemFontOfSize:15]
 
 #import <Foundation/Foundation.h>
 #import "HYTStatus.h"
@@ -39,6 +40,18 @@
 
 /** 配图Frame */
 @property (nonatomic, assign) CGRect pictureViewF;
+
+/** 转发微博 */
+@property (nonatomic, assign) CGRect retweetedStatusViewF;
+
+/** 转发微博内容 */
+@property (nonatomic, assign) CGRect retweetedContentLabelF;
+/** 转发微博配图 */
+@property (nonatomic, assign) CGRect retweetedPictureViewF;
+
+/** 底部toolBar */
+@property (nonatomic, assign) CGRect toolBarF;
+
 
 /** cell的总高度 */
 @property (nonatomic, assign) CGFloat cellTotalHeight;
