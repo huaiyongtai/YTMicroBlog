@@ -28,13 +28,20 @@
     return @{@"pictures" : [HYTPicture class]};
 }
 
-//+ (instancetype)statusWithDict:(NSDictionary *)dict {
-//    
-//    HYTStatus *status = [[HYTStatus alloc] init];
-//    status.statusID = dict[@"idstr"];
-//    status.text = dict[@"text"];
-//    status.user = [HYTUser userWithDict:dict[@"user"]];
-//    
-//    return status;
-//}
+
+//重写创建时间
+- (NSString *)createdAt {
+    return @"1小时";
+}
+
+
+- (void)setSource:(NSString *)source {
+    
+//    _source = source;
+    _source = @"我不是iPhone 10S Plus";
+}
+
+
+
+
 @end

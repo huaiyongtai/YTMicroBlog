@@ -24,6 +24,15 @@
 /** 微博创建时间 */
 @property (nonatomic, copy) NSString *createdAt;
 
+/** 转发数 */
+@property (nonatomic, copy) NSString *repostsCount;
+
+/** 评论数 */
+@property (nonatomic, copy) NSString *commentsCount;
+
+/** 表态数 */
+@property (nonatomic, copy) NSString *attitudesCount;
+
 /** 配图模型数组 */
 @property (nonatomic, strong) NSArray *pictures;
 

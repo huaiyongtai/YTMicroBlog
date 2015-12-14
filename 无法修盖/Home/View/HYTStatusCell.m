@@ -103,17 +103,17 @@
     [originalStatusView addSubview:mbMarkView];
     self.mbMarkView = mbMarkView;
     
-    /** 微博来源 */
-    UILabel *sourceLabel = [[UILabel alloc] init];
-    [sourceLabel setFont:HYTStatusFrameSourceFont];
-    [originalStatusView addSubview:sourceLabel];
-    self.sourceLabel = sourceLabel;
-    
     /** 微博创建时间 */
     UILabel *createdAtLabel = [[UILabel alloc] init];
     [createdAtLabel setFont:HYTStatusFrameCreatedAtFont];
     [originalStatusView addSubview:createdAtLabel];
     self.createdAtLabel = createdAtLabel;
+    
+    /** 微博来源 */
+    UILabel *sourceLabel = [[UILabel alloc] init];
+    [sourceLabel setFont:HYTStatusFrameSourceFont];
+    [originalStatusView addSubview:sourceLabel];
+    self.sourceLabel = sourceLabel;
 
     /** 微博信息内容 */
     UILabel *contentLabel = [[UILabel alloc] init];
@@ -183,11 +183,11 @@
         [self.mbMarkView setFrame:statusFrame.mbMarkViewF];
     }
 
-    [self.sourceLabel setText:status.source];
-    [self.sourceLabel setFrame:statusFrame.sourceLabelF];
-    
     [self.createdAtLabel setText:status.createdAt];
     [self.createdAtLabel setFrame:statusFrame.createdAtLabelF];
+    
+    [self.sourceLabel setText:status.source];
+    [self.sourceLabel setFrame:statusFrame.sourceLabelF];
     
     [self.contentLabel setText:status.text];
     [self.contentLabel setFrame:statusFrame.contentLabelF];
@@ -217,6 +217,7 @@
         }
     }
     
+    self.toolBar.status = status;
     [self.toolBar setFrame:statusFrame.toolBarF];
 }
 

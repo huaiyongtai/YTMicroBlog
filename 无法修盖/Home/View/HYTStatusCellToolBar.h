@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class HYTStatus;
+
 
 @interface HYTStatusCellToolBar : UIView
+
+@property (nonatomic, strong) HYTStatus *status;
 
 @end

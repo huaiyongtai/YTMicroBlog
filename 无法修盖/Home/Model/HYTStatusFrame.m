@@ -52,17 +52,17 @@ static CGFloat kSmallMargin    = 10;    //小间距 （用户名-时间、时间
         self.mbMarkViewF = CGRectMake(mbMarkX, mbMarkY, mbMarkWidth, mbMarkHeight);
     }
     
-    /** 微博来源Frame */
-    CGFloat sourceX = nameX;
-    CGFloat sourceY = CGRectGetMaxY(self.nameLabelF) + kSmallMargin;
-    CGSize sourceSize = [status.source yt_sizeWithFont:HYTStatusFrameSourceFont];
-    self.sourceLabelF = (CGRect){{sourceX, sourceY}, sourceSize};
-    
     /** 微博创建时间Frame */
-    CGFloat createdAtX = CGRectGetMaxX(self.sourceLabelF) + kSmallMargin;
-    CGFloat createdAtY = sourceY;
+    CGFloat createdAtX = nameX;
+    CGFloat createdAtY = CGRectGetMaxY(self.nameLabelF) + kSmallMargin;
     CGSize createdAtSize = [status.createdAt yt_sizeWithFont:HYTStatusFrameCreatedAtFont];
     self.createdAtLabelF = (CGRect){{createdAtX, createdAtY}, createdAtSize};
+    
+    /** 微博来源Frame */
+    CGFloat sourceX = CGRectGetMaxX(self.createdAtLabelF) + kSmallMargin;
+    CGFloat sourceY = createdAtY;
+    CGSize sourceSize = [status.source yt_sizeWithFont:HYTStatusFrameSourceFont];
+    self.sourceLabelF = (CGRect){{sourceX, sourceY}, sourceSize};
     
     /** 微博信息内容Frame */
     CGFloat contentX = profileImageX;

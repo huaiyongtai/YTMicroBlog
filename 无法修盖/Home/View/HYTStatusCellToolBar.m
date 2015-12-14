@@ -7,27 +7,70 @@
 //
 
 #import "HYTStatusCellToolBar.h"
+#import "HYTStatus.h"
+
+@interface HYTStatusCellToolBar ()
+
+@property (nonatomic, weak) UIButton *repostBtn;
+
+@property (nonatomic, weak) UIButton *commentBtn;
+
+@property (nonatomic, weak) UIButton *attitudeBtn;
+
+
+@end
 
 @implementation HYTStatusCellToolBar
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        [self addSubBtnWithTitle:@"转发" imageName:@"timeline_icon_retweet"];
-        [self addSubBtnWithTitle:@"评论" imageName:@"timeline_icon_comment"];
-        [self addSubBtnWithTitle:@"赞" imageName:@"timeline_icon_unlike"];
+        self.repostBtn = [self addSubBtnWithTitle:@"转发" imageName:@"timeline_icon_retweet"];
+        self.commentBtn = [self addSubBtnWithTitle:@"评论" imageName:@"timeline_icon_comment"];
+        self.attitudeBtn = [self addSubBtnWithTitle:@"赞" imageName:@"timeline_icon_unlike"];
     }
     return self;
 }
 
-- (void)addSubBtnWithTitle:(NSString *)title imageName:(NSString *)imageName {
+- (UIButton *)addSubBtnWithTitle:(NSString *)title imageName:(NSString *)imageName {
     
-    UIButton *commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [commentBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    [commentBtn setTitle:title forState:UIControlStateNormal];
-    [commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [commentBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
-    [self addSubview:commentBtn];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+    [self addSubview:btn];
+    
+    return btn;
+}
+
+- (void)setStatus:(HYTStatus *)status {
+    
+    _status = status;
+    
+    [self setupBarBtn:self.repostBtn useTitleCount:status.repostsCount];
+    
+    [self setupBarBtn:self.commentBtn useTitleCount:status.commentsCount];
+    
+    [self setupBarBtn:self.attitudeBtn useTitleCount:status.attitudesCount];
+}
+
+- (void)setupBarBtn:(UIButton *)btn useTitleCount:(NSString *)title {
+    
+    NSUInteger currentCount = title.integerValue;
+    NSString *btnTitle = btn.currentTitle;
+    
+    if (currentCount >= 10000) {
+        CGFloat formatNumber = currentCount / 10000.0f;
+        btnTitle = [NSString stringWithFormat:@"%0.1f万", formatNumber];
+        btnTitle = [btnTitle stringByReplacingOccurrencesOfString:@".0" withString:@""];
+    } else if (currentCount) {
+        btnTitle = title;
+    }
+    
+    [btn setTitle:btnTitle forState:UIControlStateNormal];
+    
 }
 
 - (void)layoutSubviews {
