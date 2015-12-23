@@ -12,12 +12,6 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "avatar_default_small@2x-1.png",
-      "unassigned" : true,
-      "scale" : "2x"
     }
   ],
   "info" : {
