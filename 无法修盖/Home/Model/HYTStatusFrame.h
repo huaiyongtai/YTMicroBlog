@@ -7,8 +7,8 @@
 //
 
 #define HYTStatusFrameNameFont [UIFont systemFontOfSize:15]
-#define HYTStatusFrameSourceFont [UIFont systemFontOfSize:15]
-#define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:12]
+#define HYTStatusFrameSourceFont HYTStatusFrameCreatedAtFont
 #define HYTStatusFrameContentFont [UIFont systemFontOfSize:15]
 #define HYTStatusFrameReweetedContentFont [UIFont systemFontOfSize:15]
 
@@ -19,31 +19,23 @@
 
 /** 原创微博Frame */
 @property (nonatomic, assign) CGRect originalStatusViewF;
-
 /** 用户头像Frame */
 @property (nonatomic, assign) CGRect profileImageViewF;
-
 /** 用户昵称Frame */
 @property (nonatomic, assign) CGRect nameLabelF;
-
 /** 用户会员图标Frame */
 @property (nonatomic, assign) CGRect mbMarkViewF;
-
 /** 微博来源Frame */
 @property (nonatomic, assign) CGRect sourceLabelF;
-
 /** 微博创建时间Frame */
 @property (nonatomic, assign) CGRect createdAtLabelF;
-
 /** 微博信息内容Frame */
 @property (nonatomic, assign) CGRect contentLabelF;
-
 /** 配图Frame */
 @property (nonatomic, assign) CGRect pictureViewF;
 
 /** 转发微博 */
 @property (nonatomic, assign) CGRect retweetedStatusViewF;
-
 /** 转发微博内容 */
 @property (nonatomic, assign) CGRect retweetedContentLabelF;
 /** 转发微博配图 */

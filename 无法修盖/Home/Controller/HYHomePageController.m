@@ -83,6 +83,10 @@
     [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
      parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            NSDictionary *tempDict = (NSDictionary *)responseObject;
+            BOOL write = [tempDict writeToFile:@"/Users/helloworld/Desktop/stutues.plist" atomically:YES];
+            NSLog(@"%i", write);
             
             [refreshControl endRefreshing];
             
@@ -147,7 +151,7 @@
     if (statusCount == 0) return;
     UILabel *alertLabel = [[UILabel alloc] init];
     [alertLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]]];
-    [alertLabel setText:[NSString stringWithFormat:@"%i 条新微薄", statusCount]];
+    [alertLabel setText:[NSString stringWithFormat:@"%li 条新微薄", statusCount]];
     [alertLabel setTextAlignment:NSTextAlignmentCenter];
     [alertLabel setTextColor:[UIColor whiteColor]];
     [alertLabel setSize:CGSizeMake(SCREEN_WIDTH, 30)];

@@ -94,6 +94,7 @@
     /** 用户昵称 */
     UILabel *nameLabel = [[UILabel alloc] init];
     [nameLabel setFont:HYTStatusFrameNameFont];
+    [nameLabel setTextColor:HYTCOLOR(241, 75, 0)];
     [originalStatusView addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
@@ -106,12 +107,14 @@
     /** 微博创建时间 */
     UILabel *createdAtLabel = [[UILabel alloc] init];
     [createdAtLabel setFont:HYTStatusFrameCreatedAtFont];
+    [createdAtLabel setTextColor:HYTCOLOR(255, 109, 0)];
     [originalStatusView addSubview:createdAtLabel];
     self.createdAtLabel = createdAtLabel;
     
     /** 微博来源 */
     UILabel *sourceLabel = [[UILabel alloc] init];
     [sourceLabel setFont:HYTStatusFrameSourceFont];
+    [sourceLabel setTextColor:HYTCOLOR(131, 131, 131)];
     [originalStatusView addSubview:sourceLabel];
     self.sourceLabel = sourceLabel;
 
