@@ -32,6 +32,8 @@
 		827CCE0A1BD544E3005B5FAD /* HYTNewFeatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827CCE091BD544E3005B5FAD /* HYTNewFeatureController.m */; };
 		82830EEB1C0431470019B30D /* HYTAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 82830EEA1C0431470019B30D /* HYTAccount.m */; };
 		82907D351BBADE9D0043D7F4 /* YTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 82907D341BBADE9D0043D7F4 /* YTTabBar.m */; };
+		8292F0B01C3381D000B0DEE8 /* HYTStatusPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0AF1C3381D000B0DEE8 /* HYTStatusPictureView.m */; };
+		8292F0B31C3381EE00B0DEE8 /* HYTStatusPicturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0B21C3381EE00B0DEE8 /* HYTStatusPicturesView.m */; };
 		82A2397E1BB05118006AD4C7 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */; };
 		82C6920F1C0B3D76009214CC /* HYTStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C6920E1C0B3D76009214CC /* HYTStatus.m */; };
 		82C692281C0B532F009214CC /* MJDictionaryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C692121C0B532F009214CC /* MJDictionaryCache.m */; };
@@ -59,7 +61,7 @@
 		82F52E181BDFDB8A00A509F5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E0D1BDFDB8A00A509F5 /* AFURLRequestSerialization.m */; };
 		82F52E191BDFDB8A00A509F5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E0F1BDFDB8A00A509F5 /* AFURLResponseSerialization.m */; };
 		82F52E1A1BDFDB8A00A509F5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F52E111BDFDB8A00A509F5 /* AFURLSessionManager.m */; };
-		82FCE0C81C1325B20091CEEF /* HYTPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FCE0C71C1325B20091CEEF /* HYTPicture.m */; };
+		82FCE0C81C1325B20091CEEF /* HYTStatusPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FCE0C71C1325B20091CEEF /* HYTStatusPicture.m */; };
 		82FE49BA1C0B14C100B7305F /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499A1C0B14C100B7305F /* MKAnnotationView+WebCache.m */; };
 		82FE49BB1C0B14C100B7305F /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499C1C0B14C100B7305F /* NSData+ImageContentType.m */; };
 		82FE49BC1C0B14C100B7305F /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FE499E1C0B14C100B7305F /* SDImageCache.m */; };
@@ -140,6 +142,10 @@
 		82830EEA1C0431470019B30D /* HYTAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTAccount.m; sourceTree = "<group>"; };
 		82907D331BBADE9D0043D7F4 /* YTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTTabBar.h; sourceTree = "<group>"; };
 		82907D341BBADE9D0043D7F4 /* YTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTTabBar.m; sourceTree = "<group>"; };
+		8292F0AE1C3381D000B0DEE8 /* HYTStatusPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusPictureView.h; sourceTree = "<group>"; };
+		8292F0AF1C3381D000B0DEE8 /* HYTStatusPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusPictureView.m; sourceTree = "<group>"; };
+		8292F0B11C3381EE00B0DEE8 /* HYTStatusPicturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusPicturesView.h; sourceTree = "<group>"; };
+		8292F0B21C3381EE00B0DEE8 /* HYTStatusPicturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusPicturesView.m; sourceTree = "<group>"; };
 		82A2397C1BB05118006AD4C7 /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
 		82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
 		82A2397F1BB05500006AD4C7 /* MicroBlog.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MicroBlog.pch; sourceTree = "<group>"; };
@@ -197,8 +203,8 @@
 		82F52E0F1BDFDB8A00A509F5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		82F52E101BDFDB8A00A509F5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		82F52E111BDFDB8A00A509F5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		82FCE0C61C1325B20091CEEF /* HYTPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTPicture.h; sourceTree = "<group>"; };
-		82FCE0C71C1325B20091CEEF /* HYTPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTPicture.m; sourceTree = "<group>"; };
+		82FCE0C61C1325B20091CEEF /* HYTStatusPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusPicture.h; sourceTree = "<group>"; };
+		82FCE0C71C1325B20091CEEF /* HYTStatusPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusPicture.m; sourceTree = "<group>"; };
 		82FE49991C0B14C100B7305F /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		82FE499A1C0B14C100B7305F /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		82FE499B1C0B14C100B7305F /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -400,12 +406,12 @@
 			children = (
 				82FE49CD1C0B38A600B7305F /* HYTUser.h */,
 				82FE49CE1C0B38A600B7305F /* HYTUser.m */,
-				82FCE0C61C1325B20091CEEF /* HYTPicture.h */,
-				82FCE0C71C1325B20091CEEF /* HYTPicture.m */,
 				82C6920D1C0B3D76009214CC /* HYTStatus.h */,
 				82C6920E1C0B3D76009214CC /* HYTStatus.m */,
 				823FF7F11C118E2700D51B60 /* HYTStatusFrame.h */,
 				823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */,
+				82FCE0C61C1325B20091CEEF /* HYTStatusPicture.h */,
+				82FCE0C71C1325B20091CEEF /* HYTStatusPicture.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -419,6 +425,10 @@
 				820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */,
 				823FF7EE1C118E1200D51B60 /* HYTStatusCell.h */,
 				823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */,
+				8292F0AE1C3381D000B0DEE8 /* HYTStatusPictureView.h */,
+				8292F0AF1C3381D000B0DEE8 /* HYTStatusPictureView.m */,
+				8292F0B11C3381EE00B0DEE8 /* HYTStatusPicturesView.h */,
+				8292F0B21C3381EE00B0DEE8 /* HYTStatusPicturesView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -807,7 +817,7 @@
 				82D945581BBA41050070051B /* DropDownMenu.m in Sources */,
 				82C6920F1C0B3D76009214CC /* HYTStatus.m in Sources */,
 				82C692311C0B532F009214CC /* NSObject+MJProperty.m in Sources */,
-				82FCE0C81C1325B20091CEEF /* HYTPicture.m in Sources */,
+				82FCE0C81C1325B20091CEEF /* HYTStatusPicture.m in Sources */,
 				82F52E171BDFDB8A00A509F5 /* AFURLConnectionOperation.m in Sources */,
 				82FE49C81C0B14C100B7305F /* UIImageView+WebCache.m in Sources */,
 				82F52E161BDFDB8A00A509F5 /* AFSecurityPolicy.m in Sources */,
@@ -823,6 +833,7 @@
 				82FE49C21C0B14C100B7305F /* SDWebImagePrefetcher.m in Sources */,
 				826298E31B766B4100E1680C /* HYTest1ViewController.m in Sources */,
 				8265CBC41BE73F7500E8A690 /* Constant.m in Sources */,
+				8292F0B31C3381EE00B0DEE8 /* HYTStatusPicturesView.m in Sources */,
 				823977DE1C045E7F00707E75 /* HYTAccountTool.m in Sources */,
 				82C6922F1C0B532F009214CC /* NSObject+MJCoding.m in Sources */,
 				82FE49BD1C0B14C100B7305F /* SDWebImageCompat.m in Sources */,
@@ -830,6 +841,7 @@
 				82FE49C01C0B14C100B7305F /* SDWebImageDownloaderOperation.m in Sources */,
 				82FE49BE1C0B14C100B7305F /* SDWebImageDecoder.m in Sources */,
 				82FE49C11C0B14C100B7305F /* SDWebImageManager.m in Sources */,
+				8292F0B01C3381D000B0DEE8 /* HYTStatusPictureView.m in Sources */,
 				823977E21C04732A00707E75 /* UIWindow+Extension.m in Sources */,
 				82C692281C0B532F009214CC /* MJDictionaryCache.m in Sources */,
 				8206786D1BB1B6FB00F698C0 /* HYSearchBar.m in Sources */,

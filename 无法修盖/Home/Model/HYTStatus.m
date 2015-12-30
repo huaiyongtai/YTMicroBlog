@@ -23,9 +23,8 @@
     
     return [propertyName mj_underlineFromCamel];
 }
-
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"pictures" : [HYTPicture class]};
+    return @{@"pictures" : [HYTStatusPicture class]};
 }
 
 
@@ -146,7 +145,6 @@
     dateFmt.dateFormat = showDateFmt;
     return [dateFmt stringFromDate:createDate];
 }
-
 /** 判断是否是今年 */
 - (BOOL)isThisYear:(NSDate *)date {
     

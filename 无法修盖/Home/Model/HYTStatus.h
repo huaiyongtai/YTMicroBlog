@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HYTUser.h"
-#import "HYTPicture.h"
+#import "HYTStatusPicture.h"
 
 @interface HYTStatus : NSObject
 

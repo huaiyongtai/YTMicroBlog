@@ -1,5 +1,5 @@
 //
-//  HYTPicture.h
+//  HYTStatusPicture.h
 //  无法修盖
 //
 //  Created by HelloWorld on 15/12/5.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HYTPicture : NSObject
+@interface HYTStatusPicture : NSObject
 
 /** 所略同 */
 @property (nonatomic, copy) NSString *thumbnailPic;

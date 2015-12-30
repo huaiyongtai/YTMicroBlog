@@ -10,39 +10,33 @@
 #import "HYTStatusFrame.h"
 #import "HYTStatusCellToolBar.h"
 #import "UIImageView+WebCache.h"
+#import "HYTStatusPicturesView.h"
 
 @interface HYTStatusCell ()
 
 /** 原创微博 */
 @property (nonatomic, weak) UIView *originalStatusView;
-
 /** 用户头像 */
 @property (nonatomic, weak) UIImageView *profileImageView;
-
 /** 用户昵称 */
 @property (nonatomic, weak) UILabel *nameLabel;
-
 /** 用户会员图标 */
 @property (nonatomic, weak) UIImageView *mbMarkView;
-
 /** 微博来源 */
 @property (nonatomic, weak) UILabel *sourceLabel;
-
 /** 微博创建时间 */
 @property (nonatomic, weak) UILabel *createdAtLabel;
-
 /** 微博信息内容 */
 @property (nonatomic, weak) UILabel *contentLabel;
 /** 配图 */
-@property (nonatomic, weak) UIImageView *pictureView;
+@property (nonatomic, weak) HYTStatusPicturesView *picturesView;
 
 /** 转发微博 */
 @property (nonatomic, weak) UIView *retweetedStatusView;
-
 /** 转发微博内容 */
 @property (nonatomic, weak) UILabel *retweetedContentLabel;
 /** 转发微博配图 */
-@property (nonatomic, weak) UIImageView *retweetedPictureView;
+@property (nonatomic, weak) HYTStatusPicturesView *retweetedPicturesView;
 
 /** 底部toolBar */
 @property (nonatomic, weak) HYTStatusCellToolBar *toolBar;
@@ -126,12 +120,9 @@
     self.contentLabel = contentLabel;
     
     /** 配图 */
-    UIImageView *pictureView = [[UIImageView alloc] init];
-    [pictureView setBackgroundColor:[UIColor blackColor]];
-    [pictureView setContentMode:UIViewContentModeScaleAspectFill];
-    [pictureView.layer setMasksToBounds:YES];
-    [originalStatusView addSubview:pictureView];
-    self.pictureView = pictureView;
+    HYTStatusPicturesView *picturesView = [[HYTStatusPicturesView alloc] init];
+    [originalStatusView addSubview:picturesView];
+    self.picturesView = picturesView;
 }
 #pragma mark - 初始化转发微博
 - (void)setupRetweetedStatusView {
@@ -150,12 +141,11 @@
     self.retweetedContentLabel = retweetedContentLabel;
     
     /** 转发微博配图 */
-    UIImageView *retweetedPictureView = [[UIImageView alloc] init];
-    [retweetedPictureView setContentMode:UIViewContentModeScaleToFill];
-    [retweetedPictureView.layer setMasksToBounds:YES];
-    [retweetedStatusView addSubview:retweetedPictureView];
-    self.retweetedPictureView = retweetedPictureView;
+    HYTStatusPicturesView *retweetedPicturesView = [[HYTStatusPicturesView alloc] init];
+    [retweetedStatusView addSubview:retweetedPicturesView];
+    self.retweetedPicturesView = retweetedPicturesView;
 }
+
 #pragma mark - 添加底部toolBar
 - (void)setupStatusToolBar {
     HYTStatusCellToolBar *toolBar = [[HYTStatusCellToolBar alloc] init];
@@ -184,22 +174,41 @@
         NSString *mbMarkNum = [NSString stringWithFormat:@"userinfo_membership_level%i", user.mbRank];
         [self.mbMarkView setImage:[UIImage imageNamed:mbMarkNum]];
         [self.mbMarkView setFrame:statusFrame.mbMarkViewF];
+        [self.mbMarkView setHidden:NO];
+    } else {
+        [self.mbMarkView setHidden:YES];
     }
 
-    [self.createdAtLabel setText:status.createdAt];
-    [self.createdAtLabel setFrame:statusFrame.createdAtLabelF];
+    /** 微博创建时间Frame */
+    NSString *currentCreatAt = status.createdAt;
+    BOOL isRecalculateCreatFrame = status.createdAt.length != self.createdAtLabel.text.length; //在cell的循环利用中判断是否需要重新计算创建时间的frame
+    if (isRecalculateCreatFrame) {
+        CGFloat createdAtX = statusFrame.nameLabelF.origin.x;
+        CGFloat createdAtY = CGRectGetMaxY(statusFrame.nameLabelF) + HYTStatusFrameSmallMargin;
+        CGSize createdAtSize = [status.createdAt yt_sizeWithFont:HYTStatusFrameCreatedAtFont];
+        [self.createdAtLabel setFrame:(CGRect){{createdAtX, createdAtY}, createdAtSize}];
+    }
+    [self.createdAtLabel setText:currentCreatAt];
     
+    /** 微博来源Frame */
+    BOOL isRecalculateSourceFrame = status.source.length != self.sourceLabel.text.length; //在cell的循环利用中判断是否需要重新计算来源时间的frame
+    if (isRecalculateSourceFrame || isRecalculateCreatFrame) {
+        CGFloat sourceX = CGRectGetMaxX(self.createdAtLabel.frame) + HYTStatusFrameSmallMargin;
+        CGFloat sourceY = self.createdAtLabel.frame.origin.y;
+        CGSize sourceSize = [status.source yt_sizeWithFont:HYTStatusFrameSourceFont];
+        [self.sourceLabel setFrame:(CGRect){{sourceX, sourceY}, sourceSize}];
+    }
     [self.sourceLabel setText:status.source];
-    [self.sourceLabel setFrame:statusFrame.sourceLabelF];
-    
+
     [self.contentLabel setText:status.text];
     [self.contentLabel setFrame:statusFrame.contentLabelF];
     
     if (status.pictures.count) {
-        HYTPicture *picture = status.pictures[0];
-        UIImage *picturePlaceholder = [UIImage imageNamed:@"timeline_image_placeholder"];
-        [self.pictureView sd_setImageWithURL:[NSURL URLWithString:picture.thumbnailPic] placeholderImage:picturePlaceholder];
-        [self.pictureView setFrame:statusFrame.pictureViewF];
+        [self.picturesView setPictures:status.pictures];
+        [self.picturesView setFrame:statusFrame.picturesViewF];
+        [self.picturesView setHidden:NO];
+    } else {
+        [self.picturesView setHidden:YES];
     }
     
     if (status.retweetedStatus) {
@@ -213,35 +222,33 @@
         [self.retweetedContentLabel setFrame:statusFrame.retweetedContentLabelF];
         
         if (retweetedStatus.pictures.count) {
-            HYTPicture *picture = retweetedStatus.pictures[0];
-            UIImage *picturePlaceholder = [UIImage imageNamed:@"timeline_image_placeholder"];
-            [self.retweetedPictureView sd_setImageWithURL:[NSURL URLWithString:picture.thumbnailPic] placeholderImage:picturePlaceholder];
-            [self.retweetedPictureView setFrame:statusFrame.retweetedPictureViewF];
+            [self.retweetedPicturesView setPictures:retweetedStatus.pictures];
+            [self.retweetedPicturesView setFrame:statusFrame.retweetedPicturesViewF];
+            self.retweetedPicturesView.hidden = NO;
+        } else {
+            self.retweetedPicturesView.hidden = YES;
         }
+        
+        [self.retweetedStatusView setHidden:NO];
+    } else {
+        [self.retweetedStatusView setHidden:YES];
     }
     
     self.toolBar.status = status;
     [self.toolBar setFrame:statusFrame.toolBarF];
 }
 
-#pragma mark - 清除复用数据
-- (void)prepareForReuse {
-    
-    [super prepareForReuse];
-    
-    [self.mbMarkView setImage:nil];
-    [self.mbMarkView setFrame:CGRectZero];
-    
-    [self.pictureView setImage:nil];
-    [self.pictureView setFrame:CGRectZero];
-    
-    [self.retweetedStatusView setFrame:CGRectZero];
-    
-    [self.retweetedContentLabel setText:nil];
-    [self.retweetedContentLabel setFrame:CGRectZero];
-    
-    [self.retweetedPictureView setImage:nil];
-    [self.retweetedPictureView setFrame:CGRectZero];
-    
-}
+#pragma mark - 清除复用数据 (不可靠，因为设置frame为CGRectZero时，内部的子控件任然可能显示出来)
+//- (void)prepareForReuse {
+//    
+//    [super prepareForReuse];
+//    
+//    [self.mbMarkView setImage:nil];
+//    [self.mbMarkView setFrame:CGRectZero];
+//    [self.retweetedStatusView setFrame:CGRectZero];
+//    
+//    [self.retweetedContentLabel setText:nil];
+//    [self.retweetedContentLabel setFrame:CGRectZero];
+//    
+//}
 @end

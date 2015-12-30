@@ -6,11 +6,14 @@
 //  Copyright (c) 2015年 SearchPrefect. All rights reserved.
 //
 
-#define HYTStatusFrameNameFont [UIFont systemFontOfSize:15]
-#define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:12]
-#define HYTStatusFrameSourceFont HYTStatusFrameCreatedAtFont
-#define HYTStatusFrameContentFont [UIFont systemFontOfSize:15]
-#define HYTStatusFrameReweetedContentFont [UIFont systemFontOfSize:15]
+#define HYTStatusFrameNameFont [UIFont systemFontOfSize:15]             //姓名字体
+#define HYTStatusFrameCreatedAtFont [UIFont systemFontOfSize:12]        //创建时间字体
+#define HYTStatusFrameSourceFont HYTStatusFrameCreatedAtFont            //微博来源字体
+#define HYTStatusFrameContentFont [UIFont systemFontOfSize:15]          //微博内容字体
+#define HYTStatusFrameReweetedContentFont [UIFont systemFontOfSize:15]  //转发内容字体
+
+extern const CGFloat HYTStatusFrameNormalMargin;
+extern const CGFloat HYTStatusFrameSmallMargin;
 
 #import <Foundation/Foundation.h>
 #import "HYTStatus.h"
@@ -32,18 +35,17 @@
 /** 微博信息内容Frame */
 @property (nonatomic, assign) CGRect contentLabelF;
 /** 配图Frame */
-@property (nonatomic, assign) CGRect pictureViewF;
+@property (nonatomic, assign) CGRect picturesViewF;
 
 /** 转发微博 */
 @property (nonatomic, assign) CGRect retweetedStatusViewF;
 /** 转发微博内容 */
 @property (nonatomic, assign) CGRect retweetedContentLabelF;
 /** 转发微博配图 */
-@property (nonatomic, assign) CGRect retweetedPictureViewF;
+@property (nonatomic, assign) CGRect retweetedPicturesViewF;
 
 /** 底部toolBar */
 @property (nonatomic, assign) CGRect toolBarF;
-
 
 /** cell的总高度 */
 @property (nonatomic, assign) CGFloat cellTotalHeight;
