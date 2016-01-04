@@ -9,7 +9,7 @@
 #import "HYTStatusPicturesView.h"
 #import "HYTStatusPictureView.h"
 
-#define ReviseColsWithCount(count) (count > 2 ? 3 : 2)
+#define ReviseColsWithCount(count) (count < 3 ? 2 : 3)
 
 @interface HYTStatusPicturesView ()
 
@@ -77,7 +77,4 @@ static const CGFloat kPictureViewPadding = 10;
     return CGSizeMake(maxWidth, rows * (pictureViewWH + kPictureViewPadding) - kPictureViewPadding);
     
 }
-
-
-
 @end

@@ -34,6 +34,10 @@
     if ([propertyName isEqualToString:@"mbRank"]) {
         return @"mbrank";
     }
+    
+    if ([propertyName isEqualToString:@"verifiedType"]) {
+        return @"verified_level";
+    }
     return [propertyName mj_underlineFromCamel];
 }
 
@@ -41,6 +45,11 @@
     _mbType = mbType;
     
     self.vip = mbType > 2;
+}
+
+- (void)setVerifiedType:(HYTUserVerifiedTypes)verifiedType {
+    
+    _verifiedType = verifiedType;
 }
 
 

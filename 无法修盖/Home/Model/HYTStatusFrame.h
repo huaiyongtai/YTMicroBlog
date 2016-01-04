@@ -23,7 +23,7 @@ extern const CGFloat HYTStatusFrameSmallMargin;
 /** 原创微博Frame */
 @property (nonatomic, assign) CGRect originalStatusViewF;
 /** 用户头像Frame */
-@property (nonatomic, assign) CGRect profileImageViewF;
+@property (nonatomic, assign) CGRect iconViewF;
 /** 用户昵称Frame */
 @property (nonatomic, assign) CGRect nameLabelF;
 /** 用户会员图标Frame */

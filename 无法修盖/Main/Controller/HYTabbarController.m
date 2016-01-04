@@ -9,6 +9,7 @@
 #import "HYTabbarController.h"
 #import "HYHomePageController.h"
 #import "HYMessageCenterController.h"
+#import "HYTComposeController.h"
 #import "HYDiscoverController.h"
 #import "HYProflieController.h"
 #import "HYNavigationController.h"
@@ -98,10 +99,9 @@
 #pragma mark - YTTabBarDelegate
 - (void)tabBarDidSelectedPlusBtn:(YTTabBar *)tabBar {
     
-    UIViewController *vc = [[UIViewController alloc] init];
-    [vc.view setBackgroundColor:[UIColor redColor]];
-    
-    [self presentViewController:vc animated:YES completion:nil];
+    HYTComposeController *composeVC = [[HYTComposeController alloc] init];
+    HYNavigationController *navVC = [[HYNavigationController alloc] initWithRootViewController:composeVC];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
 
 @end

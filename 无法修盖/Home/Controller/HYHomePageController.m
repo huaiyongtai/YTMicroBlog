@@ -84,10 +84,6 @@
      parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-            NSDictionary *tempDict = (NSDictionary *)responseObject;
-            BOOL write = [tempDict writeToFile:@"/Users/helloworld/Desktop/stutues.plist" atomically:YES];
-            NSLog(@"%i", write);
-            
             [refreshControl endRefreshing];
             
             //将字典数组转化为模型数组
@@ -260,9 +256,6 @@
              NSLog(@"error:%@", error);
          }
      ];
-
-    
-    
 }
 
 - (NSMutableArray *)statusFramesWithStatuses:(NSArray *)statuses {

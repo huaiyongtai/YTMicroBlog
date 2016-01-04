@@ -17,7 +17,7 @@
 + (void)initialize {
     
     //设置所有UIBarButtonItem的主题样式
-    UIBarButtonItem *navBarItem = [UIBarButtonItem appearance];
+    UIBarButtonItem *navBarItem = [UIBarButtonItem appearanceWhenContainedIn:[HYNavigationController class], nil];
     
     //普通状态
     NSDictionary *normalDict =  @{NSFontAttributeName : [UIFont systemFontOfSize:14],
@@ -26,7 +26,7 @@
     
     //不可用状态
     NSDictionary *disableDict = @{NSFontAttributeName : [UIFont systemFontOfSize:14],
-                                  NSForegroundColorAttributeName : [UIColor brownColor]};
+                                  NSForegroundColorAttributeName : HYTCOLOR(150, 150, 150)};
     [navBarItem setTitleTextAttributes:disableDict forState:UIControlStateDisabled];
     
 }

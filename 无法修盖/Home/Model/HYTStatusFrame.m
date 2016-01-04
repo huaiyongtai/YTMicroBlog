@@ -33,24 +33,24 @@ const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间�
     CGFloat cellWidth = SCREEN_WIDTH;
 
     /** 用户头像Frame */
-    CGFloat profileImageWidth = 50;
-    CGFloat profileImageHeight = 50;
-    CGFloat profileImageX = HYTStatusFrameNormalMargin;
-    CGFloat profileImageY = HYTStatusFrameNormalMargin;
-    self.profileImageViewF = CGRectMake(profileImageX, profileImageY, profileImageWidth, profileImageHeight);
+    CGFloat iconViewWidth = 50;
+    CGFloat iconViewHeight = 50;
+    CGFloat iconViewX = HYTStatusFrameNormalMargin;
+    CGFloat iconViewY = HYTStatusFrameNormalMargin;
+    self.iconViewF = CGRectMake(iconViewX, iconViewY, iconViewWidth, iconViewHeight);
     
     /** 用户昵称Frame */
-    CGFloat nameX = CGRectGetMaxX(self.profileImageViewF) + HYTStatusFrameNormalMargin;
-    CGFloat nameY = profileImageY;
+    CGFloat nameX = CGRectGetMaxX(self.iconViewF) + HYTStatusFrameNormalMargin;
+    CGFloat nameY = iconViewY;
     CGSize nameSize = [user.name yt_sizeWithFont:HYTStatusFrameNameFont];
     self.nameLabelF = (CGRect){{nameX, nameY}, nameSize};
     
     /** 用户会员图标Frame */
     if (user.isVip) {
+        CGFloat mbMarkHeight = nameSize.height * 0.8;
+        CGFloat mbMarkWidth = mbMarkHeight;
         CGFloat mbMarkX = CGRectGetMaxX(self.nameLabelF) + HYTStatusFrameSmallMargin;
-        CGFloat mbMarkY = nameY;
-        CGFloat mbMarkHeight = nameSize.height;
-        CGFloat mbMarkWidth = 36;
+        CGFloat mbMarkY = nameY + (nameSize.height - mbMarkHeight) * 0.5;
         self.mbMarkViewF = CGRectMake(mbMarkX, mbMarkY, mbMarkWidth, mbMarkHeight);
     }
     
@@ -67,8 +67,8 @@ const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间�
     self.sourceLabelF = (CGRect){{sourceX, sourceY}, sourceSize};
     
     /** 微博信息内容Frame */
-    CGFloat contentX = profileImageX;
-    CGFloat contentY = MAX(CGRectGetMaxY(self.profileImageViewF), CGRectGetMaxY(self.sourceLabelF)) + HYTStatusFrameNormalMargin;
+    CGFloat contentX = iconViewX;
+    CGFloat contentY = MAX(CGRectGetMaxY(self.iconViewF), CGRectGetMaxY(self.sourceLabelF)) + HYTStatusFrameNormalMargin;
     CGFloat contentMaxWidth = cellWidth - contentX - HYTStatusFrameNormalMargin;
     CGSize contentSize = [status.text yt_sizeWithFont:HYTStatusFrameContentFont maxWidth:contentMaxWidth];
     self.contentLabelF = (CGRect){{contentX, contentY}, contentSize};

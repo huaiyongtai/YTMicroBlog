@@ -11,13 +11,14 @@
 #import "HYTStatusCellToolBar.h"
 #import "UIImageView+WebCache.h"
 #import "HYTStatusPicturesView.h"
+#import "HYTIconView.h"
 
 @interface HYTStatusCell ()
 
 /** 原创微博 */
 @property (nonatomic, weak) UIView *originalStatusView;
 /** 用户头像 */
-@property (nonatomic, weak) UIImageView *profileImageView;
+@property (nonatomic, weak) HYTIconView *iconView;
 /** 用户昵称 */
 @property (nonatomic, weak) UILabel *nameLabel;
 /** 用户会员图标 */
@@ -79,11 +80,9 @@
     self.originalStatusView = originalStatusView;
     
     /** 用户头像 */
-    UIImageView *profileImageView = [[UIImageView alloc] init];
-    [profileImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [profileImageView.layer setMasksToBounds:YES];
-    [originalStatusView addSubview:profileImageView];
-    self.profileImageView = profileImageView;
+    HYTIconView *iconView = [[HYTIconView alloc] init];
+    [originalStatusView addSubview:iconView];
+    self.iconView = iconView;
     
     /** 用户昵称 */
     UILabel *nameLabel = [[UILabel alloc] init];
@@ -163,15 +162,14 @@
 
     [self.originalStatusView setFrame:statusFrame.originalStatusViewF];
     
-    UIImage *profilePlaceholderImage = [UIImage imageNamed:@"avatar_default_small"];
-    [self.profileImageView sd_setImageWithURL:[NSURL URLWithString:user.profileImageURL] placeholderImage:profilePlaceholderImage];
-    [self.profileImageView setFrame:statusFrame.profileImageViewF];
+    [self.iconView setUser:user];
+    [self.iconView setFrame:statusFrame.iconViewF];
     
     [self.nameLabel setText:user.name];
     [self.nameLabel setFrame:statusFrame.nameLabelF];
     
     if (user.isVip) {
-        NSString *mbMarkNum = [NSString stringWithFormat:@"userinfo_membership_level%i", user.mbRank];
+        NSString *mbMarkNum = [NSString stringWithFormat:@"common_icon_membership_level%i", user.mbRank];
         [self.mbMarkView setImage:[UIImage imageNamed:mbMarkNum]];
         [self.mbMarkView setFrame:statusFrame.mbMarkViewF];
         [self.mbMarkView setHidden:NO];

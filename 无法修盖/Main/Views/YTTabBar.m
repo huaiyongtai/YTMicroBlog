@@ -32,14 +32,11 @@
         [plusBtn setImage:[UIImage imageNamed:@"tabbar_compose_icon_add_highlighted"]
                  forState:UIControlStateHighlighted];
         [plusBtn setSize:plusBtn.currentBackgroundImage.size];
-        
         [plusBtn addTarget:self
                     action:@selector(plusBtnDidClick)
           forControlEvents:UIControlEventTouchUpInside];
-        self.plusBtn = plusBtn;
-
         [self addSubview:plusBtn];
-        
+        self.plusBtn = plusBtn;
     }
     return self;
 }
@@ -61,6 +58,7 @@
     
     for (UIView *item in [self subviews]) {
         if ([item isKindOfClass:tabBarItemClass]) {
+            item.width = tabBarWidth;
             item.x = tabBarWidth * tabBarItemIndex;
             tabBarItemIndex++;
         }
@@ -73,6 +71,8 @@
 }
 
 - (void)plusBtnDidClick {
+    
+    
     if ([self.delegate respondsToSelector:@selector(tabBarDidSelectedPlusBtn:)]) {
         [self.delegate tabBarDidSelectedPlusBtn:self];
     }

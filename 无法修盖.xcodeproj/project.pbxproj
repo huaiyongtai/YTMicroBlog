@@ -34,7 +34,11 @@
 		82907D351BBADE9D0043D7F4 /* YTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 82907D341BBADE9D0043D7F4 /* YTTabBar.m */; };
 		8292F0B01C3381D000B0DEE8 /* HYTStatusPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0AF1C3381D000B0DEE8 /* HYTStatusPictureView.m */; };
 		8292F0B31C3381EE00B0DEE8 /* HYTStatusPicturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0B21C3381EE00B0DEE8 /* HYTStatusPicturesView.m */; };
+		8292F0B61C34F8FD00B0DEE8 /* HYTIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0B51C34F8FD00B0DEE8 /* HYTIconView.m */; };
+		8292F0BB1C35127D00B0DEE8 /* HYTComposeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0BA1C35127D00B0DEE8 /* HYTComposeController.m */; };
+		8292F0BE1C3525AD00B0DEE8 /* HYTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8292F0BD1C3525AD00B0DEE8 /* HYTTextView.m */; };
 		82A2397E1BB05118006AD4C7 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */; };
+		82B344581C3A453A00D74742 /* HYTComposeToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B344571C3A453A00D74742 /* HYTComposeToolbar.m */; };
 		82C6920F1C0B3D76009214CC /* HYTStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C6920E1C0B3D76009214CC /* HYTStatus.m */; };
 		82C692281C0B532F009214CC /* MJDictionaryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C692121C0B532F009214CC /* MJDictionaryCache.m */; };
 		82C692291C0B532F009214CC /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C692151C0B532F009214CC /* MJExtensionConst.m */; };
@@ -146,9 +150,17 @@
 		8292F0AF1C3381D000B0DEE8 /* HYTStatusPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusPictureView.m; sourceTree = "<group>"; };
 		8292F0B11C3381EE00B0DEE8 /* HYTStatusPicturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatusPicturesView.h; sourceTree = "<group>"; };
 		8292F0B21C3381EE00B0DEE8 /* HYTStatusPicturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusPicturesView.m; sourceTree = "<group>"; };
+		8292F0B41C34F8FD00B0DEE8 /* HYTIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTIconView.h; sourceTree = "<group>"; };
+		8292F0B51C34F8FD00B0DEE8 /* HYTIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTIconView.m; sourceTree = "<group>"; };
+		8292F0B91C35127D00B0DEE8 /* HYTComposeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTComposeController.h; sourceTree = "<group>"; };
+		8292F0BA1C35127D00B0DEE8 /* HYTComposeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTComposeController.m; sourceTree = "<group>"; };
+		8292F0BC1C3525AD00B0DEE8 /* HYTTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTTextView.h; sourceTree = "<group>"; };
+		8292F0BD1C3525AD00B0DEE8 /* HYTTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTTextView.m; sourceTree = "<group>"; };
 		82A2397C1BB05118006AD4C7 /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
 		82A2397D1BB05118006AD4C7 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
 		82A2397F1BB05500006AD4C7 /* MicroBlog.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MicroBlog.pch; sourceTree = "<group>"; };
+		82B344561C3A453A00D74742 /* HYTComposeToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTComposeToolbar.h; sourceTree = "<group>"; };
+		82B344571C3A453A00D74742 /* HYTComposeToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTComposeToolbar.m; sourceTree = "<group>"; };
 		82C6920D1C0B3D76009214CC /* HYTStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTStatus.h; sourceTree = "<group>"; };
 		82C6920E1C0B3D76009214CC /* HYTStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatus.m; sourceTree = "<group>"; };
 		82C692111C0B532F009214CC /* MJDictionaryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJDictionaryCache.h; sourceTree = "<group>"; };
@@ -271,6 +283,12 @@
 				82907D341BBADE9D0043D7F4 /* YTTabBar.m */,
 				82D945661BBBB1C10070051B /* NavTitleBtn.h */,
 				82D945671BBBB1C10070051B /* NavTitleBtn.m */,
+				8292F0B41C34F8FD00B0DEE8 /* HYTIconView.h */,
+				8292F0B51C34F8FD00B0DEE8 /* HYTIconView.m */,
+				8292F0BC1C3525AD00B0DEE8 /* HYTTextView.h */,
+				8292F0BD1C3525AD00B0DEE8 /* HYTTextView.m */,
+				82B344561C3A453A00D74742 /* HYTComposeToolbar.h */,
+				82B344571C3A453A00D74742 /* HYTComposeToolbar.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +317,7 @@
 				8283F4CE1BDE8A5A003AD687 /* OAuth */,
 				826298C61B766B4100E1680C /* Main */,
 				826298BC1B766B4100E1680C /* Home */,
+				8292F0B71C35122D00B0DEE8 /* Compose */,
 				827CCE021BD5447C005B5FAD /* NewFeature */,
 				826298CC1B766B4100E1680C /* MessageCenter */,
 				826298B61B766B4100E1680C /* Discover */,
@@ -604,6 +623,23 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		8292F0B71C35122D00B0DEE8 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				8292F0B81C35122D00B0DEE8 /* Controller */,
+			);
+			path = Compose;
+			sourceTree = "<group>";
+		};
+		8292F0B81C35122D00B0DEE8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8292F0B91C35127D00B0DEE8 /* HYTComposeController.h */,
+				8292F0BA1C35127D00B0DEE8 /* HYTComposeController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		82C692101C0B532F009214CC /* MJExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,8 +864,10 @@
 				823FF7F31C118E2700D51B60 /* HYTStatusFrame.m in Sources */,
 				82F52E141BDFDB8A00A509F5 /* AFHTTPSessionManager.m in Sources */,
 				826298DE1B766B4100E1680C /* HYHomePageController.m in Sources */,
+				8292F0B61C34F8FD00B0DEE8 /* HYTIconView.m in Sources */,
 				826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */,
 				82FE49C41C0B14C100B7305F /* UIImage+GIF.m in Sources */,
+				8292F0BB1C35127D00B0DEE8 /* HYTComposeController.m in Sources */,
 				82FE49C21C0B14C100B7305F /* SDWebImagePrefetcher.m in Sources */,
 				826298E31B766B4100E1680C /* HYTest1ViewController.m in Sources */,
 				8265CBC41BE73F7500E8A690 /* Constant.m in Sources */,
@@ -844,6 +882,7 @@
 				8292F0B01C3381D000B0DEE8 /* HYTStatusPictureView.m in Sources */,
 				823977E21C04732A00707E75 /* UIWindow+Extension.m in Sources */,
 				82C692281C0B532F009214CC /* MJDictionaryCache.m in Sources */,
+				82B344581C3A453A00D74742 /* HYTComposeToolbar.m in Sources */,
 				8206786D1BB1B6FB00F698C0 /* HYSearchBar.m in Sources */,
 				826298E11B766B4100E1680C /* HYMessageCenterController.m in Sources */,
 				826298E41B766B4100E1680C /* HYTest2ViewController.m in Sources */,
@@ -868,6 +907,7 @@
 				82C692321C0B532F009214CC /* NSString+MJExtension.m in Sources */,
 				826298E01B766B4100E1680C /* main.m in Sources */,
 				820191061C1488BC00F5F7CA /* HYTStatusCellToolBar.m in Sources */,
+				8292F0BE1C3525AD00B0DEE8 /* HYTTextView.m in Sources */,
 				82FE49C61C0B14C100B7305F /* UIImage+WebP.m in Sources */,
 				823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */,
 				82D9455B1BBA6D090070051B /* UIView+Extension.m in Sources */,

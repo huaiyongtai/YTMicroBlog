@@ -157,6 +157,8 @@
 }
 
 - (void)setSource:(NSString *)source {
+    
+     if (source.length == 0) return;
     /*
     <a href="http://app.weibo.com/t/feed/5yiHuw" rel="nofollow">iPhone 6 Plus</a>
     <a href="http://app.weibo.com/t/feed/68lh5N" rel="nofollow">威锋网</a>
@@ -167,7 +169,7 @@
     NSRange endRange = [source rangeOfString:@"</a>" options:NSBackwardsSearch];
     
     NSInteger sourceLocation = startRange.location + startRange.length;
-    NSInteger sourceLength = endRange.location - startRange.location - startRange.length;
+    NSInteger sourceLength = endRange.location - sourceLocation;
     if (sourceLength < 0) {
         sourceLength = 0;
     }

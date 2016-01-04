@@ -22,13 +22,12 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        UIImageView *gifTipView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeline_icon_like"]];
+        UIImageView *gifTipView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeline_image_gif"]];
         [self addSubview:gifTipView];
         self.gifTipView = gifTipView;
         
-//        [self setBackgroundColor:[UIColor redColor]];
-        
-        [self setContentMode:UIViewContentModeScaleAspectFit];
+        [self setContentMode:UIViewContentModeScaleAspectFill];
+        [self setClipsToBounds:YES];
     }
     return self;
 }

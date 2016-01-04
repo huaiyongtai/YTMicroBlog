@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, HYTUserVerifiedTypes) {
+    
+    HYTUserVerifiedNone       = -1,    //无任何认证
+    HYTUserVerifiedPersonal   = 2,     //个人认证
+    HYTUserVerifiedEnterprise = 3,     //企业认证
+    HYTUserVerifiedGrassroot  = 10,    //微博达人
+    HYTUserVerifiedGirl
+    
+};
+
 @interface HYTUser : NSObject
 
 /** 用户ID */
@@ -24,6 +34,9 @@
 /** 会员等级 */
 @property (nonatomic, assign) int mbRank;
 @property (nonatomic, assign, getter = isVip) BOOL vip;
+
+/** 用户认证类型 */
+@property (nonatomic, assign) HYTUserVerifiedTypes verifiedType;
 
 //+ (instancetype)userWithDict:(NSDictionary *)dict;
 
