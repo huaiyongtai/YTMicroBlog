@@ -17,6 +17,9 @@
 @property (nonatomic, weak  ) HYTTextView       *textView;
 @property (nonatomic, strong) HYTComposeToolbar *toolbar;
 
+
+@property (nonatomic, weak  ) HYTComposePicturesView *picturesView;
+
 @end
 
 @implementation HYTComposeController
@@ -42,6 +45,16 @@
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (HYTComposePicturesView *)picturesView {
+    
+    if (_picturesView == nil) {
+        HYTComposePicturesView *picturesView = [HYTComposePicturesView picturesView];
+        [self.textView addSubview:picturesView];
+        _picturesView = picturesView;
+    }
+    return _picturesView;
 }
 
 - (void)setupNavInfo {
@@ -213,12 +226,10 @@
 
 #pragma mark - UINavigationControllerDelegate, UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    
-    HYTComposePicturesView *picturesView = [HYTComposePicturesView picturesView];
+
     NSString *key = info[UIImagePickerControllerReferenceURL];
     UIImage *valueImage = info[UIImagePickerControllerOriginalImage];
-    [picturesView addImageWithKey:key valueImage:valueImage];
+    [self.picturesView addImageWithKey:key valueImage:valueImage];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
