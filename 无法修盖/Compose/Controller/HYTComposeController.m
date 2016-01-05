@@ -10,10 +10,11 @@
 #import "HYTAccountTool.h"
 #import "HYTTextView.h"
 #import "HYTComposeToolbar.h"
+#import "HYTComposePicturesView.h"
 
-@interface HYTComposeController () <HYTComposeToolbarDelegate, UITextViewDelegate>
+@interface HYTComposeController () <HYTComposeToolbarDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, weak) HYTTextView *textView;
+@property (nonatomic, weak  ) HYTTextView       *textView;
 @property (nonatomic, strong) HYTComposeToolbar *toolbar;
 
 @end
@@ -23,17 +24,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 
     [self setupNavInfo];
     
     /**注意:子控件添加的顺序，必须先添加自定义textView 再添加toolbar，若textView后添加 self.automaticallyAdjustsScrollViewInsets=YES将失效，并且可能会遮挡toolbar显示*/
-    
     [self setupTextView];
     
     [self setupToolbar];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
+//    [imageView ];
+    [imageView setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:imageView];
+    
 }
-
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -49,11 +54,7 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(sendCompose)];
-//    self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    
-    NSLog(@"%@ \n %@",  [[self.navigationItem rightBarButtonItem] titleTextAttributesForState:UIControlStateNormal],
-                        [[self.navigationItem rightBarButtonItem] titleTextAttributesForState:UIControlStateDisabled]);
     
     NSString *accountName = [HYTAccountTool accountInfo].accountScreenName ? : @"";
     NSString *titleStr = @"发微博";
@@ -72,7 +73,6 @@
     [navTitleView setAttributedText:attString];
     self.navigationItem.titleView = navTitleView;
 }
-
 - (void)setupTextView {
     
     HYTTextView *textView = [[HYTTextView alloc] init];
@@ -84,9 +84,7 @@
     self.textView = textView;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    
 }
-
 - (void)setupToolbar {
     
     HYTComposeToolbar *toolbar = [HYTComposeToolbar toolbar];
@@ -97,12 +95,23 @@
     self.toolbar = toolbar;
 }
 
+- (void)cancelCompose {
+    
+    NSLog(@"-----取消-----");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)sendCompose {
+    
+    NSLog(@"-----发送-----");
+}
+
 #pragma mark HYTComposeToolbarDelegate
 - (void)composeToolbar:(HYTComposeToolbar *)toolbar didSelectedItemType:(HYTComposeToolbarItemType)itemType {
     
     switch (itemType) {
         case HYTComposeToolbarItemPicture: {
-            
+            [self.textView resignFirstResponder];
+            [self inputImageFromPhone];
             break;
         }
         case HYTComposeToolbarItemMention: {
@@ -114,7 +123,7 @@
             break;
         }
         case HYTComposeToolbarItemEmoticon: {
-            
+            [HYTAlertView showAlertMsg:@"照相机不可用"];
             break;
         }
         case HYTComposeToolbarItemMore: {
@@ -124,10 +133,8 @@
     }
 }
 
-
-#pragma mark UITextViewDelegate 
+#pragma mark - UITextViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    
     [self.textView resignFirstResponder];
 }
 - (void)textViewDidChangeSelection:(UITextView *)textView {
@@ -135,16 +142,7 @@
     self.navigationItem.rightBarButtonItem.enabled = textView.hasText;
 }
 
-- (void)cancelCompose {
-    
-    NSLog(@"-----取消-----");
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)sendCompose {
-    NSLog(@"-----发送-----");
-}
-
+#pragma mark - 键盘Frame改变通知
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
     /*
      *  UIKeyboardAnimationCurveUserInfoKey = 7;
@@ -173,5 +171,61 @@
                      }
                      completion:nil];
 }
+
+- (void)inputImageFromPhone {
+    
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"图片选择"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:@"手机拍照", @"相册", nil];
+    [sheet showInView:self.view];
+    
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    //在下面代理方法中的keyWindow 是，_UIAlertControllerShimPresenterWindow 他会Dismiss掉，随意提示框应该在它Dismiss后加到不会Dismiss的keyWindow上
+    //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+    
+    if (buttonIndex > 1) return;
+    
+    UIImagePickerControllerSourceType sourceType = 0;
+    if (buttonIndex == 0) {
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [HYTAlertView showAlertMsg:@"照相机不可用"];
+            return;
+        }
+        sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else if (buttonIndex == 1) {
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            [HYTAlertView showAlertMsg:@"相册不可用"];
+            return;
+        }
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    UIImagePickerController *imagePickerVC = [[UIImagePickerController alloc] init];
+    imagePickerVC.sourceType = sourceType;
+    imagePickerVC.delegate = self;
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
+#pragma mark - UINavigationControllerDelegate, UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    
+    HYTComposePicturesView *picturesView = [HYTComposePicturesView picturesView];
+    NSString *key = info[UIImagePickerControllerReferenceURL];
+    UIImage *valueImage = info[UIImagePickerControllerOriginalImage];
+    [picturesView addImageWithKey:key valueImage:valueImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    MBLog(@"已取消相册选择图片");
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

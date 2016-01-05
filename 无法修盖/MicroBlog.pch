@@ -25,6 +25,8 @@
 #import "NSString+Extension.h"
 #import "Constant.h"
 
+#import "HYTAlertView.h"
+
 
 ///定义常量
 #define SCREEN_BOUNDS   [UIScreen mainScreen].bounds

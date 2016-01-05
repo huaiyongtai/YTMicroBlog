@@ -24,9 +24,6 @@
                                                                                action:@selector(writePersonalMsg)]];
     //没有消息时设置不可用（viewDidLoad方法是Lazy加载）
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    
-    NSLog(@"%@ \n %@",  [[self.navigationItem rightBarButtonItem] titleTextAttributesForState:UIControlStateNormal],
-          [[self.navigationItem rightBarButtonItem] titleTextAttributesForState:UIControlStateDisabled]);
 }
 
 - (void)writePersonalMsg {
