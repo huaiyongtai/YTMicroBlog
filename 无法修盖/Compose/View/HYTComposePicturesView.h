@@ -12,6 +12,8 @@
 
 + (instancetype)picturesView;
 
+- (NSArray *)pictures;
+
 - (void)addImageWithKey:(NSString *)key valueImage:(UIImage *)valueImage;
 
 @end

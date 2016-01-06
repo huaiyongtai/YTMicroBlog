@@ -11,6 +11,7 @@
 #import "HYTTextView.h"
 #import "HYTComposeToolbar.h"
 #import "HYTComposePicturesView.h"
+#import "AFNetworking.h"
 
 @interface HYTComposeController () <HYTComposeToolbarDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
@@ -35,12 +36,6 @@
     [self setupTextView];
     
     [self setupToolbar];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
-//    [imageView ];
-    [imageView setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:imageView];
-    
 }
 - (void)dealloc {
     
@@ -51,6 +46,7 @@
     
     if (_picturesView == nil) {
         HYTComposePicturesView *picturesView = [HYTComposePicturesView picturesView];
+        [picturesView setFrame:CGRectMake(0, 100, self.view.width, self.view.height)];
         [self.textView addSubview:picturesView];
         _picturesView = picturesView;
     }
@@ -115,8 +111,66 @@
 }
 - (void)sendCompose {
     
-    NSLog(@"-----发送-----");
+    /*
+    https://api.weibo.com/2/statuses/update.json        //发布一条新微博
+    https://upload.api.weibo.com/2/statuses/upload.json //上传图片并发布一条新微博
+    
+    access_token 	false 	string 	采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+    status 	true 	string 	要发布的微博文本内容，必须做URLencode，内容不超过140个汉字。
+    visible 	false 	int 	微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
+    list_id 	false 	string 	微博的保护投递指定分组ID，只有当visible参数为3时生效且必选。
+    pic 	true 	binary 	要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
+    */
+    
+    NSString *stutusText = ({
+        NSString *stutusText = self.textView.text;
+        if (stutusText.length == 0 || stutusText.length > 140) {
+            [HYTAlertView showAlertImage:@"请输入合法字符"];
+            return;
+        }
+        stutusText;
+    });
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"status"] = stutusText;
+    HYTAccount *account = [HYTAccountTool accountInfo];
+    parameters[@"access_token"] = account.accessToken;
+    
+    NSData *picData = ({
+        UIImage *firstImage = [self.picturesView.pictures firstObject];
+        UIImageJPEGRepresentation(firstImage, 0.5);
+    });
+    
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    if (!picData.length) {  //无图片
+        [manger POST:@"https://api.weibo.com/2/statuses/update.json"
+          parameters:parameters
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 
+                 MBLog(@"success:%@", responseObject);
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error:%@", error);
+             }
+         ];
+        return;
+    }
+    
+    [manger POST:@"https://upload.api.weibo.com/2/statuses/upload.json"
+      parameters:parameters constructingBodyWithBlock:^(id <AFMultipartFormData> formData) {
+          
+          [formData appendPartWithFileData:picData name:@"pic" fileName:@"helloworld.jpg" mimeType:@"image/jpeg"];
+      }
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             MBLog(@"success:%@", responseObject);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"error:%@", error);
+         }
+     ];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 #pragma mark HYTComposeToolbarDelegate
 - (void)composeToolbar:(HYTComposeToolbar *)toolbar didSelectedItemType:(HYTComposeToolbarItemType)itemType {
