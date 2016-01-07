@@ -19,4 +19,7 @@
 /** 表情图 */
 @property (nonatomic, copy) NSString *png;
 
+/** emoji表情 */
+@property (nonatomic, copy) NSString *code;
+
 @end
