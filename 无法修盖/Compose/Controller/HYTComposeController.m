@@ -12,11 +12,14 @@
 #import "HYTComposeToolbar.h"
 #import "HYTComposePicturesView.h"
 #import "AFNetworking.h"
+#import "HYTEmoticonKeyboardView.h"
 
 @interface HYTComposeController () <HYTComposeToolbarDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, weak  ) HYTTextView       *textView;
 @property (nonatomic, strong) HYTComposeToolbar *toolbar;
+@property (nonatomic, strong) HYTEmoticonKeyboardView *emoticonKeyboardView;
+@property (nonatomic, assign, getter=isSwitchingKeyboard) BOOL switchingKeyboard;
 
 
 @property (nonatomic, weak  ) HYTComposePicturesView *picturesView;
@@ -89,10 +92,20 @@
     [textView setFrame:self.view.bounds];
     [textView setAlwaysBounceVertical:YES];
     [textView setDelegate:self];
+    [textView becomeFirstResponder];
     [self.view addSubview:textView];
     self.textView = textView;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChangeFrame:)
+                                                 name:UIKeyboardWillChangeFrameNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidChangeFrame:)
+                                                 name:UIKeyboardDidChangeFrameNotification
+                                               object:nil];
+    
 }
 - (void)setupToolbar {
     
@@ -106,7 +119,7 @@
 
 - (void)cancelCompose {
     
-    NSLog(@"-----取消-----");
+    [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)sendCompose {
@@ -170,9 +183,18 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+#pragma mark - 懒加载
+- (HYTEmoticonKeyboardView *)emoticonKeyboardView {
+    
+    if (_emoticonKeyboardView == nil) {
+        HYTEmoticonKeyboardView *emoticonKeyboardView = [HYTEmoticonKeyboardView emoticonKeyboard];
+        [emoticonKeyboardView setFrame:CGRectMake(0, 0, self.view.width, 253)];
+        _emoticonKeyboardView = emoticonKeyboardView;
+    }
+    return _emoticonKeyboardView;
+}
 
-
-#pragma mark HYTComposeToolbarDelegate
+#pragma mark - HYTComposeToolbarDelegate
 - (void)composeToolbar:(HYTComposeToolbar *)toolbar didSelectedItemType:(HYTComposeToolbarItemType)itemType {
     
     switch (itemType) {
@@ -190,7 +212,7 @@
             break;
         }
         case HYTComposeToolbarItemEmoticon: {
-            [HYTAlertView showAlertMsg:@"照相机不可用"];
+            [self switchKeyboard];
             break;
         }
         case HYTComposeToolbarItemMore: {
@@ -198,6 +220,19 @@
             break;
         }
     }
+}
+
+#pragma mark 切换键盘（系统键盘-表情键盘）
+- (void)switchKeyboard {
+    
+    if (self.textView.inputView) {
+        self.textView.inputView = nil;
+    } else {
+        self.textView.inputView = self.emoticonKeyboardView;
+    }
+    self.switchingKeyboard = YES;
+    [self.textView resignFirstResponder];
+    [self.textView becomeFirstResponder];
 }
 
 #pragma mark - UITextViewDelegate
@@ -221,10 +256,13 @@
      *  UIKeyboardFrameEndUserInfoKey = "NSRect: {{0, 227}, {320, 253}}";
      */
     
+    BOOL isShowkeyboard = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin.y < SCREEN_HEIGHT;
+    if (self.isSwitchingKeyboard && isShowkeyboard) return;
+    
     NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions animationOption = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     CGFloat endKeyboardY = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].origin.y;
-    
+
     if (endKeyboardY >= SCREEN_HEIGHT) {
         endKeyboardY = SCREEN_HEIGHT;
     }
@@ -237,6 +275,10 @@
                          [self.toolbar setFrame:endToolbarRect];
                      }
                      completion:nil];
+}
+
+- (void)keyboardDidChangeFrame:(NSNotification *)notification {
+    self.switchingKeyboard = NO;
 }
 
 - (void)inputImageFromPhone {
