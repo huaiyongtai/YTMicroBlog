@@ -12,4 +12,6 @@
 
 + (instancetype)listView;
 
+@property (nonatomic, strong) NSArray *emoticons;
+
 @end

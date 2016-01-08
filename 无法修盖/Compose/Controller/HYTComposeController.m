@@ -88,7 +88,7 @@
 - (void)setupTextView {
     
     HYTTextView *textView = [[HYTTextView alloc] init];
-    textView.placeholder = @"分享新鲜事...";
+    textView.placeholder = @"分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...";
     [textView setFrame:self.view.bounds];
     [textView setAlwaysBounceVertical:YES];
     [textView setDelegate:self];

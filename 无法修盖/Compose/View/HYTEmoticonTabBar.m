@@ -63,8 +63,8 @@
 
 - (void)emoticonSwithItemDidSelected:(UIButton *)tabBarItem {
     
-    [tabBarItem setEnabled:NO];
     [self.lastTabBarItem setEnabled:YES];
+    [tabBarItem setEnabled:NO];
     self.lastTabBarItem = tabBarItem;
     if ([self.delegate respondsToSelector:@selector(emoticonTabBar:didSelectedItemBarType:)]) {
         [self.delegate emoticonTabBar:self didSelectedItemBarType:tabBarItem.tag];

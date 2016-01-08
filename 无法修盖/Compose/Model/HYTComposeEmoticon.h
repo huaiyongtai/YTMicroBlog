@@ -10,6 +10,9 @@
 
 @interface HYTComposeEmoticon : NSObject
 
+/** 表情文字的Id */
+@property (nonatomic, copy) NSString *idStr;
+
 /** 简体文字 */
 @property (nonatomic, copy) NSString *chs;
 
