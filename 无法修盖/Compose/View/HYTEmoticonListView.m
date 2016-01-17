@@ -7,8 +7,85 @@
 //
 
 #import "HYTEmoticonListView.h"
-#import "HYTEmoticonCell.h"
+#import "HYTEmoticonsView.h"
 
+static const NSUInteger kSectionCount = 20;
+
+@interface HYTEmoticonListView () <UIScrollViewDelegate>
+
+@property (nonatomic, weak) HYTEmoticonsView *emoticonView;
+@property (nonatomic, weak) UIPageControl   *pageControl;
+@end
+
+@implementation HYTEmoticonListView
+
++ (instancetype)listView {
+    return [[self alloc] init];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    
+    if (self = [super initWithFrame:frame]) {
+        
+        [self setBackgroundColor:HYTCOLORANDOM];
+        
+//        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background"]]];
+        
+        HYTEmoticonsView *emoticonView = [[HYTEmoticonsView alloc] init];
+        [emoticonView setDelegate:self];
+        [emoticonView setPagingEnabled:YES];
+        [emoticonView setShowsHorizontalScrollIndicator:NO];
+        [emoticonView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:emoticonView];
+        self.emoticonView = emoticonView;
+        
+        UIPageControl *pageControl = [[UIPageControl alloc] init];
+        [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_normal"] forKey:@"pageImage"];
+        [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_selected"] forKey:@"currentPageImage"];
+        [pageControl setUserInteractionEnabled:NO];
+        [self addSubview:pageControl];
+        self.pageControl = pageControl;
+    }
+    return self;
+}
+
+- (void)setEmoticons:(NSArray *)emoticons {
+    
+    _emoticons = emoticons;
+    
+    [self.emoticonView setEmoticons:emoticons];
+    
+    [self.pageControl setNumberOfPages:(emoticons.count + kSectionCount - 1) / kSectionCount];
+    
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSInteger currentPage = (NSInteger)((scrollView.contentOffset.x / scrollView.width) + 0.5);
+    if (self.pageControl.currentPage != currentPage) {
+        self.pageControl.currentPage = currentPage;
+    }
+}
+
+- (void)layoutSubviews {
+    
+    [super layoutSubviews];
+    
+    CGFloat pageControlHeight = 28;
+    [self.pageControl setFrame:CGRectMake(0, self.height - pageControlHeight, self.width, pageControlHeight)];
+    [self.emoticonView setFrame:CGRectMake(0, 0, self.width, self.pageControl.y)];
+    [self.emoticonView setContentSize:CGSizeMake((self.emoticons.count + kSectionCount - 1) / kSectionCount *self.width, 0)];
+    
+}
+
+@end
+
+
+
+
+
+//使用CollectionView的简单实现
+/*
 static NSInteger cols = 0;
 static const NSUInteger kSectionCount = 21;
 
@@ -27,8 +104,10 @@ static const NSUInteger kSectionCount = 21;
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
+        
+        [self setBackgroundColor:HYTCOLORANDOM];
         [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background"]]];
-
+        
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.minimumLineSpacing = 0;
         flowLayout.minimumInteritemSpacing = 0;
@@ -114,3 +193,4 @@ static const NSUInteger kSectionCount = 21;
 }
 
 @end
+*/
