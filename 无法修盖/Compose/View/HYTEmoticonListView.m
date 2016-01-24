@@ -9,8 +9,6 @@
 #import "HYTEmoticonListView.h"
 #import "HYTEmoticonsView.h"
 
-static const NSUInteger kSectionCount = 20;
-
 @interface HYTEmoticonListView () <UIScrollViewDelegate>
 
 @property (nonatomic, weak) HYTEmoticonsView *emoticonView;
@@ -27,35 +25,36 @@ static const NSUInteger kSectionCount = 20;
     
     if (self = [super initWithFrame:frame]) {
         
-        [self setBackgroundColor:HYTCOLORANDOM];
-        
-//        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background"]]];
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background"]]];
         
         HYTEmoticonsView *emoticonView = [[HYTEmoticonsView alloc] init];
         [emoticonView setDelegate:self];
         [emoticonView setPagingEnabled:YES];
         [emoticonView setShowsHorizontalScrollIndicator:NO];
-        [emoticonView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:emoticonView];
         self.emoticonView = emoticonView;
         
-        UIPageControl *pageControl = [[UIPageControl alloc] init];
-        [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_normal"] forKey:@"pageImage"];
-        [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_selected"] forKey:@"currentPageImage"];
-        [pageControl setUserInteractionEnabled:NO];
+        UIPageControl *pageControl = ({
+            UIPageControl *pageControl = [[UIPageControl alloc] init];
+            [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_normal"] forKey:@"pageImage"];
+            [pageControl setValue:[UIImage imageNamed:@"compose_keyboard_dot_selected"] forKey:@"currentPageImage"];
+            [pageControl setUserInteractionEnabled:NO];
+            [pageControl setHidesForSinglePage:YES];
+            pageControl;
+        });
         [self addSubview:pageControl];
         self.pageControl = pageControl;
     }
     return self;
 }
 
-- (void)setEmoticons:(NSArray *)emoticons {
+- (void)setEmoticons:(NSArray *)emoticons{
     
     _emoticons = emoticons;
     
     [self.emoticonView setEmoticons:emoticons];
     
-    [self.pageControl setNumberOfPages:(emoticons.count + kSectionCount - 1) / kSectionCount];
+    [self.pageControl setNumberOfPages:(emoticons.count + HYTEmotionPageCount - 1) / HYTEmotionPageCount];
     
 }
 
@@ -74,15 +73,11 @@ static const NSUInteger kSectionCount = 20;
     CGFloat pageControlHeight = 28;
     [self.pageControl setFrame:CGRectMake(0, self.height - pageControlHeight, self.width, pageControlHeight)];
     [self.emoticonView setFrame:CGRectMake(0, 0, self.width, self.pageControl.y)];
-    [self.emoticonView setContentSize:CGSizeMake((self.emoticons.count + kSectionCount - 1) / kSectionCount *self.width, 0)];
+    [self.emoticonView setContentSize:CGSizeMake((self.emoticons.count + HYTEmotionPageCount - 1) / HYTEmotionPageCount *self.width, 0)];
     
 }
 
 @end
-
-
-
-
 
 //使用CollectionView的简单实现
 /*
@@ -153,7 +148,7 @@ static const NSUInteger kSectionCount = 21;
     if (isDelete) {
         cell.title = @"删除";
     } else if (emoticonIndex < self.emoticons.count) {
-        HYTComposeEmoticon *emoticon = self.emoticons[emoticonIndex];
+        HYTEmoticon *emoticon = self.emoticons[emoticonIndex];
         cell.emoticon = emoticon;
     } else {
         cell.title = @"";
@@ -178,7 +173,7 @@ static const NSUInteger kSectionCount = 21;
     if ((indexPath.item+1) % kSectionCount == 0) return;
     
     NSUInteger emoticonIndex =  indexPath.item - ((indexPath.item+1) / kSectionCount);  //表情模型索引
-    HYTComposeEmoticon *emoticon = self.emoticons[emoticonIndex];
+    HYTEmoticon *emoticon = self.emoticons[emoticonIndex];
     NSLog(@"=======:%@", emoticon);
 }
 

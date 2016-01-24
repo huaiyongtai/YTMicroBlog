@@ -9,7 +9,7 @@
 #import "HYTEmoticonKeyboardView.h"
 #import "HYTEmoticonTabBar.h"
 #import "HYTEmoticonListView.h"
-#import "HYTComposeEmoticon.h"
+#import "HYTEmoticon.h"
 #import "MJExtension.h"
 
 @interface HYTEmoticonKeyboardView () <HYTEmoticonTabBarDelegate>
@@ -54,10 +54,10 @@
     if (_emoticonRecencyView == nil) {
         _emoticonRecencyView = [HYTEmoticonListView listView];
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.apple.emoji/info.plist" ofType:nil];
-        NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
-        NSArray *emoticons = [HYTComposeEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
-        _emoticonRecencyView.emoticons = emoticons;
+//        NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.apple.emoji/info.plist" ofType:nil];
+//        NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
+//        NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+//        _emoticonRecencyView.emoticons = emoticons;
     }
     return _emoticonRecencyView;
 }
@@ -69,7 +69,8 @@
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.sina.default/info.plist" ofType:nil];
         NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
-        NSArray *emoticons = [HYTComposeEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        [emoticons setValue:@"com.sina.default" forKeyPath:@"idStr"];
         _emoticonDefaultView.emoticons = emoticons;
     }
     return _emoticonDefaultView;
@@ -82,7 +83,8 @@
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.apple.emoji/info.plist" ofType:nil];
         NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
-        NSArray *emoticons = [HYTComposeEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        [emoticons setValue:@"com.apple.emoji" forKeyPath:@"idStr"];
         _emoticonEmojiView.emoticons = emoticons;
     }
     return _emoticonEmojiView;
@@ -95,7 +97,8 @@
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.sina.lxh/info.plist" ofType:nil];
         NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
-        NSArray *emoticons = [HYTComposeEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        [emoticons setValue:@"com.sina.lxh" forKeyPath:@"idStr"];
         _emoticonLXHView.emoticons = emoticons;
     }
     return _emoticonLXHView;
@@ -213,7 +216,7 @@
         NSDictionary *emoticonDict = [NSDictionary dictionaryWithContentsOfFile:path];  //表情字典
         NSArray *emoticonArray =  emoticonDict[@"emoticons"];   //表情数组
         
-        emoticons = [HYTComposeEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
+        emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
         [self.emoticonsDict setObject:emoticons forKey:emoticonPackageKey];
     }
     self.listView.emoticons = emoticons;

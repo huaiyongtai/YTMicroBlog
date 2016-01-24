@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		820191061C1488BC00F5F7CA /* HYTStatusCellToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */; };
 		8206786D1BB1B6FB00F698C0 /* HYSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */; };
+		820B952D1C55135600E125F4 /* HYTEmoticonBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 820B952C1C55135600E125F4 /* HYTEmoticonBtn.m */; };
+		820B95301C551CAF00E125F4 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 820B952F1C551CAF00E125F4 /* NSString+Emoji.m */; };
+		820B95381C55241700E125F4 /* HYTEmoticonPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 820B95371C55241700E125F4 /* HYTEmoticonPackage.m */; };
 		8217FF941C0DF4500063A100 /* HYTFooterRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */; };
 		821AB06F1B76517A00E793B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821AB06E1B76517A00E793B1 /* Images.xcassets */; };
 		821AB0721B76517A00E793B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821AB0701B76517A00E793B1 /* LaunchScreen.xib */; };
@@ -91,7 +94,7 @@
 		82FF1B461C3E746500AE6F93 /* HYTEmoticonTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B451C3E746500AE6F93 /* HYTEmoticonTabBar.m */; };
 		82FF1B491C3E748E00AE6F93 /* HYTEmoticonListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B481C3E748E00AE6F93 /* HYTEmoticonListView.m */; };
 		82FF1B4C1C3E9D4000AE6F93 /* HYTEmoticonTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B4B1C3E9D4000AE6F93 /* HYTEmoticonTabBarItem.m */; };
-		82FF1B501C3E9EFA00AE6F93 /* HYTComposeEmoticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B4F1C3E9EFA00AE6F93 /* HYTComposeEmoticon.m */; };
+		82FF1B501C3E9EFA00AE6F93 /* HYTEmoticon.h.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B4F1C3E9EFA00AE6F93 /* HYTEmoticon.h.m */; };
 		82FF1B531C3F635C00AE6F93 /* HYTEmoticonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF1B521C3F635C00AE6F93 /* HYTEmoticonCell.m */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +113,12 @@
 		820191051C1488BC00F5F7CA /* HYTStatusCellToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusCellToolBar.m; sourceTree = "<group>"; };
 		8206786B1BB1B6FB00F698C0 /* HYSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSearchBar.h; sourceTree = "<group>"; };
 		8206786C1BB1B6FB00F698C0 /* HYSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSearchBar.m; sourceTree = "<group>"; };
+		820B952B1C55135600E125F4 /* HYTEmoticonBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticonBtn.h; sourceTree = "<group>"; };
+		820B952C1C55135600E125F4 /* HYTEmoticonBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticonBtn.m; sourceTree = "<group>"; };
+		820B952E1C551CAF00E125F4 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		820B952F1C551CAF00E125F4 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
+		820B95361C55241700E125F4 /* HYTEmoticonPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticonPackage.h; sourceTree = "<group>"; };
+		820B95371C55241700E125F4 /* HYTEmoticonPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticonPackage.m; sourceTree = "<group>"; };
 		8217FF921C0DF4500063A100 /* HYTFooterRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTFooterRefreshView.h; sourceTree = "<group>"; };
 		8217FF931C0DF4500063A100 /* HYTFooterRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTFooterRefreshView.m; sourceTree = "<group>"; };
 		821AB05E1B76517A00E793B1 /* 无法修盖.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "无法修盖.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,8 +286,8 @@
 		82FF1B481C3E748E00AE6F93 /* HYTEmoticonListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticonListView.m; sourceTree = "<group>"; };
 		82FF1B4A1C3E9D4000AE6F93 /* HYTEmoticonTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticonTabBarItem.h; sourceTree = "<group>"; };
 		82FF1B4B1C3E9D4000AE6F93 /* HYTEmoticonTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticonTabBarItem.m; sourceTree = "<group>"; };
-		82FF1B4E1C3E9EFA00AE6F93 /* HYTComposeEmoticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTComposeEmoticon.h; sourceTree = "<group>"; };
-		82FF1B4F1C3E9EFA00AE6F93 /* HYTComposeEmoticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTComposeEmoticon.m; sourceTree = "<group>"; };
+		82FF1B4E1C3E9EFA00AE6F93 /* HYTEmoticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticon.h; sourceTree = "<group>"; };
+		82FF1B4F1C3E9EFA00AE6F93 /* HYTEmoticon.h.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticon.h.m; sourceTree = "<group>"; };
 		82FF1B511C3F635C00AE6F93 /* HYTEmoticonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticonCell.h; sourceTree = "<group>"; };
 		82FF1B521C3F635C00AE6F93 /* HYTEmoticonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTEmoticonCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -404,6 +413,8 @@
 				82FF1B481C3E748E00AE6F93 /* HYTEmoticonListView.m */,
 				82C8934F1C4BF2530062320A /* HYTEmoticonsView.h */,
 				82C893501C4BF2530062320A /* HYTEmoticonsView.m */,
+				820B952B1C55135600E125F4 /* HYTEmoticonBtn.h */,
+				820B952C1C55135600E125F4 /* HYTEmoticonBtn.m */,
 				82FF1B511C3F635C00AE6F93 /* HYTEmoticonCell.h */,
 				82FF1B521C3F635C00AE6F93 /* HYTEmoticonCell.m */,
 				82FF1B4A1C3E9D4000AE6F93 /* HYTEmoticonTabBarItem.h */,
@@ -529,6 +540,8 @@
 				82D9455A1BBA6D090070051B /* UIView+Extension.m */,
 				823977E01C04732A00707E75 /* UIWindow+Extension.h */,
 				823977E11C04732A00707E75 /* UIWindow+Extension.m */,
+				820B952E1C551CAF00E125F4 /* NSString+Emoji.h */,
+				820B952F1C551CAF00E125F4 /* NSString+Emoji.m */,
 				8246805F1C11C52900B81579 /* NSString+Extension.h */,
 				824680601C11C52900B81579 /* NSString+Extension.m */,
 			);
@@ -796,8 +809,10 @@
 		82FF1B4D1C3E9ED400AE6F93 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				82FF1B4E1C3E9EFA00AE6F93 /* HYTComposeEmoticon.h */,
-				82FF1B4F1C3E9EFA00AE6F93 /* HYTComposeEmoticon.m */,
+				820B95361C55241700E125F4 /* HYTEmoticonPackage.h */,
+				820B95371C55241700E125F4 /* HYTEmoticonPackage.m */,
+				82FF1B4E1C3E9EFA00AE6F93 /* HYTEmoticon.h */,
+				82FF1B4F1C3E9EFA00AE6F93 /* HYTEmoticon.h.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -913,7 +928,7 @@
 				822131771C3BF09C00531B37 /* HYTComposeToolbar.m in Sources */,
 				82C692311C0B532F009214CC /* NSObject+MJProperty.m in Sources */,
 				82FCE0C81C1325B20091CEEF /* HYTStatusPicture.m in Sources */,
-				82FF1B501C3E9EFA00AE6F93 /* HYTComposeEmoticon.m in Sources */,
+				82FF1B501C3E9EFA00AE6F93 /* HYTEmoticon.h.m in Sources */,
 				82F52E171BDFDB8A00A509F5 /* AFURLConnectionOperation.m in Sources */,
 				82FE49C81C0B14C100B7305F /* UIImageView+WebCache.m in Sources */,
 				82F52E161BDFDB8A00A509F5 /* AFSecurityPolicy.m in Sources */,
@@ -932,10 +947,12 @@
 				8292F0BB1C35127D00B0DEE8 /* HYTComposeController.m in Sources */,
 				82FE49C21C0B14C100B7305F /* SDWebImagePrefetcher.m in Sources */,
 				826298E31B766B4100E1680C /* HYTest1ViewController.m in Sources */,
+				820B95301C551CAF00E125F4 /* NSString+Emoji.m in Sources */,
 				8265CBC41BE73F7500E8A690 /* Constant.m in Sources */,
 				8292F0B31C3381EE00B0DEE8 /* HYTStatusPicturesView.m in Sources */,
 				823977DE1C045E7F00707E75 /* HYTAccountTool.m in Sources */,
 				82C6922F1C0B532F009214CC /* NSObject+MJCoding.m in Sources */,
+				820B95381C55241700E125F4 /* HYTEmoticonPackage.m in Sources */,
 				82FE49BD1C0B14C100B7305F /* SDWebImageCompat.m in Sources */,
 				82FE49BF1C0B14C100B7305F /* SDWebImageDownloader.m in Sources */,
 				82FE49C01C0B14C100B7305F /* SDWebImageDownloaderOperation.m in Sources */,
@@ -958,6 +975,7 @@
 				82F52E1A1BDFDB8A00A509F5 /* AFURLSessionManager.m in Sources */,
 				827CCE0A1BD544E3005B5FAD /* HYTNewFeatureController.m in Sources */,
 				82F52E151BDFDB8A00A509F5 /* AFNetworkReachabilityManager.m in Sources */,
+				820B952D1C55135600E125F4 /* HYTEmoticonBtn.m in Sources */,
 				82FE49BA1C0B14C100B7305F /* MKAnnotationView+WebCache.m in Sources */,
 				824680611C11C52900B81579 /* NSString+Extension.m in Sources */,
 				82FE49C51C0B14C100B7305F /* UIImage+MultiFormat.m in Sources */,

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYTEmoticonsView : UIScrollView
+extern const NSUInteger HYTEmotionPageMaxCols;
+extern const NSUInteger HYTEmotionPageMaxRows;
+extern const NSUInteger HYTEmotionPageCount;
 
+@interface HYTEmoticonsView : UIScrollView
 
 @property (nonatomic, strong) NSArray *emoticons;
 

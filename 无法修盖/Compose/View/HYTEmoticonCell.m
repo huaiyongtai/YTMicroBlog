@@ -7,7 +7,7 @@
 //
 
 #import "HYTEmoticonCell.h"
-#import "HYTComposeEmoticon.h"
+#import "HYTEmoticon.h"
 
 @interface HYTEmoticonCell ()
 
@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void)setEmoticon:(HYTComposeEmoticon *)emoticon {
+- (void)setEmoticon:(HYTEmoticon *)emoticon {
     
     _emoticon = emoticon;
     [self setUserInteractionEnabled:YES];

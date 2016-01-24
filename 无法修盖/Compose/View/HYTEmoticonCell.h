@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class HYTComposeEmoticon;
+@class HYTEmoticon;
 
 @interface HYTEmoticonCell : UICollectionViewCell
 
-@property (nonatomic, strong) HYTComposeEmoticon *emoticon;
+@property (nonatomic, strong) HYTEmoticon *emoticon;
 
 @property (nonatomic, copy) NSString *title;
 

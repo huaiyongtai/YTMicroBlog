@@ -39,6 +39,7 @@
     [self setupTextView];
     
     [self setupToolbar];
+    
 }
 - (void)dealloc {
     

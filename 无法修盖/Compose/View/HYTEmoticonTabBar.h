@@ -11,7 +11,7 @@
 @class HYTEmoticonTabBar;
 
 typedef NS_ENUM(NSUInteger, HYTEmoticonTabBarItemType) {
-    
+
     HYTEmoticonTabBarItemTypeRecency,
     HYTEmoticonTabBarItemTypeDefault,
     HYTEmoticonTabBarItemTypeEmoji,

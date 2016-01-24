@@ -1,5 +1,5 @@
 //
-//  HYTComposeEmoticon.h
+//  HYTEmoticon.h
 //  无法修盖
 //
 //  Created by HelloWorld on 16/1/7.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HYTComposeEmoticon : NSObject
+@interface HYTEmoticon : NSObject
 
 /** 表情文字的Id */
 @property (nonatomic, copy) NSString *idStr;
