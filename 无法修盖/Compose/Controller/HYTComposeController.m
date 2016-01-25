@@ -16,10 +16,10 @@
 
 @interface HYTComposeController () <HYTComposeToolbarDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, weak  ) HYTTextView       *textView;
-@property (nonatomic, strong) HYTComposeToolbar *toolbar;
+@property (nonatomic, weak  ) HYTTextView             *textView;
+@property (nonatomic, strong) HYTComposeToolbar       *toolbar;
 @property (nonatomic, strong) HYTEmoticonKeyboardView *emoticonKeyboardView;
-@property (nonatomic, assign, getter=isSwitchingKeyboard) BOOL switchingKeyboard;
+@property (nonatomic, assign, getter = isSwitchingKeyboard) BOOL switchingKeyboard;
 
 
 @property (nonatomic, weak  ) HYTComposePicturesView *picturesView;
@@ -89,7 +89,7 @@
 - (void)setupTextView {
     
     HYTTextView *textView = [[HYTTextView alloc] init];
-    textView.placeholder = @"分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...分享新鲜事...";
+    textView.placeholder = @"分享新鲜事...";
     [textView setFrame:self.view.bounds];
     [textView setAlwaysBounceVertical:YES];
     [textView setDelegate:self];
@@ -101,10 +101,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillChangeFrame:)
                                                  name:UIKeyboardWillChangeFrameNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidChangeFrame:)
-                                                 name:UIKeyboardDidChangeFrameNotification
                                                object:nil];
     
 }
@@ -189,7 +185,7 @@
     
     if (_emoticonKeyboardView == nil) {
         HYTEmoticonKeyboardView *emoticonKeyboardView = [HYTEmoticonKeyboardView emoticonKeyboard];
-        [emoticonKeyboardView setFrame:CGRectMake(0, 0, self.view.width, 253)];
+        [emoticonKeyboardView setFrame:CGRectMake(0, 0, self.view.width, 216)];
         _emoticonKeyboardView = emoticonKeyboardView;
     }
     return _emoticonKeyboardView;
@@ -228,11 +224,20 @@
     
     if (self.textView.inputView) {
         self.textView.inputView = nil;
+        self.toolbar.itemShowKeyBoard = NO;
     } else {
         self.textView.inputView = self.emoticonKeyboardView;
+        self.toolbar.itemShowKeyBoard = YES;
     }
+    
+    //1.标识切换键盘
     self.switchingKeyboard = YES;
+    //2.退出键盘
     [self.textView resignFirstResponder];
+    
+    //3.标识键盘退出结束
+    self.switchingKeyboard = NO;
+    //4.交出键盘
     [self.textView becomeFirstResponder];
 }
 
@@ -257,13 +262,12 @@
      *  UIKeyboardFrameEndUserInfoKey = "NSRect: {{0, 227}, {320, 253}}";
      */
     
-    BOOL isShowkeyboard = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin.y < SCREEN_HEIGHT;
-    if (self.isSwitchingKeyboard && isShowkeyboard) return;
+//    BOOL isShowkeyboard = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin.y < SCREEN_HEIGHT;
+    if (self.isSwitchingKeyboard) return;
     
     NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions animationOption = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     CGFloat endKeyboardY = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].origin.y;
-
     if (endKeyboardY >= SCREEN_HEIGHT) {
         endKeyboardY = SCREEN_HEIGHT;
     }
@@ -274,12 +278,7 @@
                         options:animationOption
                      animations:^{
                          [self.toolbar setFrame:endToolbarRect];
-                     }
-                     completion:nil];
-}
-
-- (void)keyboardDidChangeFrame:(NSNotification *)notification {
-    self.switchingKeyboard = NO;
+                     } completion:nil];
 }
 
 - (void)inputImageFromPhone {

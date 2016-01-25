@@ -49,13 +49,12 @@
     
     NSString *highlightedImageName = [NSString stringWithFormat:@"%@_highlighted", imageName];
     
-    UIButton *itemBar = [UIButton buttonWithType:UIButtonTypeCustom];
-    [itemBar setImage:[UIImage imageNamed:imageName]
-             forState:UIControlStateNormal];
-    [itemBar setImage:[UIImage imageNamed:highlightedImageName]
-             forState:UIControlStateHighlighted];
-    [itemBar setTag:identitiyTag];
-    [itemBar addTarget:self action:@selector(itemBarDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *itemBar = [UIButton buttonWithType:UIButtonTypeCustom]; {
+        [itemBar setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        [itemBar setImage:[UIImage imageNamed:highlightedImageName] forState:UIControlStateHighlighted];
+        [itemBar setTag:identitiyTag];
+        [itemBar addTarget:self action:@selector(itemBarDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
     [self addSubview:itemBar];
     [self.toolbarItems addObject:itemBar];
 }
@@ -65,6 +64,18 @@
     if ([self.delegate respondsToSelector:@selector(composeToolbar:didSelectedItemType:)]) {
         [self.delegate composeToolbar:self didSelectedItemType:itemBar.tag];
     }
+    
+    if (itemBar.tag != HYTComposeToolbarItemEmoticon) return;
+    
+    if (self.isItemShowKeyBoard) {
+        [itemBar setImage:[UIImage imageNamed:@"compose_keyboardbutton_background"] forState:UIControlStateNormal];
+        [itemBar setImage:[UIImage imageNamed:@"compose_keyboardbutton_background_highlighted"] forState:UIControlStateHighlighted];
+        
+    } else {
+        [itemBar setImage:[UIImage imageNamed:@"compose_emoticonbutton_background"] forState:UIControlStateNormal];
+        [itemBar setImage:[UIImage imageNamed:@"compose_emoticonbutton_background_highlighted"] forState:UIControlStateHighlighted];
+    }
+    
 }
 
 - (void)layoutSubviews {

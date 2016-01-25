@@ -37,7 +37,7 @@
     
     NSDictionary *attr = @{NSFontAttributeName : self.font,
                            NSForegroundColorAttributeName : self.placeholderColor};
-    [self.placeholder drawInRect:CGRectMake(5, 8, rect.size.width, rect.size.height) withAttributes:attr];
+    [self.placeholder drawInRect:CGRectMake(5, 8, rect.size.width-10, rect.size.height) withAttributes:attr];
 }
 
 - (void)textDidChange {
@@ -59,8 +59,5 @@
     [super setFont:font];
     [self setNeedsDisplay];
 }
-
-
-
 
 @end

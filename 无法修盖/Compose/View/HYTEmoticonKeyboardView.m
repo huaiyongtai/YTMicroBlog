@@ -85,6 +85,7 @@
         NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
         NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
         [emoticons setValue:@"com.apple.emoji" forKeyPath:@"idStr"];
+        
         _emoticonEmojiView.emoticons = emoticons;
     }
     return _emoticonEmojiView;

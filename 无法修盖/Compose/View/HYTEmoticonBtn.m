@@ -34,10 +34,9 @@
     
     [self setImage:[UIImage imageNamed:({
         [NSString stringWithFormat:@"Emoticons.bundle/%@/%@", emoticon.idStr, emoticon.png];
-    
     })] forState:UIControlStateNormal];
-    [self setTitle:emoticon.code.emoji forState:UIControlStateNormal];
     
+    [self setTitle:emoticon.code.emoji forState:UIControlStateNormal];
 }
 
 @end

@@ -7,7 +7,9 @@
 //
 
 #import "HYTEmoticon.h"
+#import "MJExtension.h"
 
 @implementation HYTEmoticon
+
 
 @end

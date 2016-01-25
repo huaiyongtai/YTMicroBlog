@@ -8,6 +8,7 @@
 
 #import "HYTEmoticonsView.h"
 #import "HYTEmoticonBtn.h"
+#import "HYTEmoticonPopView.h"
 
 const NSUInteger HYTEmotionPageMaxCols = 7;
 const NSUInteger HYTEmotionPageMaxRows = 3;
@@ -18,18 +19,20 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
 @property (nonatomic, strong) NSMutableArray *emotionViews;
 @property (nonatomic, strong) NSMutableArray *deleteBtns;
 
+@property (nonatomic, strong) HYTEmoticonPopView *popView;
+
 @end
 
 @implementation HYTEmoticonsView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    
-    if (self == [super initWithFrame:frame]) {
-    }
-    
-    return self;
-}
 
+- (HYTEmoticonPopView *)popView {
+    
+    if (!_popView) {
+        _popView = [HYTEmoticonPopView emoticonPopView];
+    }
+    return _popView;
+}
 
 - (void)setEmoticons:(NSArray *)emoticons {
     
@@ -63,8 +66,14 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
     NSLog(@"deleteDidClick");
 }
 
-- (void)emoticonViewDidSelected:(UIButton *)emoticonView {
+- (void)emoticonViewDidSelected:(HYTEmoticonBtn *)emoticonView {
     NSLog(@"emoticonViewDidSelected");
+    
+    [self.popView showEmoticon:emoticonView.emoticon fromView:emoticonView];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.popView dismissView];
+    });
 }
 
 - (void)layoutSubviews {

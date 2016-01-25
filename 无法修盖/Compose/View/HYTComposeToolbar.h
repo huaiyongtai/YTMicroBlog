@@ -31,4 +31,6 @@ typedef NS_ENUM(NSUInteger, HYTComposeToolbarItemType) {
 
 @property (nonatomic, weak) id <HYTComposeToolbarDelegate> delegate;
 
+@property (nonatomic, assign, getter=isItemShowKeyBoard) BOOL itemShowKeyBoard;
+
 @end
