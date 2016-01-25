@@ -25,6 +25,16 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
 
 @implementation HYTEmoticonsView
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    
+    self = [super initWithFrame:frame];
+    if (!self) return nil;
+    
+    [self addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressEmoticonRecognizer:)]];
+    
+    return self;
+}
+
 
 - (HYTEmoticonPopView *)popView {
     
@@ -71,9 +81,54 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
     
     [self.popView showEmoticon:emoticonView.emoticon fromView:emoticonView];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.popView dismissView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.popView dismissViewFromSuper];
     });
+}
+
+- (void)pressEmoticonRecognizer:(UIGestureRecognizer *)recognizer {
+
+    CGPoint touchPoint = [recognizer locationInView:self];
+    switch (recognizer.state) {
+        case UIGestureRecognizerStatePossible:
+        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateChanged: {
+            HYTEmoticonBtn *emotionView = [self findToPressEmoticonViewFromPoint:touchPoint];
+            if (emotionView) {
+                [self.popView showEmoticon:emotionView.emoticon fromView:emotionView];
+            } else {
+                [self.popView dismissViewFromSuper];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateFailed: {
+            HYTEmoticonBtn *emotionView = [self findToPressEmoticonViewFromPoint:touchPoint];
+            if (emotionView) {
+                [self emoticonViewDidSelected:emotionView];
+            } else {
+                [self.popView dismissViewFromSuper];
+            }
+            break;
+        }
+    }
+}
+
+- (HYTEmoticonBtn *)findToPressEmoticonViewFromPoint:(CGPoint)point {
+
+    if (!CGRectContainsPoint(CGRectMake(self.x, self.y, self.contentSize.width, self.height), point)) {
+        [self.popView dismissViewFromSuper];
+        return nil;
+    }
+    __block HYTEmoticonBtn *findView = nil;
+    [self.emotionViews enumerateObjectsUsingBlock:^(HYTEmoticonBtn *emoticonView, NSUInteger idx, BOOL *stop) {
+        if (CGRectContainsPoint(emoticonView.frame, point)) {
+            findView = emoticonView;
+            *stop = YES;
+        }
+    }];
+    return findView;
 }
 
 - (void)layoutSubviews {

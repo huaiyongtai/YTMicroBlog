@@ -15,6 +15,6 @@
 + (instancetype)emoticonPopView;
 
 - (void)showEmoticon:(HYTEmoticon *)emoticon fromView:(UIView *)fromView;
-- (void)dismissView;
+- (void)dismissViewFromSuper;
 
 @end

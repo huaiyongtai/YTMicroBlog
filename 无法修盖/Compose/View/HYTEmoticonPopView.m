@@ -11,7 +11,7 @@
 
 @interface HYTEmoticonPopView ()
 
-@property (nonatomic, weak) UIView *emoticonView;
+@property (nonatomic, weak) HYTEmoticonBtn *emoticonView;
 
 @end
 
@@ -27,40 +27,57 @@
     self = [super initWithImage:[UIImage imageNamed:@"emoticon_keyboard_magnifier"]];
     if (!self) return nil;
 
+    HYTEmoticonBtn *emoticonView = [HYTEmoticonBtn emoticonBtn];
+    [self addSubview:emoticonView];
+    self.emoticonView = emoticonView;
+    
     return self;
 }
 
 - (void)showEmoticon:(HYTEmoticon *)emoticon fromView:(UIView *)fromView {
+
+    if (self.superview && self.emoticonView.emoticon == emoticon) {
+        return;
+    }
     
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     [window addSubview:self];
+    CGRect fromRect = [fromView convertRect:fromView.bounds toView:nil]; {
+        if (fromRect.origin.x < 0 ) {
+//            CGFloat x = fabsf(fromRect.origin.x);
+//            x = window.width * ((int)(x / window.width) - x);
+//            fromRect.origin.x = x;
+//          ==
+            CGFloat x = fromRect.origin.x;
+            x =- window.width * (int)(x / window.width);
+            fromRect.origin.x = x;
+            
+        }
+    }
     
-    CGRect fromRect = [fromView convertRect:fromView.bounds toView:window];
     [self setFrame:CGRectMake(fromRect.origin.x + (fromRect.size.width - self.width) * 0.5,
                               CGRectGetMaxY(fromRect) - self.height,
                               self.width,
                               self.height)];
     
-    HYTEmoticonBtn *emoticonView = [HYTEmoticonBtn emoticonBtn];
-    [emoticonView setEmoticon:emoticon];;
-    [emoticonView sizeToFit];
-    [emoticonView setOrigin:CGPointMake((self.width-emoticonView.width) * 0.5, self.height-emoticonView.height)];
-    [self addSubview:emoticonView];
-    self.emoticonView = emoticonView;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        emoticonView.y = 0;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.1 animations:^{
-            emoticonView.y = 8;
-        }];
-    }];
+    [self.emoticonView setEmoticon:emoticon];
+    [self.emoticonView sizeToFit];
+    [self.emoticonView setOrigin:CGPointMake((self.width-self.emoticonView.width) * 0.5, self.height-self.emoticonView.height)];
+    [UIView animateWithDuration:0.2
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.emoticonView.y = 0;
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.1 animations:^{
+                             self.emoticonView.y = 8;
+                         }];
+                     }];
+
 }
 
-- (void)dismissView {
-    
-    [self removeFromSuperview];
-    
-    [self.emoticonView removeFromSuperview];
+- (void)dismissViewFromSuper {
+        [self removeFromSuperview];
 }
 
 
