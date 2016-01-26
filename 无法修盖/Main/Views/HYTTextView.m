@@ -43,6 +43,11 @@
 - (void)textDidChange {
     [self setNeedsDisplay];
 }
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+    [super setAttributedText:attributedText];
+    [self setNeedsDisplay];
+}
+
 
 #pragma mark - 重写setter方法，保证实时变化
 - (void)setPlaceholder:(NSString *)placeholder {

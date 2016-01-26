@@ -29,8 +29,11 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
     
     self = [super initWithFrame:frame];
     if (!self) return nil;
-    
-    [self addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressEmoticonRecognizer:)]];
+    [self addGestureRecognizer:({
+        UILongPressGestureRecognizer *longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressEmoticonRecognizer:)];
+        longRecognizer.minimumPressDuration = 0.25;
+        longRecognizer;
+    })];
     
     return self;
 }
@@ -63,7 +66,7 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
         UIButton *deleteBtn = ({
             UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [deleteBtn setImage:[UIImage imageNamed:@"compose_emotion_delete"] forState:UIControlStateNormal];
-            [deleteBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateHighlighted];
+//            [deleteBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateHighlighted];
             [deleteBtn addTarget:self action:@selector(deleteDidSelected) forControlEvents:UIControlEventTouchUpInside];
             deleteBtn;
         });
@@ -73,17 +76,19 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
 }
 
 - (void)deleteDidSelected {
-    NSLog(@"deleteDidClick");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:HYTEmoticonDeleteDidSelectedNotification
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 - (void)emoticonViewDidSelected:(HYTEmoticonBtn *)emoticonView {
-    NSLog(@"emoticonViewDidSelected");
-    
-    [self.popView showEmoticon:emoticonView.emoticon fromView:emoticonView];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.popView dismissViewFromSuper];
-    });
+    //发送表情选中通知
+    NSDictionary *userInfo = @{HYTEmoticonDidSelectedKey : emoticonView.emoticon};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HYTEmoticonDidSelectedNotification
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 - (void)pressEmoticonRecognizer:(UIGestureRecognizer *)recognizer {
@@ -97,28 +102,32 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
             if (emotionView) {
                 [self.popView showEmoticon:emotionView.emoticon fromView:emotionView];
             } else {
-                [self.popView dismissViewFromSuper];
+                [self.popView removeFromSuperview];
             }
             break;
         }
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateFailed: {
-            HYTEmoticonBtn *emotionView = [self findToPressEmoticonViewFromPoint:touchPoint];
-            if (emotionView) {
-                [self emoticonViewDidSelected:emotionView];
+            HYTEmoticonBtn *emoticonView = [self findToPressEmoticonViewFromPoint:touchPoint];
+            if (emoticonView) {
+                [self.popView showEmoticon:emoticonView.emoticon fromView:emoticonView delay:0.35 completion:^{
+                    [self.popView removeFromSuperview];
+                    [self emoticonViewDidSelected:emoticonView];
+                }];
             } else {
-                [self.popView dismissViewFromSuper];
+                [self.popView removeFromSuperview];
             }
             break;
         }
     }
 }
 
+/**  根据点击坐标点来查找点击的表情视图 */
 - (HYTEmoticonBtn *)findToPressEmoticonViewFromPoint:(CGPoint)point {
 
     if (!CGRectContainsPoint(CGRectMake(self.x, self.y, self.contentSize.width, self.height), point)) {
-        [self.popView dismissViewFromSuper];
+        [self.popView removeFromSuperview];
         return nil;
     }
     __block HYTEmoticonBtn *findView = nil;

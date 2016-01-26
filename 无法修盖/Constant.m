@@ -8,6 +8,10 @@
 
 #import "Constant.h"
 
+NSString *const HYTEmoticonDidSelectedNotification = @"HYTEmoticonDidSelectedNotification";  //普通表情按键
+NSString *const HYTEmoticonDeleteDidSelectedNotification = @"HYTEmoticonDeleteDidSelectedNotification";    //删除按键
+NSString *const HYTEmoticonDidSelectedKey = @"YTEmoticonDidSelectedKey";
+
 @implementation Constant
 
 @end

@@ -23,15 +23,20 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        UIImageView *iconImageView = [[UIImageView alloc] init];
+        UIImageView *iconImageView = [[UIImageView alloc] init]; {
+            [iconImageView setContentMode:UIViewContentModeScaleToFill];
+            [iconImageView.layer setBorderColor:HYTCOLOR(230, 230, 230).CGColor];
+            [iconImageView.layer setBorderWidth:0.5];
+            [iconImageView.layer setMasksToBounds:YES];
+        }
         [self addSubview:iconImageView];
         self.iconImageView = iconImageView;
-        [self.iconImageView setContentMode:UIViewContentModeScaleToFill];
-        [self.iconImageView.layer setMasksToBounds:YES];
         
         UIImageView *verifiedView = [[UIImageView alloc] init];
         [self addSubview:verifiedView];
         self.verifiedView = verifiedView;
+        
+        
     }
     return self;
 }

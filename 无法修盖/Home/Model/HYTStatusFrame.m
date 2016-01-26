@@ -13,8 +13,9 @@
 
 @implementation HYTStatusFrame
 
-const CGFloat HYTStatusFrameNormalMargin = 17;  //普通内容的间距
-const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间、时间-来源）
+static CGFloat HYTStatusFrameMargin = 8;  //Cell之间的间距
+const CGFloat HYTStatusFrameNormalMargin = 8;  //普通内容的间距
+const CGFloat HYTStatusFrameSmallMargin  = 5;  //小间距 （用户名-时间、时间-来源）
 
 //static CGFloat kVerticalMargin = 25;    //距离边框的竖直距离(暂时弃用)
 + (instancetype)statusFrameWithStatus:(HYTStatus *)status {
@@ -29,12 +30,12 @@ const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间�
     _status = status;
     HYTUser *user = status.user;
     
-    CGFloat cellCurrentHeight = 0;
+    CGFloat cellHeight = 0;
     CGFloat cellWidth = SCREEN_WIDTH;
 
     /** 用户头像Frame */
-    CGFloat iconViewWidth = 50;
-    CGFloat iconViewHeight = 50;
+    CGFloat iconViewWidth = 38.5;
+    CGFloat iconViewHeight = iconViewWidth;
     CGFloat iconViewX = HYTStatusFrameNormalMargin;
     CGFloat iconViewY = HYTStatusFrameNormalMargin;
     self.iconViewF = CGRectMake(iconViewX, iconViewY, iconViewWidth, iconViewHeight);
@@ -84,8 +85,8 @@ const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间�
     self.picturesViewF = (CGRect){{picturesViewX, picturesViewY}, picturesViewSize};
     
     /** 原创微博Frame */
-    self.originalStatusViewF = CGRectMake(0, HYTStatusFrameSmallMargin, cellWidth, CGRectGetMaxY(self.picturesViewF));
-    cellCurrentHeight = CGRectGetMaxY(self.originalStatusViewF);
+    self.originalStatusViewF = CGRectMake(0, HYTStatusFrameMargin, cellWidth, CGRectGetMaxY(self.picturesViewF) + HYTStatusFrameNormalMargin);
+    cellHeight = CGRectGetMaxY(self.originalStatusViewF);
     
     /***********************转发微博***********************/
     if (status.retweetedStatus) {
@@ -108,15 +109,15 @@ const CGFloat HYTStatusFrameSmallMargin  = 10;  //小间距 （用户名-时间�
         }
         self.retweetedPicturesViewF = (CGRect){{retweetedPicturesViewX, retweetedPicturesViewY}, retweetedPicturesViewSize};
         
-        self.retweetedStatusViewF = CGRectMake(0, cellCurrentHeight, cellWidth, CGRectGetMaxY(self.retweetedPicturesViewF)+HYTStatusFrameNormalMargin);
+        self.retweetedStatusViewF = CGRectMake(0, cellHeight, cellWidth, CGRectGetMaxY(self.retweetedPicturesViewF)+HYTStatusFrameNormalMargin);
         
-        cellCurrentHeight = CGRectGetMaxY(self.retweetedStatusViewF);
+        cellHeight = CGRectGetMaxY(self.retweetedStatusViewF);
     }
     
-    self.toolBarF = CGRectMake(0, cellCurrentHeight, cellWidth, 34);
+    self.toolBarF = CGRectMake(0, cellHeight, cellWidth, 34);
     
-    cellCurrentHeight = CGRectGetMaxY(self.toolBarF);
-    self.cellTotalHeight = cellCurrentHeight;
+    cellHeight = CGRectGetMaxY(self.toolBarF);
+    self.cellTotalHeight = cellHeight;
 }
 
 @end

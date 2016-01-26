@@ -36,7 +36,18 @@
 
 - (void)showEmoticon:(HYTEmoticon *)emoticon fromView:(UIView *)fromView {
 
+    [self showEmoticon:emoticon fromView:fromView delay:0 completion:nil];
+
+}
+
+- (void)showEmoticon:(HYTEmoticon *)emoticon fromView:(UIView *)fromView delay:(NSTimeInterval)delay completion:(void (^)(void))completion {
+    
     if (self.superview && self.emoticonView.emoticon == emoticon) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion();
+            }
+        });
         return;
     }
     
@@ -71,14 +82,16 @@
                      } completion:^(BOOL finished) {
                          [UIView animateWithDuration:0.1 animations:^{
                              self.emoticonView.y = 8;
+                         } completion:^(BOOL finished) {
+                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                 if (completion) {
+                                     completion();
+                                 }                                 
+                             });
                          }];
                      }];
 
+    
 }
-
-- (void)dismissViewFromSuper {
-        [self removeFromSuperview];
-}
-
 
 @end

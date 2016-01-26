@@ -61,7 +61,6 @@
     [super layoutSubviews];
     
     [self.emoticonLabel setFrame:self.bounds];
-
 }
 
 @end
