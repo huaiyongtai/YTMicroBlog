@@ -28,8 +28,6 @@
         self.repostBtn = [self addSubBtnWithTitle:@"转发" imageName:@"timeline_icon_retweet"];
         self.commentBtn = [self addSubBtnWithTitle:@"评论" imageName:@"timeline_icon_comment"];
         self.attitudeBtn = [self addSubBtnWithTitle:@"赞" imageName:@"timeline_icon_unlike"];
-        
-        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"statusdetail_toolbar_background"]]];
     }
     return self;
 }
