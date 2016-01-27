@@ -11,5 +11,33 @@
 
 @implementation HYTEmoticon
 
+MJCodingImplementation
+
+
+//- (id)initWithCoder:(NSCoder *)decoder 
+//{
+//    if (self = [super init]) {
+//        [self mj_decode:decoder];
+//    }
+//    return self;
+//}
+//\
+//- (void)encodeWithCoder:(NSCoder *)encoder \
+//{ \
+//    [self mj_encode:encoder]; \
+//}
+
+- (BOOL)isEqual:(id)object {
+    
+    BOOL equal = [super isEqual:object];
+    
+    if (equal) return YES;
+    
+    HYTEmoticon *emoticon = object;
+    if (![emoticon isKindOfClass:[HYTEmoticon class]]) return NO;
+    
+    //向一个空的对象发送消息肯定是nil
+    return [self.code isEqualToString:emoticon.code] || [self.chs isEqualToString:emoticon.chs];
+}
 
 @end

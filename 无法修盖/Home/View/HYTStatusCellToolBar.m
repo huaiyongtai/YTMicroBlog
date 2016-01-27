@@ -25,6 +25,9 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
+        
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"statusdetail_toolbar_background"]]];
+        
         self.repostBtn = [self addSubBtnWithTitle:@"转发" imageName:@"timeline_icon_retweet"];
         self.commentBtn = [self addSubBtnWithTitle:@"评论" imageName:@"timeline_icon_comment"];
         self.attitudeBtn = [self addSubBtnWithTitle:@"赞" imageName:@"timeline_icon_unlike"];
@@ -70,7 +73,6 @@
     }
     
     [btn setTitle:btnTitle forState:UIControlStateNormal];
-    
 }
 
 - (void)layoutSubviews {

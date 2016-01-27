@@ -12,6 +12,9 @@
 
 @interface HYTEmoticonTextView : HYTTextView
 
-@property (nonatomic, strong) HYTEmoticon *emoticon;
+- (void)insertEmoticon:(HYTEmoticon *)emoticon;
+
+- (NSString *)plainText;
+
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HYTEmoticon : NSObject
+@interface HYTEmoticon : NSObject <NSCoding>
 
 /** 表情文字的Id */
 @property (nonatomic, copy) NSString *idStr;

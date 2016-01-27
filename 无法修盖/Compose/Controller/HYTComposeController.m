@@ -11,7 +11,7 @@
 #import "HYTEmoticonTextView.h"
 #import "HYTComposeToolbar.h"
 #import "HYTComposePicturesView.h"
-#import "AFNetworking.h"
+//#import "AFNetworking.h"
 #import "HYTEmoticonKeyboardView.h"
 #import "HYTEmoticon.h"
 #import "HYTTextAttachment.h"
@@ -44,7 +44,7 @@
     
 }
 - (void)dealloc {
-    
+    NSLog(@"HYTComposeController 被释放");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -134,7 +134,7 @@
 - (void)emoticonDidSelected:(NSNotification *)emoticonNotification {
     
     HYTEmoticon *emoticon = emoticonNotification.userInfo[HYTEmoticonDidSelectedKey];
-    self.textView.emoticon = emoticon;
+    [self.textView insertEmoticon:emoticon];;
 }
 
 - (void)emoticonDeleteDidSelected:(NSNotification *)deleteNotification {
@@ -142,17 +142,7 @@
 }
 - (void)sendCompose {
     
-    NSMutableString *statusText = [NSMutableString string]; {
-        [self.textView.attributedText enumerateAttributesInRange:NSMakeRange(0, self.textView.attributedText.length)
-                                                         options:0
-                                                      usingBlock:^(NSDictionary<NSString *,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-                                                          HYTTextAttachment *textAttach = attrs[@"NSAttachment"];
-                                                          if (textAttach) {
-                                                              [statusText appendString:textAttach.emoticon.chs];
-                                                          } else {
-                                                              [statusText appendString:[self.textView.attributedText attributedSubstringFromRange:range].string];
-                                                          }
-                                                      }];
+    NSString *statusText = self.textView.plainText; {
         if (statusText.length == 0) {
             [HYTAlertView showAlertImage:@"请输入合法字符"];
             return;
@@ -187,21 +177,24 @@
         UIImageJPEGRepresentation(firstImage, 0.5);
     });
     
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger POST:@"https://upload.api.weibo.com/2/statuses/upload.json"
-      parameters:parameters constructingBodyWithBlock:^(id <AFMultipartFormData> formData) {
-          
-          [formData appendPartWithFileData:picData name:@"pic" fileName:@"helloworld.jpg" mimeType:@"image/jpeg"];
-      }
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [HYTAlertView showAlertMsg:@"发送成功"];
-             [self dismissViewControllerAnimated:YES completion:nil];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"error:%@", error);
-             [HYTAlertView showAlertMsg:@"发送失败"];
-             [self dismissViewControllerAnimated:YES completion:nil];
-         }
+    NSMutableArray *files = [NSMutableArray array];
+    for (int index=0; index<3; index++) {
+        HYTHttpUpload *upload = [[HYTHttpUpload alloc] init];
+        upload.fileData = picData;
+        upload.name = @"pic";
+        upload.mimeType = @"image/jpeg";
+        upload.fileName = [NSString stringWithFormat:@"asdfa%i", arc4random_uniform(2)];
+        [files addObject:upload];
+    }
+    [HYTHttpTool post:@"https://upload.api.weibo.com/2/statuses/upload.json"
+           parameters:parameters
+                files:files
+              success:^(id responseObject) {
+                  [HYTAlertView showAlertMsg:@"发送成功"];
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              } failure:^(NSError *error) {
+                  [HYTAlertView showAlertMsg:@"发送失败"];
+              }
      ];
 }
 
@@ -220,18 +213,14 @@
     HYTAccount *account = [HYTAccountTool accountInfo];
     parameters[@"access_token"] = account.accessToken;
     
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger POST:@"https://api.weibo.com/2/statuses/update.json"
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [HYTAlertView showAlertMsg:@"发送成功"];
-             [self dismissViewControllerAnimated:YES completion:nil];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"error:%@", error);
-             [HYTAlertView showAlertMsg:@"发送失败"];
-             [self dismissViewControllerAnimated:YES completion:nil];
-         }
+    [HYTHttpTool post:@"https://api.weibo.com/2/statuses/update.json"
+           parameters:parameters success:^(id responseObject) {
+               [HYTAlertView showAlertMsg:@"发送成功"];
+               [self dismissViewControllerAnimated:YES completion:nil];
+           } failure:^(NSError *error) {
+               [HYTAlertView showAlertMsg:@"发送失败"];
+               [self dismissViewControllerAnimated:YES completion:nil];
+           }
      ];
 }
 
@@ -239,6 +228,7 @@
 - (HYTEmoticonKeyboardView *)emoticonKeyboardView {
     
     if (_emoticonKeyboardView == nil) {
+        
         HYTEmoticonKeyboardView *emoticonKeyboardView = [HYTEmoticonKeyboardView emoticonKeyboard];
         [emoticonKeyboardView setFrame:CGRectMake(0, 0, self.view.width, 216)];
         _emoticonKeyboardView = emoticonKeyboardView;

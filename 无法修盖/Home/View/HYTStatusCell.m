@@ -148,7 +148,6 @@
 #pragma mark - 添加底部toolBar
 - (void)setupStatusToolBar {
     HYTStatusCellToolBar *toolBar = [[HYTStatusCellToolBar alloc] init];
-    [toolBar setBackgroundColor:[UIColor whiteColor]];
     [self.contentView addSubview:toolBar];
     self.toolBar = toolBar;
 }
@@ -177,25 +176,19 @@
         [self.mbMarkView setHidden:YES];
     }
 
-    /** 微博创建时间Frame */
-    NSString *currentCreatAt = status.createdAt;
-    BOOL isRecalculateCreatFrame = status.createdAt.length != self.createdAtLabel.text.length; //在cell的循环利用中判断是否需要重新计算创建时间的frame
-    if (isRecalculateCreatFrame) {
-        CGFloat createdAtX = statusFrame.nameLabelF.origin.x;
-        CGFloat createdAtY = CGRectGetMaxY(statusFrame.nameLabelF) + HYTStatusFrameSmallMargin;
+    /** 微博创建时间Frame */    NSString *currentCreatAt = status.createdAt;
+    [self.createdAtLabel setFrame:({
         CGSize createdAtSize = [status.createdAt yt_sizeWithFont:HYTStatusFrameCreatedAtFont];
-        [self.createdAtLabel setFrame:(CGRect){{createdAtX, createdAtY}, createdAtSize}];
-    }
+        statusFrame.createdAtLabelF = (CGRect){statusFrame.createdAtLabelF.origin, createdAtSize};
+    })];
     [self.createdAtLabel setText:currentCreatAt];
     
     /** 微博来源Frame */
-    BOOL isRecalculateSourceFrame = status.source.length != self.sourceLabel.text.length; //在cell的循环利用中判断是否需要重新计算来源时间的frame
-    if (isRecalculateSourceFrame || isRecalculateCreatFrame) {
-        CGFloat sourceX = CGRectGetMaxX(self.createdAtLabel.frame) + HYTStatusFrameSmallMargin;
-        CGFloat sourceY = self.createdAtLabel.frame.origin.y;
-        CGSize sourceSize = [status.source yt_sizeWithFont:HYTStatusFrameSourceFont];
-        [self.sourceLabel setFrame:(CGRect){{sourceX, sourceY}, sourceSize}];
-    }
+    [self.sourceLabel setFrame:({
+        CGFloat sourceX = CGRectGetMaxX(statusFrame.createdAtLabelF) + HYTStatusFrameSmallMargin;
+        CGFloat sourceY = CGRectGetMinY(statusFrame.createdAtLabelF);
+        statusFrame.sourceLabelF = (CGRect){{sourceX, sourceY}, statusFrame.sourceLabelF.size};
+    })];
     [self.sourceLabel setText:status.source];
 
     [self.contentLabel setText:status.text];

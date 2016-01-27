@@ -10,6 +10,7 @@
 #import "HYTEmoticonTabBar.h"
 #import "HYTEmoticonListView.h"
 #import "HYTEmoticon.h"
+#import "HYTRecentEmoticonTool.h"
 #import "MJExtension.h"
 
 @interface HYTEmoticonKeyboardView () <HYTEmoticonTabBarDelegate>
@@ -35,7 +36,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        
         HYTEmoticonListView *showingEmoticonView = [HYTEmoticonListView listView];
         [self addSubview:showingEmoticonView];
         self.showingEmoticonView = showingEmoticonView;
@@ -53,11 +53,6 @@
     
     if (_emoticonRecencyView == nil) {
         _emoticonRecencyView = [HYTEmoticonListView listView];
-        
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"Emoticons.bundle/com.apple.emoji/info.plist" ofType:nil];
-//        NSArray *emoticonArray = [NSDictionary dictionaryWithContentsOfFile:path][@"emoticons"];
-//        NSArray *emoticons = [HYTEmoticon mj_objectArrayWithKeyValuesArray:emoticonArray];
-//        _emoticonRecencyView.emoticons = emoticons;
     }
     return _emoticonRecencyView;
 }
@@ -112,6 +107,7 @@
     
     switch (itemType) {
         case HYTEmoticonTabBarItemTypeRecency: {
+            self.emoticonRecencyView.emoticons = [HYTRecentEmoticonTool recentEmoticons];
             self.showingEmoticonView = self.emoticonRecencyView;
             break;
         }

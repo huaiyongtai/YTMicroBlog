@@ -7,7 +7,6 @@
 //
 
 #import "HYTOAuthViewController.h"
-#import "AFNetworking.h"
 #import "HYTAccount.h"
 #import "HYTAccountTool.h"
 
@@ -35,7 +34,8 @@
     sinaOAuthView.delegate = self;
     
     //1. 获得授权过的Request Token
-    NSURL *url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/authorize?client_id=3718372838&redirect_uri=http://m.baidu.com/"];
+    NSString *urlStri = [NSString stringWithFormat:@"https://api.weibo.com/oauth2/authorize?client_id=%@&redirect_uri=http://m.baidu.com/", HYTAPPKey];
+    NSURL *url = [NSURL URLWithString:urlStri];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [sinaOAuthView loadRequest:request];
     
@@ -80,27 +80,24 @@
          redirect_uri 	true        string 	回调地址，需需与注册应用里的回调地址一致。
      */
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"client_id"] = @"3718372838";
-    parameters[@"client_secret"] = @"8ebd1ff6d8a3380b747c6fe8907755f6";
+    parameters[@"client_id"] = HYTAPPKey;
+    parameters[@"client_secret"] = HYTAPPSecret;
     parameters[@"grant_type"] = @"authorization_code";
     parameters[@"code"] = code;
     parameters[@"redirect_uri"] = @"http://m.baidu.com/";
 
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger POST:@"https://api.weibo.com/oauth2/access_token"
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             HYTAccount *account = [HYTAccount accountWithDict:responseObject];
-             
-             [HYTAccountTool saveAccountInfo:account];
-             
-             UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-             [keyWindow switchRootViewController];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"error:%@", error);
-         }
+    [HYTHttpTool post:@"https://api.weibo.com/oauth2/access_token"
+           parameters:parameters
+              success:^(id responseObject) {
+                  HYTAccount *account = [HYTAccount accountWithDict:responseObject];
+                  
+                  [HYTAccountTool saveAccountInfo:account];
+                  UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+                  [keyWindow switchRootViewController];
+                  
+              } failure:^(NSError *error) {
+                  NSLog(@"error:%@", error);
+              }
      ];
 }
 

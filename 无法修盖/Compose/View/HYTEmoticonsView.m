@@ -9,6 +9,7 @@
 #import "HYTEmoticonsView.h"
 #import "HYTEmoticonBtn.h"
 #import "HYTEmoticonPopView.h"
+#import "HYTRecentEmoticonTool.h"
 
 const NSUInteger HYTEmotionPageMaxCols = 7;
 const NSUInteger HYTEmotionPageMaxRows = 3;
@@ -50,6 +51,7 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
 - (void)setEmoticons:(NSArray *)emoticons {
     
     _emoticons = emoticons;
+    [_emotionViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     _emotionViews = [NSMutableArray array];
     [emoticons enumerateObjectsUsingBlock:^(HYTEmoticon *emoticon, NSUInteger idx, BOOL *stop) {
@@ -89,6 +91,8 @@ const NSUInteger HYTEmotionPageCount = HYTEmotionPageMaxCols * HYTEmotionPageMax
     [[NSNotificationCenter defaultCenter] postNotificationName:HYTEmoticonDidSelectedNotification
                                                         object:nil
                                                       userInfo:userInfo];
+    
+    [HYTRecentEmoticonTool addEmoticonToRecentEmotions:emoticonView.emoticon];
 }
 
 - (void)pressEmoticonRecognizer:(UIGestureRecognizer *)recognizer {

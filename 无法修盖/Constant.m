@@ -8,10 +8,11 @@
 
 #import "Constant.h"
 
-NSString *const HYTEmoticonDidSelectedNotification = @"HYTEmoticonDidSelectedNotification";  //普通表情按键
-NSString *const HYTEmoticonDeleteDidSelectedNotification = @"HYTEmoticonDeleteDidSelectedNotification";    //删除按键
-NSString *const HYTEmoticonDidSelectedKey = @"YTEmoticonDidSelectedKey";
+#pragma mark - 应用息
+NSString * const HYTAPPKey    = @"3718372838";
+NSString * const HYTAPPSecret = @"8ebd1ff6d8a3380b747c6fe8907755f6";
 
-@implementation Constant
-
-@end
+#pragma mark -
+NSString * const HYTEmoticonDidSelectedNotification       = @"HYTEmoticonDidSelectedNotification";//普通表情按键
+NSString * const HYTEmoticonDeleteDidSelectedNotification = @"HYTEmoticonDeleteDidSelectedNotification";//删除按键
+NSString * const HYTEmoticonDidSelectedKey                = @"YTEmoticonDidSelectedKey";

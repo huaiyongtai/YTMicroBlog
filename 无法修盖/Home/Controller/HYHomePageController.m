@@ -10,7 +10,6 @@
 #import "HYHomePageController.h"
 #import "DropDownMenu.h"
 #import "NavTitleBtn.h"
-#import "AFNetworking.h"
 #import "HYTAccountTool.h"
 #import "UIImageView+WebCache.h"
 #import "HYTStatusFrame.h"
@@ -31,6 +30,8 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:HYTCOLOR(239, 239, 239)];
+    
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.statusFrames = [NSMutableArray array];
     
@@ -78,31 +79,29 @@
     if (status.statusID) {
         parameters[@"since_id"] = status.statusID;
     }
-    
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
-     parameters:parameters
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-            [refreshControl endRefreshing];
-            
-            //将字典数组转化为模型数组
-            NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
-            
-            //提醒新的微博数量
-            [self alertuNewsStatusCount:statuses.count];
-            
-            //插入到模型数组中
-            NSIndexSet *statusesIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
-            [self.statusFrames insertObjects:[self statusFramesWithStatuses:statuses] atIndexes:statusesIndexSet];
-
-            //刷新表格
-            [self.tableView reloadData];
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error:%@", error);
-        }
+    [HYTHttpTool get:@"https://api.weibo.com/2/statuses/friends_timeline.json"
+          parameters:parameters
+             success:^(id responseObject) {
+                 
+                 [refreshControl endRefreshing];
+                 
+                 //将字典数组转化为模型数组
+                 NSArray *statuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+                 
+                 //提醒新的微博数量
+                 [self alertuNewsStatusCount:statuses.count];
+                 
+                 //插入到模型数组中
+                 NSIndexSet *statusesIndexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
+                 [self.statusFrames insertObjects:[self statusFramesWithStatuses:statuses] atIndexes:statusesIndexSet];
+                 
+                 //刷新表格
+                 [self.tableView reloadData];
+             } failure:^(NSError *error) {
+                 
+             }
      ];
+    
 }
 #pragma mark - 上拉加载更多数据
 - (void)loadMoreStatus {
@@ -118,22 +117,20 @@
         long long maxID = [status.statusID longLongValue] - 1;
         parameters[@"max_id"] = @(maxID);    //max_id返回的是
     }
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:@"https://api.weibo.com/2/statuses/friends_timeline.json"
-     parameters:parameters
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            //将字典数组转化为模型数组
-            NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
-            [self.statusFrames addObjectsFromArray:[self statusFramesWithStatuses:oldStatuses]];
-            
-            //刷新表格
-            [self.tableView reloadData];
-            self.tableView.tableFooterView.hidden = YES;
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error:%@", error);
-        }
+    
+    [HYTHttpTool get:@"https://api.weibo.com/2/statuses/friends_timeline.json"
+          parameters:parameters
+             success:^(id responseObject) {
+                 //将字典数组转化为模型数组
+                 NSArray *oldStatuses = [HYTStatus mj_objectArrayWithKeyValuesArray:responseObject[@"statuses"]];
+                 [self.statusFrames addObjectsFromArray:[self statusFramesWithStatuses:oldStatuses]];
+                 
+                 //刷新表格
+                 [self.tableView reloadData];
+                 self.tableView.tableFooterView.hidden = YES;
+             } failure:^(NSError *error) {
+                 
+             }
      ];
 }
 
@@ -181,25 +178,24 @@
     HYTAccount *account = [HYTAccountTool accountInfo];
     parameters[@"access_token"] = account.accessToken;
     parameters[@"uid"] = account.accountID;
+    
+    [HYTHttpTool get:@"https://rm.api.weibo.com/2/remind/unread_count.json"
+          parameters:parameters
+             success:^(id responseObject) {
+                 NSString *unreadStutasCount = responseObject[@"status"];
+                 unreadStutasCount = unreadStutasCount.description;
+                 if (unreadStutasCount.integerValue) {
+                     self.tabBarItem.badgeValue = unreadStutasCount;
+                     //设置AppIcon提醒数字
+                     [UIApplication sharedApplication].applicationIconBadgeNumber = unreadStutasCount.integerValue;
+                 } else {
+                     self.tabBarItem.badgeValue = nil;
+                     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+                 }
 
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:@"https://rm.api.weibo.com/2/remind/unread_count.json"
-     parameters:parameters
-        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *unreadStutasCount = responseObject[@"status"];
-            unreadStutasCount = unreadStutasCount.description;
-            if (unreadStutasCount.integerValue) {
-                self.tabBarItem.badgeValue = unreadStutasCount;
-                //设置AppIcon提醒数字
-                [UIApplication sharedApplication].applicationIconBadgeNumber = unreadStutasCount.integerValue;
-            } else {
-                self.tabBarItem.badgeValue = nil;
-                [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-            }
-        }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error:%@", error);
-        }
+             } failure:^(NSError *error) {
+                 
+             }
      ];
 }
 
@@ -237,24 +233,21 @@
     parameters[@"access_token"] = account.accessToken;
     parameters[@"uid"] = account.accountID;
     
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:@"https://api.weibo.com/2/users/show.json"
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             HYTUser *user = [HYTUser mj_objectWithKeyValues:responseObject];
-             
-             //与上次昵称相同则直接返回
-             if ([user.name isEqualToString:account.accountScreenName]) return;
-             
-             account.accountScreenName = user.name;
-             NavTitleBtn *navTitle = (NavTitleBtn *)self.navigationItem.titleView;
-             [navTitle setTitle:account.accountScreenName forState:UIControlStateNormal];
-             [HYTAccountTool saveAccountInfo:account];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"error:%@", error);
-         }
+    [HYTHttpTool get:@"https://api.weibo.com/2/users/show.json"
+          parameters:parameters
+             success:^(id responseObject) {
+                 HYTUser *user = [HYTUser mj_objectWithKeyValues:responseObject];
+                 
+                 //与上次昵称相同则直接返回
+                 if ([user.name isEqualToString:account.accountScreenName]) return;
+                 
+                 account.accountScreenName = user.name;
+                 NavTitleBtn *navTitle = (NavTitleBtn *)self.navigationItem.titleView;
+                 [navTitle setTitle:account.accountScreenName forState:UIControlStateNormal];
+                 [HYTAccountTool saveAccountInfo:account];
+             } failure:^(NSError *error) {
+                 
+             }
      ];
 }
 
