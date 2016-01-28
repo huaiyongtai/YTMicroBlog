@@ -1,5 +1,5 @@
 //
-//  HYTHttpUpload.h
+//  HYTHttpFile.h
 //  无法修盖
 //
 //  Created by HelloWorld on 16/1/27.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HYTHttpUpload : NSObject
+@interface HYTHttpFile : NSObject
 
 /** 文件Data */
 @property (nonatomic, copy) NSData   *fileData;

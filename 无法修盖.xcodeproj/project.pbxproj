@@ -27,7 +27,7 @@
 		823FF7F01C118E1200D51B60 /* HYTStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7EF1C118E1200D51B60 /* HYTStatusCell.m */; };
 		823FF7F31C118E2700D51B60 /* HYTStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */; };
 		82432AFB1C58C98300EB4D87 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 82432AFA1C58C98300EB4D87 /* MBProgressHUD.m */; };
-		82432AFE1C58E69800EB4D87 /* HYTHttpUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 82432AFD1C58E69800EB4D87 /* HYTHttpUpload.m */; };
+		82432AFE1C58E69800EB4D87 /* HYTHttpFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 82432AFD1C58E69800EB4D87 /* HYTHttpFile.m */; };
 		824680611C11C52900B81579 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 824680601C11C52900B81579 /* NSString+Extension.m */; };
 		8262874D1C560C6E0057F09F /* HYTEmoticonPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8262874C1C560C6E0057F09F /* HYTEmoticonPopView.m */; };
 		826298DD1B766B4100E1680C /* HYDiscoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 826298B91B766B4100E1680C /* HYDiscoverController.m */; };
@@ -158,8 +158,8 @@
 		823FF7F21C118E2700D51B60 /* HYTStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTStatusFrame.m; sourceTree = "<group>"; };
 		82432AF91C58C98300EB4D87 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		82432AFA1C58C98300EB4D87 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		82432AFC1C58E69800EB4D87 /* HYTHttpUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTHttpUpload.h; sourceTree = "<group>"; };
-		82432AFD1C58E69800EB4D87 /* HYTHttpUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTHttpUpload.m; sourceTree = "<group>"; };
+		82432AFC1C58E69800EB4D87 /* HYTHttpFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTHttpFile.h; sourceTree = "<group>"; };
+		82432AFD1C58E69800EB4D87 /* HYTHttpFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTHttpFile.m; sourceTree = "<group>"; };
 		8246805F1C11C52900B81579 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		824680601C11C52900B81579 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		8262874B1C560C6E0057F09F /* HYTEmoticonPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTEmoticonPopView.h; sourceTree = "<group>"; };
@@ -465,8 +465,8 @@
 			children = (
 				822F30DF1C58ADE000B8A6D5 /* HYTHttpTool.h */,
 				822F30E01C58ADE000B8A6D5 /* HYTHttpTool.m */,
-				82432AFC1C58E69800EB4D87 /* HYTHttpUpload.h */,
-				82432AFD1C58E69800EB4D87 /* HYTHttpUpload.m */,
+				82432AFC1C58E69800EB4D87 /* HYTHttpFile.h */,
+				82432AFD1C58E69800EB4D87 /* HYTHttpFile.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -1051,7 +1051,7 @@
 				822F30E11C58ADE000B8A6D5 /* HYTHttpTool.m in Sources */,
 				82C692291C0B532F009214CC /* MJExtensionConst.m in Sources */,
 				82C692301C0B532F009214CC /* NSObject+MJKeyValue.m in Sources */,
-				82432AFE1C58E69800EB4D87 /* HYTHttpUpload.m in Sources */,
+				82432AFE1C58E69800EB4D87 /* HYTHttpFile.m in Sources */,
 				82F52E181BDFDB8A00A509F5 /* AFURLRequestSerialization.m in Sources */,
 				82432AFB1C58C98300EB4D87 /* MBProgressHUD.m in Sources */,
 				8217FF941C0DF4500063A100 /* HYTFooterRefreshView.m in Sources */,

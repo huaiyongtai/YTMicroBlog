@@ -9,7 +9,7 @@
 #import "HYTHttpTool.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
-#import "HYTHttpUpload.h"
+#import "HYTHttpFile.h"
 
 static AFNetworkReachabilityStatus _lastNetworkStatus = AFNetworkReachabilityStatusReachableViaWiFi;
 static MBProgressHUD *_showProgress = nil;
@@ -53,14 +53,10 @@ static MBProgressHUD *_showProgress = nil;
     }];
 }
 
+#pragma mark - GET请求
 + (void)get:(NSString *)url parameters:(id)parameters success:(void (^)(id))success failure:(void (^)(NSError *))failure {
-    [self get:url parameters:parameters autoShowLoading:YES success:success failure:failure];
+    [self get:url parameters:parameters autoShowLoading:NO success:success failure:failure];
 }
-
-+ (void)post:(NSString *)url parameters:(id)parameters success:(void (^)(id))success failure:(void (^)(NSError *))failure {
-    [self post:url parameters:parameters autoShowLoading:YES success:success failure:failure];
-}
-
 + (void)get:(NSString *)url parameters:(id)parameters autoShowLoading:(BOOL)showLoading success:(void (^)(id))success failure:(void (^)(NSError *))failure {
     
     if (_lastNetworkStatus == AFNetworkReachabilityStatusNotReachable) {
@@ -68,27 +64,26 @@ static MBProgressHUD *_showProgress = nil;
         return;
     }
     
-    if (showLoading) {
-        [_showProgress show:YES];
-    }
+    if (showLoading) { [_showProgress show:YES]; }
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
     [mgr GET:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if (showLoading) {
-            [_showProgress hide:YES];
-        }
+        if (showLoading) { [_showProgress hide:YES]; }
+        
         if (success) {
             success(responseObject);
         }
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        if (showLoading) {
-            [_showProgress hide:YES];
-        }
+        if (showLoading) { [_showProgress hide:YES]; }
         if (failure) {
             failure(error);
         }
     }];
 }
 
+#pragma mark - POST请求
++ (void)post:(NSString *)url parameters:(id)parameters success:(void (^)(id))success failure:(void (^)(NSError *))failure {
+    [self post:url parameters:parameters autoShowLoading:NO success:success failure:failure];
+}
 + (void)post:(NSString *)url parameters:(id)parameters autoShowLoading:(BOOL)showLoading success:(void (^)(id))success failure:(void (^)(NSError *))failure {
     
     if (_lastNetworkStatus == AFNetworkReachabilityStatusNotReachable) {
@@ -96,51 +91,50 @@ static MBProgressHUD *_showProgress = nil;
         return;
     }
     
-    if (showLoading) {
-        [_showProgress show:YES];
-    }
+    if (showLoading) { [_showProgress show:YES]; }
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
     [mgr POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if (showLoading) {
-            [_showProgress hide:YES];
-        }
+        if (showLoading) { [_showProgress hide:YES]; }
+        
         if (success) {
             success(responseObject);
         }
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        if (showLoading) {
-            [_showProgress hide:YES];
-        }
+        if (showLoading) { [_showProgress hide:YES]; }
         if (failure) {
             failure(error);
         }
     }];
 }
 
-+ (void)post:(NSString *)url parameters:(id)parameters files:(NSArray <HYTHttpUpload *> * )files success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))failure {
+#pragma mark - 上传（POST方式）
++ (void)post:(NSString *)url parameters:(id)parameters uploadFiles:(NSArray <HYTHttpFile *> * )files success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))failure {
+    [self post:url parameters:parameters uploadFiles:files uploadProgressBlock:nil success:success failure:failure];
+}
++ (void)post:(NSString *)url parameters:(id)parameters uploadFiles:(NSArray <HYTHttpFile *> *)files uploadProgressBlock:(void (^)(NSUInteger, long long, long long))uploadProgress success:(void (^)(id))success failure:(void (^)(NSError *))failure {
     
     AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestOperation *request = [mgr POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
-        [files enumerateObjectsUsingBlock:^(HYTHttpUpload * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    AFHTTPRequestOperation *reqOpt = [mgr POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [files enumerateObjectsUsingBlock:^(HYTHttpFile * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [formData appendPartWithFileData:obj.fileData name:obj.name fileName:obj.fileName mimeType:obj.mimeType];
         }];
-    
-    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         if (success) {
             success(responseObject);
         }
-        
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
     }];
     
-    [request setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-        NSLog(@"%ld, %lld, %lld",bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
-    }];
+    //加载文件上传进度
+    if (uploadProgress) {
+        [reqOpt setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            uploadProgress(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+        }];
+    }
 }
 
 @end

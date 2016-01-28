@@ -179,7 +179,7 @@
     
     NSMutableArray *files = [NSMutableArray array];
     for (int index=0; index<3; index++) {
-        HYTHttpUpload *upload = [[HYTHttpUpload alloc] init];
+        HYTHttpFile *upload = [[HYTHttpFile alloc] init];
         upload.fileData = picData;
         upload.name = @"pic";
         upload.mimeType = @"image/jpeg";
@@ -187,15 +187,18 @@
         [files addObject:upload];
     }
     [HYTHttpTool post:@"https://upload.api.weibo.com/2/statuses/upload.json"
-           parameters:parameters
-                files:files
-              success:^(id responseObject) {
-                  [HYTAlertView showAlertMsg:@"发送成功"];
-                  [self dismissViewControllerAnimated:YES completion:nil];
-              } failure:^(NSError *error) {
-                  [HYTAlertView showAlertMsg:@"发送失败"];
-              }
+           parameters:parameters uploadFiles:files
+                            uploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                                NSLog(@"%li, %lli, %lld", bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+                            } success:^(id responseObject) {
+                                [HYTAlertView showAlertMsg:@"发送成功"];
+                                [self dismissViewControllerAnimated:YES completion:nil];
+                            } failure:^(NSError *error) {
+                                [HYTAlertView showAlertMsg:@"发送失败"];
+                            }
      ];
+
+
 }
 
 #pragma mark 发送纯文本微博
