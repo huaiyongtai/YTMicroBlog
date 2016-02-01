@@ -39,4 +39,11 @@
     [self setTitle:emoticon.code.emoji forState:UIControlStateNormal];
 }
 
+- (void)setHidden:(BOOL)hidden {
+    
+    [super setHidden:hidden];
+    
+    self.enabled = !hidden;
+}
+
 @end

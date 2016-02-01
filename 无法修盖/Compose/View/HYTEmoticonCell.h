@@ -11,8 +11,6 @@
 
 @interface HYTEmoticonCell : UICollectionViewCell
 
-@property (nonatomic, strong) HYTEmoticon *emoticon;
-
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) NSArray *emoticons;
 
 @end
